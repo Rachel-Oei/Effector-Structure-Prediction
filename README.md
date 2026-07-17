@@ -1,5 +1,5 @@
 # Effector-Structure-Prediction
-Pipeline for predicting effector structures. 
+Pipeline for predicting effector structures. Using BioPython and mmCIF files. 
 
 **Background**: 
 I would like to use ESMFold, AF2 and AF3 to predict fungal effector structures. Effectors are secreted virulent proteins by pathogens that evoke an immune response in the host organism. They are structurally very diverse, and little is known on how to predict their structures from their amino sequence.
@@ -7,24 +7,24 @@ I would like to use ESMFold, AF2 and AF3 to predict fungal effector structures. 
 I already collected 80 fungal effector structures that are experimentally resolved and available in the PDB database. I based this on literature reviews and recent papers. 
 
 The **input** for this project is simply:
-- A .tsv file called "PDB_ID_list.tsv" with in the first column, a list of all PDB ID's with protein identities, and in the second column, a binary indicator that says whether the protein ID is an effector or not.  
+- A .txt file called "PDB_ID_list.txt" with in one column, a list of all PDB ID's and its specific chain.
 
 ```
-PDB_ID  Effector
-1FN8_1  1
-1FN8_2  0
-1KG1_1  1
-1KPT_1  1
-1ZLD_1  1
-1ZLE_1  1
-2LW6_1  1
+PDB_ID
+1FN8.A
+1KG1.A
+1KPT.A
+4GVB.B
+
 ```
 
-Notes on the **PDB ID's**:
-- It is possible that a PDB ID contains multiple protein identities (for instance, one effector and one receptor that were experimentally resolved together). For instance, 6FUB can be divided into 6FUB_1 and 6FUB_2. We choose the protein ID that contains the effector, so 6FUB_2 in this case.
-- Each protein ID can also contain multiple chains. 6FUB_2 can contain chain A, B, C etc. We assume that all the chains within a protein ID are identical. Therefore, we choose the first chain that is mentioned, such as chain A. 
-- Sometimes, there is a difference between the PDB chain label, and the label by the author. For e.g: chain A[B auth], means that the PDB considers the chain to be A, but the author originally deposited it as B. In this case, we choose the chain to be B, because that is what is in the .pdb file. 
+Note that the chains are PDB labelled chains (label_asym_id), **not** the author labelled (auth_asym_id). 
 
-1. From the .tsv file ("PDB_ID_list.tsv") with all effector structures, we first need to extract the FASTA files. 
+1. From the .txt file, we want to download all the mmCIF files. In July 2027, this will be the standard, overruling the legacy .pdb files. We extract and read within the mmCIF using BioPython. We can get out the exact sequence (on which we will perform ESMFold, AlphaFold etc), and we can get out the crystal structure coordinates.
+2. 
 
-   
+
+
+
+
+
