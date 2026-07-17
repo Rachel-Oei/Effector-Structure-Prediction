@@ -20,8 +20,7 @@ PDB_ID
 
 Note that the chains are PDB labelled chains (label_asym_id), **not** the author labelled (auth_asym_id). 
 
-1. From the .txt file, we want to download all the mmCIF files. In July 2027, this will be the standard, overruling the legacy .pdb files. We extract and read within the mmCIF using BioPython. We can get out the exact sequence (on which we will perform ESMFold, AlphaFold etc), and we can get out the crystal structure coordinates.
-2. 
+1. From the .txt file, we want to download all the mmCIF files. On July 2027, the mmCIF file will be the standard, overruling the legacy .pdb files. We extract and read within the mmCIF using BioPython. We can get out the exact sequence (on which we will perform ESMFold, AlphaFold etc), and we can get out the crystal structure coordinates. Use the script ...
 
 
 
