@@ -1,1 +1,27 @@
+import requests 
 
+# Make sure you are logged in to the server @alive. 
+
+# Create the folder cif inside your home directory. 
+# Move the PDB_ID_list.txt inside the cif folder.
+# Create the folder cif_downloads inside the cif folder.
+
+home_directory="/home/rachel"
+input_file=home_directory+"/cif/PDB_ID_list.txt"
+output_directory=home_directory+"/cif/cif_downloads/"
+
+# Stores the PDB ID's with only the first 4 characters inside a list
+lines = []
+with open(input_file, "r") as f:
+    for line in f:
+        lines.append(line[:4])
+
+# Downloads the .cif file for each protein id.
+for protein_id in lines:
+    url = f"https://files.rcsb.org/download/{protein_id}.cif"
+    output_final_directory=output_directory+f"{protein_id}.cif"
+
+    response = requests.get(url, timeout=30)
+    with open(output_final_directory, "wb") as out_file:
+            out_file.write(response.content)
+    print(f"Downloaded {protein_id}")
