@@ -11,17 +11,22 @@ The **input** for this project is simply:
 
 ```
 PDB_ID
-1FN8.A
-1KG1.A
-1KPT.A
-4GVB.B
+1FN8_1
+1KG1_1
+1KPT_1
+4GVB_2
 
 ```
 
-Note that the chains are PDB labelled chains (label_asym_id), **not** the author labelled (auth_asym_id). 
+Note that the chains are PDB labelled by the protein identity, and not by the specific chain. It is assumed that all the chains within a protein identity is identical. 
 
-1. From the .txt file, we want to download all the mmCIF files. On July 2027, the mmCIF file will be the standard, overruling the legacy .pdb files. We extract and read within the mmCIF using BioPython. We can get out the exact sequence (on which we will perform ESMFold, AlphaFold etc), and we can get out the crystal structure coordinates. Use the script ...
+1. From the .txt file, we want to download all the mmCIF files. On July 2027, the mmCIF file will be the standard, overruling the legacy .pdb files. We extract and read within the mmCIF using BioPython. We can get out the exact sequence (on which we will perform ESMFold, AlphaFold etc), and we can get out the crystal structure coordinates. Use the script **download_cif.py** to download the cif files. 
 
+2. Use the **extract_sequences.py** to create all the fasta files for each protein ID. 
+
+3. From the fasta files, you can run the ESMFold, AF2 and AF3. 
+
+4. 
 
 
 
