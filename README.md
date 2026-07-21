@@ -45,7 +45,7 @@ python run_AF3_all.py
 bash /home/rachel/esmfold-1.0.3/run_all_esmfold.sh
 ```
 
-6. TMAlign
+6. We want to also use TMAlign to compare the results. We downloaded the cif files, but we now need to extract only the right chains. 
 
 
 
