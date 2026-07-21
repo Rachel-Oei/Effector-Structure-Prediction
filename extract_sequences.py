@@ -27,3 +27,4 @@ for filename in os.listdir(input_directory):
 
     seq = entity_to_seq.get(str(entity_id))
     return seq.replace("\n", "") if seq else None
+
