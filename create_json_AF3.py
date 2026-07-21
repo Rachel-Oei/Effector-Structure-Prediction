@@ -15,7 +15,6 @@ for identity, chain in zip(protein_ID_list_identities, protein_ID_list_chains):
     protein=identity[:4]
     identity=identity[5]
     chain=chain[5]
-    sequence="/home/rachel/cif/cif_fasta/{protein_id}_{identity}.fasta"
 
     # Read the FASTA sequence
     fasta_file = f"/home/rachel/cif/cif_fasta/{protein}_{identity}.fasta"
@@ -29,7 +28,7 @@ for identity, chain in zip(protein_ID_list_identities, protein_ID_list_chains):
         )
 
     json_data={
-        "name": protein,
+        "name":f"{protein}_{identity}"
         "sequences": [
         {
             "protein": {
@@ -49,6 +48,6 @@ for identity, chain in zip(protein_ID_list_identities, protein_ID_list_chains):
     with open(output_file, "w") as f:
         json.dump(json_data, f, indent=2)
 
-    print(f"{protein}.json created")
+    print(f"{protein}_{identity}.json created")
 
 
