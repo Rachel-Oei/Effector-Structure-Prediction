@@ -23,6 +23,7 @@ do
     mkdir -p "${OUT_DIR}/${name}"
     mkdir -p "${LOG_DIR}"
 
+    # Run on GPU 1 
     CUDA_VISIBLE_DEVICES=1 ${ESMFOLD} \
     "$fasta" \
     "${OUT_DIR}/${name}/" \
