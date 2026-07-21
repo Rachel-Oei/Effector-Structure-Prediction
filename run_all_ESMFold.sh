@@ -1,6 +1,6 @@
 #!/bin/bash
 
-FASTA_DIR=/home/rachel/esmfold-1.0.3
+FASTA_DIR=/home/rachel/cif/cif_fasta
 OUT_DIR=/linuxhome/tmp/rachel/esmfold-results
 LOG_DIR=/linuxhome/tmp/rachel/esmfold-logs
 
@@ -23,9 +23,9 @@ do
     mkdir -p "${OUT_DIR}/${name}"
     mkdir -p "${LOG_DIR}"
 
-    ${ESMFOLD} \
-        "$fasta" \
-        "${OUT_DIR}/${name}/" \
-        |& tee "${LOG_DIR}/${name}.log"
+    CUDA_VISIBLE_DEVICES=1 ${ESMFOLD} \
+    "$fasta" \
+    "${OUT_DIR}/${name}/" \
+    |& tee "${LOG_DIR}/${name}.log"
 
 done
