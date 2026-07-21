@@ -26,7 +26,9 @@ Note that the chains are PDB labelled by the protein identity, and not by the sp
 
 3. From the fasta files, you can run the ESMFold, AF2 and AF3. 
 
-4. 
+4. For AF3, **run create_json_AF3.py**. This creates all json files for AF3. Once the json files are created, run **run_AF3_all.py** to run AF3 for all.
+
+
 
 
 
