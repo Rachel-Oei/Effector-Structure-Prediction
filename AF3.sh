@@ -17,7 +17,7 @@ nano /home/rachel/alphafold3-3.0.3/fold_input.json
 #Create output directory in that folder 
 mkdir -p /home/rachel/alphafold3-3.0.3/output
 
-# Go in the binfgpu
+# Go in the binfgpu server 
 
 # Start folding the example
   /home/jankees-alphafold-303/alphafold3-3.0.3/run_alphafold.sh \
@@ -25,6 +25,16 @@ mkdir -p /home/rachel/alphafold3-3.0.3/output
   --model_dir=/home/rachel/alphafold-models-3.0.3 \
   --db_dir=/net/leca/linuxhome/alphafold/alphafold-db-3.0.3 \
   --output_dir=/home/rachel/alphafold3-3.0.3/output
+
+# I need to create the loop where the fold_inputs are created in .json files per protein and chain. 
+# I have a list of protein ID's with the chain ID's. 
+"1FN8.A
+1KG1.A
+1KPT.A
+1ZLD.A
+1ZLE.A"
+
+bash run_all_proteins_AF3.sh will run all the folding of the proteins. 
 
 
 
