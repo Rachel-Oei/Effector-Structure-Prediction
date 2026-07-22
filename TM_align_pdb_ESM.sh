@@ -19,7 +19,7 @@ for folder in "$PREDICTED"/*; do
     id=$(basename "$folder")
 
     predicted=$(find "$folder" -maxdepth 1 -name "*.pdb" | head -n 1)
-    experimental="$EXPERIMENTAL/${id}.pdb"
+    experimental="$EXPERIMENTAL/${id}.cif"
 
     echo "====================================="
     echo "Structure: $id"
