@@ -28,24 +28,53 @@ PDB_ID
 
 Note that the chains are PDB labelled by the protein identity, and not by the specific chain. It is assumed that all the chains within a protein identity is identical. 
 
-1. From the .txt file, we want to download all the mmCIF files. On July 2027, the mmCIF file will be the standard, overruling the legacy .pdb files. We extract and read within the mmCIF using BioPython. We can get out the exact sequence (on which we will perform ESMFold, AlphaFold etc), and we can get out the crystal structure coordinates. Use the script **download_cif.py** to download the cif files. 
+1. From the .txt file, we want to download all the mmCIF files. On July 2027, the mmCIF file will be the standard, overruling the legacy .pdb files. We extract and read within the mmCIF using BioPython. We can get out the exact sequence (on which we will perform ESMFold, AlphaFold etc), and we can get out the crystal structure coordinates. Use this script to download the cif files:
+
+```
+python /home/rachel/cif/download_cif.py
+```
 
 2. Use the **extract_sequences.py** to create all the fasta files for each protein ID. 
 
-3. From the fasta files, you can run the ESMFold, AF2 and AF3. 
+```
+python /home/rachel/cif/extract_sequences.py
+```
 
 4. For AF3, **run create_json_AF3.py**. This creates all json files for AF3. Once the json files are created, run **run_AF3_all.py** to run AF3 for all.
 ```
-python run_AF3_all.py
+python /home/rachel/alphafold-models-3.0.3/create_json_AF3.py
+bash /home/rachel/alphafold-models-3.0.3/run_AF3_all.sh
 ```
 
 5. For ESMFold, we want to use the fasta files as well. 
 
 ```
-bash /home/rachel/esmfold-1.0.3/run_all_esmfold.sh
+bash /home/rachel/esmfold-1.0.3/run_all_esmfold2.sh
 ```
 
 6. We want to also use TMAlign to compare the results. We downloaded the cif files, but we now need to extract only the right chains. 
+
+```
+python cif_single_chain.py
+```
+
+We then need to run TMAlign on AF3, and ESMFold. 
+
+```
+bash /home/rachel/TM-align/run_tmalign_batch.sh #for ESM
+bash /home/rachel/TM-align/run_tmalign_batch2.sh #for AF3
+```
+
+7. We need to compile all the results in a tsv file.
+```
+python /home/rachel/TM-align/results/extract_tmalign_metadata2.py #for ESM
+python /home/rachel/alphafold-models-3.0.3/extract_tmalign_metadata3.py
+
+
+
+
+
+
 
 We currently only used the clean_pdb files with AF3, but we want to use .cif files. We just need to extract the right info.
 
