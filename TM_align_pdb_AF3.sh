@@ -5,9 +5,9 @@
 # I have the 2022 version, could not find the 2024 version. 
 
 # Paths
-EXPERIMENTAL=~/TM-align/clean_pdbs
+EXPERIMENTAL=/home/rachel/cif/cif_single_chain
 PREDICTED=/home/rachel/alphafold3-3.0.3/output
-OUTDIR=~/TM-align/results2
+OUTDIR=~/TM-align/results_AF3_2
 
 mkdir -p "$OUTDIR"
 
