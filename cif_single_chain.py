@@ -15,9 +15,12 @@ os.makedirs(output_directory, exist_ok=True)
 with open("/home/rachel/cif/PDB_ID_list.txt") as f:
     protein_list = [line.strip() for line in f if line.strip()]
 
-for protein_id in protein_list:
+with open("/home/rachel/cif/PDB_ID_list2.txt") as f:
+    protein_list_identity = [line.strip() for line in f if line.strip()]
+
+for protein_id, protein_identity in zip(protein_list, protein_list_identity):
     pdb = protein_id[:4]
-    chain_id = protein_id[5]   # label_asym_id, e.g. A
+    chain_id = protein_id[5]
 
     cif_file = f"{input_directory}{pdb}.cif"
 
@@ -47,7 +50,7 @@ for protein_id in protein_list:
         continue
 
     # Write single-chain mmCIF
-    output_file = f"{output_directory}{pdb}.cif"
+    output_file = f"{output_directory}{protein_identity}.cif"
 
     structure.make_mmcif_document().write_file(output_file)
 
