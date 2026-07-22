@@ -1,4 +1,7 @@
-# Activate .venv environment and pip install gemmi
+# Activate .venv environment and pip install gemmi:
+# python3 -m venv venv
+# source venv/bin/activate
+# pip install gemmi
 
 import gemmi
 import os
@@ -13,7 +16,6 @@ with open("/home/rachel/cif/PDB_ID_list.txt") as f:
     protein_list = [line.strip() for line in f if line.strip()]
 
 for protein_id in protein_list:
-
     pdb = protein_id[:4]
     chain_id = protein_id[5]   # label_asym_id, e.g. A
 
@@ -26,11 +28,19 @@ for protein_id in protein_list:
     found_chain = False
 
     for model in structure:
-        for chain in list(model):
+        chains_to_remove = []
+
+        for chain in model:
+            print("name:", chain.name)
+            print("id:", chain_id)
+
             if chain.name != chain_id:
-                model.remove_chain(chain.name)
+                chains_to_remove.append(chain.name)
             else:
                 found_chain = True
+
+        for chain_name in chains_to_remove:
+            model.remove_chain(chain_name)
 
     if not found_chain:
         print(f"WARNING: Chain {chain_id} not found in {pdb}")

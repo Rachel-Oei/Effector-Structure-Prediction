@@ -32,15 +32,15 @@ with open(text_file) as f:
 for protein_id in protein_ID_list:
     protein=protein_id[:4]
     print(protein)
-    chain=protein_id[5]
-    print(chain)
+    identity=protein_id[5]
+    print(identity)
     cif_file=f"{input_directory}{protein}.cif"
-    sequence = get_sequence_by_chain(cif_file, chain)
+    sequence = get_sequence_by_chain(cif_file, identity)
     print(sequence)
-    output_file = f"{output_directory}{protein}.fasta"
+    output_file = f"{output_directory}{protein_id}.fasta"
 
     with open(output_file, "w") as f:
-        f.write(f">{protein}\n")
+        f.write(f">{protein_id}\n")
         f.write(sequence + "\n")
 
     print(f"Created {output_file}")
