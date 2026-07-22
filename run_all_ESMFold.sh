@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# CREATES TOO MANY FOLDERS, BOTH 1FN8 AND 1FN8_1 ETC. FIX (in download_cif.py)
 FASTA_DIR=/home/rachel/cif/cif_fasta
 OUT_DIR=/linuxhome/tmp/rachel/esmfold-results
 LOG_DIR=/linuxhome/tmp/rachel/esmfold-logs
