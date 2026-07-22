@@ -73,6 +73,10 @@ python /home/rachel/TM-align/results/extract_tmalign_metadata2.py #for ESM
 python /home/rachel/alphafold-models-3.0.3/extract_tmalign_metadata3.py
 ```
 
+When AF3 is finished running, run TMAlign, then run the metadata.
+Then do the graphs with all the combinations from the table.
+
+
 
 
 
