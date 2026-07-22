@@ -47,6 +47,8 @@ bash /home/rachel/esmfold-1.0.3/run_all_esmfold.sh
 
 6. We want to also use TMAlign to compare the results. We downloaded the cif files, but we now need to extract only the right chains. 
 
+We currently only used the clean_pdb files with AF3, but we want to use .cif files. We just need to extract the right info.
+
 
 
 
