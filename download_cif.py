@@ -6,6 +6,8 @@ import requests
 # Move the PDB_ID_list.txt inside the cif folder.
 # Create the folder cif_downloads inside the cif folder.
 
+# CREATES TOO MANY FOLDERS, BOTH 1FN8 AND 1FN8_1 ETC. FIX (in download_cif.py)
+
 home_directory="/home/rachel"
 input_file=home_directory+"/cif/PDB_ID_list.txt"
 output_directory=home_directory+"/cif/cif_downloads/"
