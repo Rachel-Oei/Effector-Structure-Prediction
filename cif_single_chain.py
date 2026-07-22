@@ -47,7 +47,7 @@ for protein_id in protein_list:
         continue
 
     # Write single-chain mmCIF
-    output_file = f"{output_directory}{protein_id}.cif"
+    output_file = f"{output_directory}{pdb}.cif"
 
     structure.make_mmcif_document().write_file(output_file)
 
