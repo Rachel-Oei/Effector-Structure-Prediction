@@ -6,8 +6,10 @@ I would like to use ESMFold, AF2 and AF3 to predict fungal effector structures. 
 
 I already collected 80 fungal effector structures that are experimentally resolved and available in the PDB database. I based this on literature reviews and recent papers. 
 
+Note on chain identifiers: author chain ID (auth_asym_id) and mmCIF (label_asym_id) exist. Since auth_asym_id is more often used, and also in literature, we use that chain.
+
 The **input** for this project is simply:
-- A .txt file called "PDB_ID_list.txt" with in one column, a list of all PDB ID's and its specific chain.
+- A .txt file called "PDB_ID_list.txt" with in one column, a list of all PDB ID's and its specific chain (based on auth_asym_id).
 
 ```
 PDB_ID
