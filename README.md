@@ -73,10 +73,6 @@ python /home/rachel/TM-align/results/extract_tmalign_metadata2.py #for ESM
 python /home/rachel/alphafold-models-3.0.3/extract_tmalign_metadata3.py
 ```
 
-Things that need to be fixed/ questions: 
-- For TM-align, We currently only used the crystal clean_pdb files with AF3, but we want to use the single chain .cif files. We just need to figure out how to extract only the right chain. 
-- There is an error with cif_downloads, that some cifs are not downloaded.
-
 
 
 
