@@ -1,5 +1,11 @@
 import requests 
+import os
 from typing import List
+
+def create_directory (nested_directory: str):
+    """Creates directory
+    """
+    os.makedirs(nested_directory, exist_ok=True)
 
 def pdb_text_to_list (input_text: str) -> List[str] : 
     """Converts PDB codes from a .txt separated by new-lines into a list
@@ -38,9 +44,9 @@ def main():
     home_directory = "/home/rachel"
     input_text = home_directory + "/cif/input_pdb_lists/pdb_list_chain.txt"
     output_directory = home_directory + "/cif/cif_downloads/"
+    create_directory(output_directory)
     input_list = pdb_text_to_list(input_text)
     download_cif(input_list, output_directory)
 
 if __name__ == "__main__":
     main()
-
