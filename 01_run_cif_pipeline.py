@@ -120,12 +120,16 @@ def extract_chain_sequences(input_text, cif_directory, cif_fasta_directory):
 
         print(f"Created {output_file}")
 
-def cif_single_chain (input_text_chain, input_text_entity, cif_download_directory, cif_single_chain_directory):
+def cif_single_chain (input_text_chain, 
+                      input_text_entity, 
+                      cif_download_directory, 
+                      cif_single_chain_directory
+                      ):
     chain_list = pdb_text_to_list(input_text_chain)
     entity_list = pdb_text_to_list(input_text_entity)
 
     for id_with_chain, id_with_entity in zip (chain_list, entity_list):
-        full_protein_id=id_with_chain[:6]
+        full_protein_id=id_with_entity[:6]
         protein_id=id_with_chain[:4]
         protein_chain=id_with_chain[5]
 
@@ -176,7 +180,12 @@ def main():
     download_cif(input_text_chain, cif_download_directory)
     map_chain_to_entity(input_text_chain, cif_download_directory, input_text_entity)
     extract_chain_sequences(input_text_entity, cif_download_directory, cif_fasta_directory)
-
+    cif_single_chain(
+        input_text_chain, 
+        input_text_entity, 
+        cif_download_directory, 
+        cif_single_chain_directory
+        )
 
 if __name__ == "__main__":
     main()
