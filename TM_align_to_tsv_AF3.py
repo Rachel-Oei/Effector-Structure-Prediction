@@ -5,8 +5,8 @@ import pandas as pd
 # Write this in a function so you can use it for both ESMFold and AF3
 
 tmalign_dir = "/home/rachel/TM-align/results2"
-metadata_file = "/home/rachel/TM-align/pdb_metadata_with_tmalign.tsv"
-output_file = "/home/rachel/TM-align/pdb_metadata_with_tmalign2.tsv"
+metadata_file = "/home/rachel/TM-align/pdb_metadata_with_tmalign_AF2.tsv"
+output_file = "/home/rachel/TM-align/pdb_metadata_with_tmalign_AF3.tsv"
 
 
 # -------------------------
@@ -52,12 +52,12 @@ for filename in os.listdir(tmalign_dir):
         text
         )
 
-    tm_crystal = re.search(
+    tm_AF3 = re.search(
     r"TM-score=\s+([\d.]+)\s+\(if normalized by length of Chain_1\)",
     text
 )
 
-    tm_esm = re.search(
+    tm_crystal = re.search(
     r"TM-score=\s+([\d.]+)\s+\(if normalized by length of Chain_2\)",
     text
 )
@@ -75,7 +75,7 @@ for filename in os.listdir(tmalign_dir):
     results.append({
     "PDB_ID": pdb_id,
     "TM_score_crystal": float(tm_crystal.group(1)) if tm_crystal else None,
-    "TM_score_esm": float(tm_esm.group(1)) if tm_esm else None,
+    "TM_score_AF3": float(tm_AF3.group(1)) if tm_AF3 else None,
     "RMSD": float(rmsd.group(1)) if rmsd else None,
     "Aligned_length": int(aligned_length.group(1)) if aligned_length else None,
     "Seq_ID": float(seq_id.group(1)) if seq_id else None,
@@ -114,7 +114,7 @@ print(f"Saved to: {output_file}")
 print("\nAdded columns:")
 print([
     "TM_score_crystal",
-    "TM_score_esm",
+    "TM_score_AF3",
     "RMSD",
     "Aligned_length",
     "Seq_ID"

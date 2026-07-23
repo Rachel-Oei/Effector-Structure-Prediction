@@ -5,7 +5,7 @@
 # I have the 2022 version, could not find the 2024 version. 
 
 # Paths
-EXPERIMENTAL=~/TM-align/clean_pdbs
+EXPERIMENTAL=/home/rachel/cif/cif_single_chain
 PREDICTED=/home/rachel/esmfold-1.0.3/esmfold-results-2
 
 OUTDIR=~/TM-align/results2
@@ -19,7 +19,7 @@ for folder in "$PREDICTED"/*; do
     id=$(basename "$folder")
 
     predicted=$(find "$folder" -maxdepth 1 -name "*.pdb" | head -n 1)
-    experimental="$EXPERIMENTAL/${id}.pdb"
+    experimental="$EXPERIMENTAL/${id}.cif"
 
     echo "====================================="
     echo "Structure: $id"
