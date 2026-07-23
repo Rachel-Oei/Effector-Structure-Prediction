@@ -33,11 +33,13 @@ def write_file (response, output_final_directory):
     with open(output_final_directory, "wb") as out_file:
         out_file.write(response.content)
     
-def download_cif (input_lines, output_directory):
+def download_cif (input_text, output_directory):
     """
     Downloads cif files from RCSB, from PDB codes in the input list
     Output file name e.g: 1FN8.cif
     """
+    input_lines = pdb_text_to_list(input_text)
+
     for protein_full in input_lines:
         protein_id=protein_full[:4]
         url = f"https://files.rcsb.org/download/{protein_id}.cif"
@@ -46,7 +48,7 @@ def download_cif (input_lines, output_directory):
         write_file(response, output_final_directory)
         print(f"Downloaded {protein_id}")
 
-def map_chain_to_entity (input_text: str, output_directory) -> str:
+def map_chain_to_entity (input_text: str, cif_directory, new_text_directory):
     """
     Maps all pdb chains to entity number and stores it into a 
     similar format text file. 
@@ -65,29 +67,75 @@ def map_chain_to_entity (input_text: str, output_directory) -> str:
     """
     input_list=pdb_text_to_list(input_text)
 
-    for protein in input_list:
+    input_list_entity=[]
+    chain_sequence_list=[]
+    for protein_full in input_list:
+        protein_id=protein_full[:4]
+        protein_directory=f"{cif_directory}{protein_id}.cif"
+        d = MMCIF2Dict(protein_directory)
+        cif_entity_ids = d["_atom_site.label_entity_id"]
+        cif_chains = d["_atom_site.auth_asym_id"]
         
+        protein_chain=protein_full[5]
+        entity_id=None
+        for cif_entity_id, cif_chain in zip(cif_entity_ids, cif_chains):
+            if protein_chain == cif_chain:
+                entity_id=cif_entity_id
+                break
 
+        if entity_id is None:
+            print(f"Could not find chain {protein_full}")
+            continue
 
-# def get_sequence_by_chain(cif_file, chain):
-#     d = MMCIF2Dict(cif_file)
+        input_list_entity.append(f"{protein_id}_{entity_id}")
 
-#     strand_ids = d["_entity_poly.entity_id"]
-#     print(strand_ids)
-#     sequences = d["_entity_poly.pdbx_seq_one_letter_code_can"]
-#     print(sequences)
+    with open(f"{new_text_directory}pdb_list_entity.txt", "w") as text_file:
+        for protein_with_entity in input_list_entity:
+            text_file.write(protein_with_entity+"\n")
 
-#     for strand_id, sequence in zip(strand_ids, sequences):
-#         if chain in strand_id.split(","):
-#             return sequence.replace("\n", "")
+    return text_file
+
+def extract_chain_sequences(input_text, cif_directory, cif_fasta_directory):
+
+    input_list=pdb_text_to_list(input_text)
+    for protein_full in input_list:
+        protein_id=protein_full[:4]
+        entity_id=protein_full[5]
+        protein_directory=f"{cif_directory}{protein_id}.cif"
+        d = MMCIF2Dict(protein_directory)
+        strand_ids = d["_entity_poly.entity_id"]
+        sequences = d["_entity_poly.pdbx_seq_one_letter_code_can"]
+
+        chain_sequence=None
+        for strand_id, sequence in zip(strand_ids, sequences):
+            if entity_id == strand_id:
+                chain_sequence=sequence.replace("\n", "")
+                break
+
+        if chain_sequence is None:
+            print(f"Could not find sequence {protein_full}")
+            continue 
+
+        output_file = f"{cif_fasta_directory}{protein_full}.fasta"
+
+        with open(output_file, "w") as f:
+            f.write(f">{protein_full}\n")
+            f.write(sequence + "\n")
+
+        print(f"Created {output_file}")
 
 def main():
     home_directory = "/home/rachel"
     input_text = home_directory + "/cif/input_pdb_lists/pdb_list_chain.txt"
+    new_text_directory = home_directory + "/cif/input_pdb_lists/"
+    cif_fasta_directory = home_directory + "/cif/cif_fasta/"
     output_directory = home_directory + "/cif/cif_downloads/"
+    cif_directory= home_directory + "/cif/cif_downloads/"
     create_directory(output_directory)
-    input_list = pdb_text_to_list(input_text)
-    download_cif(input_list, output_directory)
+    text_file=map_chain_to_entity(input_text, cif_directory, new_text_directory)
+    download_cif(input_text, output_directory)
+    extract_chain_sequences(text_file, cif_directory, cif_fasta_directory)
+
 
 if __name__ == "__main__":
     main()
