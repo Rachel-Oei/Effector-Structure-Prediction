@@ -77,3 +77,34 @@ When AF3 is finished running, run TMAlign, then run the metadata.
 Then do the graphs with all the combinations from the table.
 
 Need to save the .tsv as a xlsx Excel workbook.
+
+I want to combine all the procedures into a better workflow.
+
+1. Preparation of experimental structure cif files 
+- 1a. Input is 1 list of PDB identifiers (chains and identifiers)
+Convert the list of chains to the identifier list (function 1)
+- 1b. Download the cif files (function 2)
+- 1c. Single chain fasta files (function 3)
+- 1d. Single chain atom coordinates (function 4)
+
+Output is under folder 
+~/cif/input_PDB_lists
+~/cif/cif_downloads
+~/cif/cif_fasta
+~/cif/cif_single_chain
+
+- input_PDB_lists
+- 01_run_cif_pipeline.py
+- 02_run_folding_pipeline.py
+- 03_run_tmalign.py
+- 04_extract_results.py
+- output_results
+
+2. Folding ESM, AF2, AF3 (each their own code)
+- 2a. ESM
+- 2b. AF2
+- 2c. AF3
+
+3. TM-align for all (same code but specify if ESM, if AF2, etc)
+
+4. Compile in a data table (specify the input directories for the table and output)
