@@ -1,5 +1,6 @@
 import requests 
 import os
+import gemmi
 from typing import List
 from Bio.PDB.MMCIF2Dict import MMCIF2Dict
 
@@ -119,6 +120,45 @@ def extract_chain_sequences(input_text, cif_directory, cif_fasta_directory):
 
         print(f"Created {output_file}")
 
+def cif_single_chain (input_text_chain, input_text_entity, cif_download_directory, cif_single_chain_directory):
+    chain_list = pdb_text_to_list(input_text_chain)
+    entity_list = pdb_text_to_list(input_text_entity)
+
+    for id_with_chain, id_with_entity in zip (chain_list, entity_list):
+        full_protein_id=id_with_chain[:6]
+        protein_id=id_with_chain[:4]
+        protein_chain=id_with_chain[5]
+
+        cif_file=f"{cif_download_directory}{protein_id}.cif"
+        structure = gemmi.read_structure(cif_file)
+
+        found_chain = False
+        for model in structure:
+            chains_to_remove=[]
+    
+            for chain in model:
+                print("name:", chain.name)
+                print("id:", protein_chain)
+    
+                if chain.name != protein_chain:
+                    chains_to_remove.append(chain.name)
+                else:
+                    found_chain = True
+    
+            for chain_name in chains_to_remove:
+                model.remove_chain(chain_name)
+    
+        if not found_chain:
+            print(f"WARNING: Chain {protein_chain} not found in {protein_id}")
+            continue
+    
+        # Write single-chain mmCIF
+        output_file = f"{cif_single_chain_directory}{full_protein_id}.cif"
+
+        structure.make_mmcif_document().write_file(output_file)
+    
+        print(f"Created {output_file}")
+
 def main():
     home_directory = "/home/rachel"
 
@@ -127,15 +167,16 @@ def main():
 
     cif_fasta_directory = home_directory + "/cif/cif_fasta/"
     cif_download_directory = home_directory + "/cif/cif_downloads/"
+    cif_single_chain_directory = "/home/rachel/cif/cif_single_chain/"
 
     create_directory(cif_download_directory)
     create_directory(cif_fasta_directory)
+    create_directory(cif_single_chain_directory)
 
     download_cif(input_text_chain, cif_download_directory)
     map_chain_to_entity(input_text_chain, cif_download_directory, input_text_entity)
     extract_chain_sequences(input_text_entity, cif_download_directory, cif_fasta_directory)
 
-    
 
 if __name__ == "__main__":
     main()
