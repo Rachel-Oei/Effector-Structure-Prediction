@@ -36,7 +36,7 @@ def download_cif (input_lines, output_directory):
 
 def main():
     home_directory = "/home/rachel"
-    input_text = home_directory + "/cif/input_PDB_lists/PDB_ID_list.txt"
+    input_text = home_directory + "/cif/input_pdb_lists/pdb_list_chain.txt"
     output_directory = home_directory + "/cif/cif_downloads/"
     input_list = pdb_text_to_list(input_text)
     download_cif(input_list, output_directory)
