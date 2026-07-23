@@ -5,7 +5,7 @@
 # I have the 2022 version, could not find the 2024 version. 
 
 # Paths
-EXPERIMENTAL=~/TM-align/clean_pdbs
+EXPERIMENTAL=/home/rachel/cif/cif_single_chain
 PREDICTED=/home/rachel/esmfold-1.0.3/esmfold-results-2
 
 OUTDIR=~/TM-align/results2
