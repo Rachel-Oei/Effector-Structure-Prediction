@@ -76,9 +76,4 @@ python /home/rachel/alphafold-models-3.0.3/extract_tmalign_metadata3.py
 When AF3 is finished running, run TMAlign, then run the metadata.
 Then do the graphs with all the combinations from the table.
 
-
-
-
-
-
-
+Need to save the .tsv as a xlsx Excel workbook.
