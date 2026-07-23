@@ -25,13 +25,6 @@ def pdb_text_to_list (input_text: str) -> List[str] :
         for line in f:
             lines.append(line[:6])
     return lines
-
-def write_file (response, output_final_directory):
-    """
-    Writes files to directory
-    """
-    with open(output_final_directory, "wb") as out_file:
-        out_file.write(response.content)
     
 def download_cif (input_text, output_directory):
     """
@@ -45,7 +38,10 @@ def download_cif (input_text, output_directory):
         url = f"https://files.rcsb.org/download/{protein_id}.cif"
         output_final_directory=output_directory+f"{protein_id}.cif"
         response = requests.get(url, timeout=30)
-        write_file(response, output_final_directory)
+
+        with open(output_final_directory, "wb") as out_file:
+            out_file.write(response.content)
+
         print(f"Downloaded {protein_id}")
 
 def map_chain_to_entity (input_text: str, cif_directory, new_text_directory):
@@ -68,7 +64,6 @@ def map_chain_to_entity (input_text: str, cif_directory, new_text_directory):
     input_list=pdb_text_to_list(input_text)
 
     input_list_entity=[]
-    chain_sequence_list=[]
     for protein_full in input_list:
         protein_id=protein_full[:4]
         protein_directory=f"{cif_directory}{protein_id}.cif"
@@ -89,14 +84,14 @@ def map_chain_to_entity (input_text: str, cif_directory, new_text_directory):
 
         input_list_entity.append(f"{protein_id}_{entity_id}")
 
-    with open(f"{new_text_directory}pdb_list_entity.txt", "w") as text_file:
+    with open(new_text_directory, "w") as text_file:
         for protein_with_entity in input_list_entity:
             text_file.write(protein_with_entity+"\n")
 
-    return text_file
-
 def extract_chain_sequences(input_text, cif_directory, cif_fasta_directory):
-
+    """
+    Obtain fasta sequences from only the single chains that are used.
+    """
     input_list=pdb_text_to_list(input_text)
     for protein_full in input_list:
         protein_id=protein_full[:4]
@@ -120,22 +115,27 @@ def extract_chain_sequences(input_text, cif_directory, cif_fasta_directory):
 
         with open(output_file, "w") as f:
             f.write(f">{protein_full}\n")
-            f.write(sequence + "\n")
+            f.write(chain_sequence + "\n")
 
         print(f"Created {output_file}")
 
 def main():
     home_directory = "/home/rachel"
-    input_text = home_directory + "/cif/input_pdb_lists/pdb_list_chain.txt"
-    new_text_directory = home_directory + "/cif/input_pdb_lists/"
-    cif_fasta_directory = home_directory + "/cif/cif_fasta/"
-    output_directory = home_directory + "/cif/cif_downloads/"
-    cif_directory= home_directory + "/cif/cif_downloads/"
-    create_directory(output_directory)
-    text_file=map_chain_to_entity(input_text, cif_directory, new_text_directory)
-    download_cif(input_text, output_directory)
-    extract_chain_sequences(text_file, cif_directory, cif_fasta_directory)
 
+    input_text_chain = home_directory + "/cif/input_pdb_lists/pdb_list_chain.txt"
+    input_text_entity = home_directory + "/cif/input_pdb_lists/pdb_list_entity.txt"
+
+    cif_fasta_directory = home_directory + "/cif/cif_fasta/"
+    cif_download_directory = home_directory + "/cif/cif_downloads/"
+
+    create_directory(cif_download_directory)
+    create_directory(cif_fasta_directory)
+
+    download_cif(input_text_chain, cif_download_directory)
+    map_chain_to_entity(input_text_chain, cif_download_directory, input_text_entity)
+    extract_chain_sequences(input_text_entity, cif_download_directory, cif_fasta_directory)
+
+    
 
 if __name__ == "__main__":
     main()
