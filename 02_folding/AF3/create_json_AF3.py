@@ -1,35 +1,37 @@
 import json
+import sys
 
-home_directory = "/home/rachel"
-input_text_chain = home_directory + "/01_prepare_cif/input_pdb_lists/pdb_list_chain.txt"
-input_text_entity = home_directory + "/01_prepare_cif/input_pdb_lists/pdb_list_entity.txt"
+cif_directory = "/home/rachel/01_prepare_cif"
 
+sys.path.append(cif_directory)
 
-# Make the text file into a list
-with open("/home/rachel/cif/PDB_ID_list2.txt") as f:
-    protein_ID_list_identities = [line.strip() for line in f if line.strip()]
+from prepare_cif_models import pdb_text_to_list
 
-with open("/home/rachel/cif/PDB_ID_list.txt") as f:
-    protein_ID_list_chains = [line.strip() for line in f if line.strip()]
+input_text_chain = cif_directory+"/input_pdb_lists/pdb_list_chain.txt"
+input_text_entity = cif_directory+"/input_pdb_lists/pdb_list_entity.txt"
+fasta_dir=cif_directory+"/cif_fasta"
 
-for identity, chain in zip(protein_ID_list_identities, protein_ID_list_chains):
-    protein=identity[:4]
-    identity=identity[5]
+list_chain = pdb_text_to_list(input_text_chain)
+list_entity = pdb_text_to_list(input_text_entity)
+
+output_file
+
+for entity, chain in zip(list_entity, list_chain):
+    protein=entity[:4] #just 1FN8
+    entity=entity[5]
     chain=chain[5]
 
-    # Read the FASTA sequence
-    fasta_file = f"/home/rachel/cif/cif_fasta/{protein}_{identity}.fasta"
+    fasta_file = f"{fasta_dir}/{protein}_{entity}.fasta"
 
-    # Open the FASTA file and only extract the sequence 
     with open(fasta_file) as f:
-        sequence = "".join(
-            line.strip()
-            for line in f
-            if not line.startswith(">")
-        )
+        sequence_lines = []
+        for line in f:
+            if not line.startswith(">"):
+                sequence_lines.append(line.strip())
+        sequence = "".join(sequence_lines)
 
     json_data={
-        "name":f"{protein}_{identity}"
+        "name":f"{protein}_{entity}"
         "sequences": [
         {
             "protein": {
@@ -43,12 +45,12 @@ for identity, chain in zip(protein_ID_list_identities, protein_ID_list_chains):
         "version": 1
     }
     
-    output_file = f"/home/rachel/alphafold3-3.0.3/{protein}_{identity}.json"
+    output_file = f"/home/rachel/alphafold3-3.0.3/{protein}_{entity}.json"
 
     # Write the json file 
     with open(output_file, "w") as f:
         json.dump(json_data, f, indent=2)
 
-    print(f"{protein}_{identity}.json created")
+    print(f"{protein}_{entity}.json created")
 
 
