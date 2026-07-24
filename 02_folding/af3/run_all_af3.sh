@@ -7,6 +7,7 @@ JSON_DIR="/home/rachel/02_folding/af3/json"
 MODEL_DIR="/home/rachel/02_folding/af3/alphafold-models-3.0.3"
 DB_DIR="/net/leca/linuxhome/alphafold/alphafold-db-3.0.3"
 OUTPUT_DIR="/home/rachel/02_folding/af3/alphafold3-3.0.3/output"
+RUNTIME_CSV="/home/rachel/02_folding/af3/af3_runtime.csv"
 
 mkdir -p ${MODEL_DIR}
 
@@ -24,6 +25,9 @@ do
 
     echo "Starting AF3 for ${json_file}"
 
+    # collect the runtime times 
+    start=$(date +%s)
+
     # Use specifically GPU 0 
     APPTAINERENV_CUDA_VISIBLE_DEVICES=0 ${AF3_DIR} \
       --json_path=${json_file} \
@@ -31,5 +35,11 @@ do
       --db_dir=${DB_DIR} \
       --output_dir=${OUTPUT_DIR}
 
+    end=$(date +%s)
+    runtime=$((end - start))
+    
     echo "Finished ${json_file}"
+    
+    echo "${protein_identity},${runtime}" >> $RUNTIME_CSV
+
 done

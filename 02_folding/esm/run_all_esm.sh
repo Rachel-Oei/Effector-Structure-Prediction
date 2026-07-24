@@ -7,6 +7,7 @@ ESMFOLD=/home/jankees-esmfold-103/esmfold-1.0.3/run_esmfold.sh
 
 #After folding, copy the output to your own home directory files: 
 HOME_DIR=/home/rachel/02_folding/esm
+RUNTIME_CSV="/home/rachel/02_folding/esm/esm_runtime.csv"
 
 for fasta in ${FASTA_DIR}/*.fasta
 do
@@ -25,13 +26,23 @@ do
     mkdir -p "${OUT_DIR}/${name}"
     mkdir -p "${LOG_DIR}"
 
+    # collect the runtime times 
+    start=$(date +%s)
+
     # Run on GPU 1 
     CUDA_VISIBLE_DEVICES=1 ${ESMFOLD} \
     "$fasta" \
     "${OUT_DIR}/${name}/" \
     |& tee "${LOG_DIR}/${name}.log"
 
-done
+    end=$(date +%s)
+    runtime=$((end - start))
 
-cp -r "$OUT_DIR" "$HOME_DIR"
-cp -r "$LOG_DIR" "$HOME_DIR"
+    echo "Finished ${name}"
+    
+    echo "${name},${runtime}" >> $RUNTIME_CSV
+
+    cp -r "${OUT_DIR}/${name}" "$HOME_DIR/esmfold-results"
+    cp "${LOG_DIR}/${name}.log" "$HOME_DIR/esmfold-logs"
+    
+done
