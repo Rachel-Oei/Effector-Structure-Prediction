@@ -125,3 +125,5 @@ Current folding script can only do 2 GPU's. If I want to also do AF2, then I hav
 
 For AF3, you need to make a folder ${HOME}/alphafold-models-3.0.3 with have af3.bin.zst inside. I will then copy the results inside 02_folding 
 ${HOME}/alphafold-models-3.0.3
+
+still need to add runtime to the table 
