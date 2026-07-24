@@ -1,11 +1,12 @@
 #!/bin/bash
 
-# CREATES TOO MANY FOLDERS, BOTH 1FN8 AND 1FN8_1 ETC. FIX (in download_cif.py)
-FASTA_DIR=/home/rachel/cif/cif_fasta
+FASTA_DIR=/home/rachel/01_prepare_cif/cif_fasta
 OUT_DIR=/linuxhome/tmp/rachel/esmfold-results
 LOG_DIR=/linuxhome/tmp/rachel/esmfold-logs
-
 ESMFOLD=/home/jankees-esmfold-103/esmfold-1.0.3/run_esmfold.sh
+
+#After folding, copy the output to your own home directory files: 
+HOME_DIR=/home/rachel/02_folding/esm
 
 for fasta in ${FASTA_DIR}/*.fasta
 do
@@ -14,7 +15,7 @@ do
     output_folder="${OUT_DIR}/${name}"
 
     # Skip if ESMFolder already exists
-    if [ -d "$output_folder" ]; then
+    if [ -f "${output_folder}/${name}.pdb" ]; then
         echo "Skipping ${name}: already completed"
         continue
     fi
@@ -31,3 +32,6 @@ do
     |& tee "${LOG_DIR}/${name}.log"
 
 done
+
+cp -r "$OUT_DIR" "$HOME_DIR"
+cp -r "$LOG_DIR" "$HOME_DIR"

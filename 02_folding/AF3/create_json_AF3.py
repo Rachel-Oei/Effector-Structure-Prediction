@@ -1,8 +1,9 @@
-# I want this code to create all .json files like:
-# /home/rachel/alphafold3-3.0.3/1FN8_1.json
-# /home/rachel/alphafold3-3.0.3/1KG1_1.json
-
 import json
+
+home_directory = "/home/rachel"
+input_text_chain = home_directory + "/01_prepare_cif/input_pdb_lists/pdb_list_chain.txt"
+input_text_entity = home_directory + "/01_prepare_cif/input_pdb_lists/pdb_list_entity.txt"
+
 
 # Make the text file into a list
 with open("/home/rachel/cif/PDB_ID_list2.txt") as f:

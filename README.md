@@ -114,7 +114,11 @@ Make sure you activate venv before running 01_prepare_cif/ main.py
 
 ```
 pip install -r requirements.txt
+pip install -r /home/rachel/requirements.txt
 ```
 
 Make sure you put a folder with the text file: "/01_prepare_cif/input_pdb_lists/pdb_list_chain.txt"
 
+For the run_all_ESMFold.sh, you have to be in binfgpu and in screen. ESMFold is run on GPU 1.
+
+Current folding script can only do 2 GPU's. If I want to also do AF2, then I have to make it so that main can run AF2 on a different binfgpu.
