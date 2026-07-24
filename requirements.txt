@@ -4,3 +4,6 @@ requests==2.34.2
 json 
 sys
 subprocess
+pandas
+matplotlib
+openpyxl
