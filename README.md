@@ -6,7 +6,7 @@ I would like to use ESMFold, AF2 and AF3 to predict fungal effector structures. 
 
 I already collected 80 fungal effector structures that are experimentally resolved and available in the PDB database. I based this on literature reviews and recent papers. 
 
-Note on chain identifiers: author chain ID (auth_asym_id) and mmCIF (label_asym_id) exist. Since auth_asym_id is more often used, and also in literature, we use that chain.
+Note on chain identifiers: author chain ID (_atom_site.auth_asym_id) and mmCIF (_atom_site.label_asym_id) exist. Since auth_asym_id is more often used, and also in literature, we use that chain.
 
 The **input** for this project is simply:
 - A .txt file called "PDB_ID_list.txt" with in one column, a list of all PDB ID's and its specific chain (based on auth_asym_id).
@@ -108,3 +108,13 @@ Output is under folder
 3. TM-align for all (same code but specify if ESM, if AF2, etc)
 
 4. Compile in a data table (specify the input directories for the table and output)
+
+
+Make sure you activate venv before running 01_prepare_cif/ main.py 
+
+```
+pip install -r requirements.txt
+```
+
+Make sure you put a folder with the text file: "/01_prepare_cif/input_pdb_lists/pdb_list_chain.txt"
+
