@@ -108,3 +108,13 @@ Output is under folder
 3. TM-align for all (same code but specify if ESM, if AF2, etc)
 
 4. Compile in a data table (specify the input directories for the table and output)
+
+
+Make sure you activate venv before running 01_prepare_cif/ main.py 
+
+```
+pip install -r requirements.txt
+```
+
+Make sure you put a folder with the text file: "/01_prepare_cif/input_pdb_lists/pdb_list_chain.txt"
+
