@@ -5,19 +5,20 @@
 # I have the 2022 version, could not find the 2024 version. 
 
 # Paths
-EXPERIMENTAL=/home/rachel/cif/cif_single_chain
-PREDICTED=/home/rachel/alphafold3-3.0.3/output
-OUTDIR=~/TM-align/results_AF3_2
+HOME="/home/rachel"
+EXPERIMENTAL="${HOME}/01_prepare_cif/cif_single_chain"
+PREDICTED="${HOME}/02_folding/esm/esmfold-results"
+OUTDIR="${HOME}/03_tm_align/results_esm"
 
 mkdir -p "$OUTDIR"
 
-# Loop through AF3 folders
+# Loop through ESMFold folders
 for folder in "$PREDICTED"/*; do
 
     # Get folder name (example: 2MYW_1)
     id=$(basename "$folder")
 
-    predicted="$PREDICTED/${id}/${id}_model.cif"
+    predicted=$(find "$folder" -maxdepth 1 -name "*.pdb" | head -n 1)
     experimental="$EXPERIMENTAL/${id}.cif"
 
     echo "====================================="
@@ -30,10 +31,8 @@ for folder in "$PREDICTED"/*; do
     TMalign "$predicted" "$experimental" \
         > "$OUTDIR/${id}_tmalign.txt"
 
-
     echo "Completed $id"
 
 done
-
 
 echo "Finished all TM-align comparisons."
