@@ -7,15 +7,35 @@ I would like to use ESMFold, AF2 and AF3 to predict fungal effector structures. 
 I collected 80 fungal effector structures that are experimentally resolved and available in the PDB database. I based this on literature reviews and recent papers. The metadata for this is under 
 
 ```
-/workspaces/Effector-Structure-Prediction/04_results_tsv/pdb_metadata_with_dates.tsv
+~/04_results_tsv/pdb_metadata_with_dates.tsv
 ```
 
-`pdb_metadata_with_dates.tsv`
+The first few rows look like:
 
-Note on chain identifiers: author chain ID (_atom_site.auth_asym_id) and mmCIF (_atom_site.label_asym_id) exist. Since auth_asym_id is more often used, and also in literature, we use that chain.
+| PDB_ID   | Chain   | Annotation                  | Organism                             |   Effector | Deposition_date               |
+|:---------|:--------|:----------------------------|:-------------------------------------|-----------:|:------------------------------|
+| 1FN8_1   | A       | TRYPSIN                     | Fusarium oxysporum (5507)            |          1 | 2000-08-21T00:00:00.000+00:00 |
+| 1FN8_2   | B       | GLY-ALA-ARG                 | nan                                  |          0 | 2000-08-21T00:00:00.000+00:00 |
+| 1KG1_1   | A       | Necrosis Inducing Protein 1 | Rhynchosporium secalis (38038)       |          1 | 2001-11-26T00:00:00.000+00:00 |
+| 1KPT_1   | A, B    | KP4 TOXIN                   | Ustilago maydis (5270)               |          1 | 1995-06-06T00:00:00.000+00:00 |
+| 1ZLD_1   | A       | Ptr necrosis toxin          | Pyrenophora tritici-repentis (45151) |          1 | 2005-05-06T00:00:00.000+00:00 |
 
-The **input** for this project is simply:
-- A .txt file called "PDB_ID_list.txt" with in one column, a list of all PDB ID's and its specific chain (based on auth_asym_id).
+It shows all the PDB_ID's collected, the specific chain, their annotation, what the host organism is, whether the entity is considered an effector, and the deposition date. 
+
+The PDB_ID contains the 4 letter code, and underscore of the protein entity. 1FN8_1 and 1FN8_2 belong to the same resolved crystal structure, but only the first entity is an effector. 
+
+The chains in the metadate file show both the PDB labels (label_asym_id) and in square brackets the author chain ID's (auth_asym_id). Certain softwares use one or another, therefore it is important to collect information on both. 
+
+There are two **inputs** for this project:
+- The metadata file describe above. As long as the first column is included, it is possible to use a different metadata table, with different columns. I chose this information since we want to later cluster the results based on these characteristics specfically.
+- A .txt file called "PDB_ID_list_chain.txt" with in one column, a list of all PDB ID's and its specific chain (based on auth_asym_id). We only consider one chain to be the effector. 
+
+The text file is under
+```
+~/01_prepare_cif/input_pdb_lists/PDB_ID_list_chain.txt
+```
+
+It looks like: 
 
 ```
 PDB_ID
@@ -25,111 +45,22 @@ PDB_ID
 4GVB.B
 ```
 
-And a .txt file called "PDB_ID_list.txt" with in one column all the protein identities.
-```
-PDB_ID
-1FN8_1
-1KG1_1
-1KPT_1
-4GVB_2
-```
+Again, the chains are according to auth_asym_id. 
 
-Note that the chains are PDB labelled by the protein identity, and not by the specific chain. It is assumed that all the chains within a protein identity is identical. 
+**Running**
 
-1. From the .txt file, we want to download all the mmCIF files. On July 2027, the mmCIF file will be the standard, overruling the legacy .pdb files. We extract and read within the mmCIF using BioPython. We can get out the exact sequence (on which we will perform ESMFold, AlphaFold etc), and we can get out the crystal structure coordinates. Use this script to download the cif files:
+To run the pipeline, first make sure you have all the requirements installed. It is recommended to use a virtual environment. 
 
-```
-python /home/rachel/cif/download_cif.py
+```bash
+python3 -m venv venv
 ```
 
-2. Use the **extract_sequences.py** to create all the fasta files for each protein ID. 
-
-```
-python /home/rachel/cif/extract_sequences.py
+```bash
+source venv/bin/activate
 ```
 
-4. For AF3, **run create_json_AF3.py**. This creates all json files for AF3. Once the json files are created, run **run_AF3_all.py** to run AF3 for all.
-```
-python /home/rachel/alphafold-models-3.0.3/create_json_AF3.py
-bash /home/rachel/alphafold-models-3.0.3/run_AF3_all.sh
-```
-
-5. For ESMFold, we want to use the fasta files as well. 
-
-```
-bash /home/rachel/esmfold-1.0.3/run_all_esmfold2.sh
-```
-
-6. We want to also use TMAlign to compare the results. We downloaded the cif files, but we now need to extract only the right chains. 
-
-```
-python cif_single_chain.py
-```
-
-We then need to run TMAlign on AF3, and ESMFold. 
-
-```
-bash /home/rachel/TM-align/run_tmalign_batch.sh #for ESM
-bash /home/rachel/TM-align/run_tmalign_batch2.sh #for AF3
-```
-
-7. We need to compile all the results in a tsv file.
-```
-python /home/rachel/TM-align/results/extract_tmalign_metadata2.py #for ESM
-python /home/rachel/alphafold-models-3.0.3/extract_tmalign_metadata3.py
-```
-
-When AF3 is finished running, run TMAlign, then run the metadata.
-Then do the graphs with all the combinations from the table.
-
-Need to save the .tsv as a xlsx Excel workbook.
-
-I want to combine all the procedures into a better workflow.
-
-1. Preparation of experimental structure cif files 
-- 1a. Input is 1 list of PDB identifiers (chains and identifiers)
-Convert the list of chains to the identifier list (function 1)
-- 1b. Download the cif files (function 2)
-- 1c. Single chain fasta files (function 3)
-- 1d. Single chain atom coordinates (function 4)
-
-Output is under folder 
-~/cif/input_PDB_lists
-~/cif/cif_downloads
-~/cif/cif_fasta
-~/cif/cif_single_chain
-
-- input_PDB_lists
-- 01_run_cif_pipeline.py
-- 02_run_folding_pipeline.py
-- 03_run_tmalign.py
-- 04_extract_results.py
-- output_results
-
-2. Folding ESM, AF2, AF3 (each their own code)
-- 2a. ESM
-- 2b. AF2
-- 2c. AF3
-
-3. TM-align for all (same code but specify if ESM, if AF2, etc)
-
-4. Compile in a data table (specify the input directories for the table and output)
-
-
-Make sure you activate venv before running 01_prepare_cif/ main.py 
-
-```
+```bash
 pip install -r requirements.txt
-pip install -r /home/rachel/requirements.txt
 ```
 
-Make sure you put a folder with the text file: "/01_prepare_cif/input_pdb_lists/pdb_list_chain.txt"
-
-For the run_all_ESMFold.sh, you have to be in binfgpu and in screen. ESMFold is run on GPU 1.
-
-Current folding script can only do 2 GPU's. If I want to also do AF2, then I have to make it so that main can run AF2 on a different binfgpu.
-
-For AF3, you need to make a folder ${HOME}/alphafold-models-3.0.3 with have af3.bin.zst inside. I will then copy the results inside 02_folding 
-${HOME}/alphafold-models-3.0.3
-
-still need to add runtime to the table 
+Then 
