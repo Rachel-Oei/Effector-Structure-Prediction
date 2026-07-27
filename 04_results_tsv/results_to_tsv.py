@@ -2,19 +2,9 @@ import os
 import re
 import pandas as pd
 
-def results_to_tsv (model):
-
-    home_dir="/home/rachel"
-
-    if model=="esm":
-        metadata_file = f"{home_dir}/04_results_tsv/pdb_metadata_with_dates.tsv"
-    elif model=="af2":
-        metadata_file = f"{home_dir}/04_results_tsv/pdb_metadata_esm.tsv"
-    elif model=="af3":
-        metadata_file = f"{home_dir}/04_results_tsv/pdb_metadata_af2.tsv"
-
-    tmalign_dir = f"{home_dir}/03_tm_align/results_{model}"
-    output_file = f"{home_dir}/04_results_tsv/pdb_metadata_{model}.tsv"
+def results_to_tsv (tmalign_folder, output_dir, model, metadata_file):
+    tmalign_dir = f"{tmalign_folder}/results_{model}"
+    output_file = f"{output_dir}/pdb_metadata_{model}.tsv"
 
     df = pd.read_csv(metadata_file, sep="\t")
 
