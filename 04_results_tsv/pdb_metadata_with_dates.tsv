@@ -1,0 +1,104 @@
+PDB_ID	Chain	Annotation	Organism	Effector	Deposition_date
+1FN8_1	A	TRYPSIN	Fusarium oxysporum (5507)	1	2000-08-21T00:00:00.000+00:00
+1FN8_2	B	GLY-ALA-ARG		0	2000-08-21T00:00:00.000+00:00
+1KG1_1	A	Necrosis Inducing Protein 1	Rhynchosporium secalis (38038)	1	2001-11-26T00:00:00.000+00:00
+1KPT_1	A, B	KP4 TOXIN	Ustilago maydis (5270)	1	1995-06-06T00:00:00.000+00:00
+1ZLD_1	A	Ptr necrosis toxin	Pyrenophora tritici-repentis (45151)	1	2005-05-06T00:00:00.000+00:00
+1ZLE_1	A, B, C	Ptr necrosis toxin	Pyrenophora tritici-repentis (45151)	1	2005-05-06T00:00:00.000+00:00
+2LW6_1	A	AvrPiz-t protein	Magnaporthe oryzae (318829)	1	2012-07-23T00:00:00.000+00:00
+2MM0_1	A	Host-selective toxin protein	Pyrenophora tritici-repentis (45151)	1	2014-03-06T00:00:00.000+00:00
+2MM2_1	A	Toxb	Pyrenophora tritici-repentis (45151)	1	2014-03-06T00:00:00.000+00:00
+2MYV_1	A	Uncharacterized protein	Magnaporthe grisea (148305)	1	2015-01-30T00:00:00.000+00:00
+2MYW_1	A	AVR-Pia protein	Magnaporthe oryzae (318829)	1	2015-01-30T00:00:00.000+00:00
+2N37_1	A	AVR-Pia protein	Magnaporthe oryzae (318829)	1	2015-05-25T00:00:00.000+00:00
+2N4O_1	A	Hydrophobin-like protein MPG1	Magnaporthe oryzae 70-15 (242507)	1	2015-06-25T00:00:00.000+00:00
+2OPC_1	A	AvrL567-A	Melampsora lini (5261)	1	2007-01-29T00:00:00.000+00:00
+2QVT_1	A	AvrL567-D	Melampsora lini (5261)	1	2007-08-08T00:00:00.000+00:00
+31EE_1	A, B	Cyclodipeptide synthase (FoCDPS)	Fusarium oxysporum (5507)	1	2026-05-28T00:00:00.000+00:00
+31EE_2	C	ALA-ALA-LEU-ALA-PRO-LEU-GLY-SER-VAL-GLY-SER-VAL	Fusarium oxysporum (5507)	0	2026-05-28T00:00:00.000+00:00
+4B8V_1	A	EXTRACELLULAR PROTEIN 6	PASSALORA FULVA (5499)	1	2012-08-30T00:00:00.000+00:00
+4B9H_1	A	EXTRACELLULAR PROTEIN 6	PASSALORA FULVA (5499)	1	2012-09-04T00:00:00.000+00:00
+4BJM_1	A, B, C, D	AVRM	MELAMPSORA LINI (5261)	1	2013-04-19T00:00:00.000+00:00
+4BJN_1	A, B, C, D, E, F, G, H	AVRM-A	MELAMPSORA LINI (5261)	1	2013-04-19T00:00:00.000+00:00
+4FPQ_1	A, B, C, D	Avirulence Effector AvrLm4-7	Leptosphaeria maculans (985895)	1	2012-06-22T00:00:00.000+00:00
+4FPR_1	A, B, C, D	Avirulence Effector AvrLm4-7	Leptosphaeria maculans (985895)	1	2012-06-22T00:00:00.000+00:00
+4GVB_1	A	KP6 killer toxin subunit alpha	Ustilago maydis virus P6 (11010)	1	2012-08-30T00:00:00.000+00:00
+4GVB_2	B	KP6 killer toxin subunit beta	Ustilago maydis virus P6 (11010)	1	2012-08-30T00:00:00.000+00:00
+4Z4A_1	A, B	Carbohydrate-binding module family 14 protein	Pseudocercospora fuligena (685502)	1	2015-04-01T00:00:00.000+00:00
+5A6W_1	A, B	RESISTANCE PROTEIN PIKP-1	ORYZA SATIVA (4530)	0	2015-07-01T00:00:00.000+00:00
+5A6W_2	C	AVR-PIK PROTEIN	MAGNAPORTHE ORYZAE (318829)	1	2015-07-01T00:00:00.000+00:00
+5FID_1	A, B	Elicitor protein Hrip2	Magnaporthe oryzae (318829)	1	2015-12-23T00:00:00.000+00:00
+5FNO_1	A, B	MANGANESE LIPOXYGENASE	MAGNAPORTHE ORYZAE (318829)	1	2015-11-16T00:00:00.000+00:00
+5JHJ_1	A	Antivirulence protein AVR-Pia	Magnaporthe oryzae (318829)	1	2016-04-21T00:00:00.000+00:00
+5LOS_1	A	PIIN_05872	Piriformospora indica (1109443)	1	2016-08-09T00:00:00.000+00:00
+5OD4_1	A	Secreted in xylem 3	Fusarium oxysporum (5507)	1	2017-07-04T00:00:00.000+00:00
+5VJJ_1	A, B	Avirulence protein AvrP123	Melampsora lini (5261)	1	2017-04-19T00:00:00.000+00:00
+5XMZ_1	A	Effector protein PevD1	Verticillium dahliae (27337)	1	2017-05-17T00:00:00.000+00:00
+5Z1V_1	A, B, C, D	AvrPib protein	Magnaporthe oryzae (318829)	1	2017-12-28T00:00:00.000+00:00
+5ZNG_1	A	NBS-LRR type protein	Oryza sativa subsp. japonica (39947)	0	2018-04-09T00:00:00.000+00:00
+5ZNG_2	B[auth C]	AVR1-CO39	Magnaporthe grisea (148305)	1	2018-04-09T00:00:00.000+00:00
+6BN0_1	A, B, C, D	Race-specific elicitor A4	Passalora fulva (5499)	1	2017-11-15T00:00:00.000+00:00
+6FMB_1	A	CSEP0064 putative effector protein	Blumeria graminis f. sp. hordei (2867405)	1	2018-01-30T00:00:00.000+00:00
+6FU9_1	A, C	NBS-LRR class disease resistance protein	Oryza sativa subsp. japonica (39947)	0	2018-02-26T00:00:00.000+00:00
+6FU9_2	B, D	AVR-Pik protein	Magnaporthe oryzae (318829)	1	2018-02-26T00:00:00.000+00:00
+6FUB_1	A[auth B]	AVR-Pik protein	Magnaporthe oryzae (318829)	1	2018-02-26T00:00:00.000+00:00
+6FUB_2	B[auth A]	NBS-LRR class disease resistance protein	Oryza sativa subsp. japonica (39947)	0	2018-02-26T00:00:00.000+00:00
+6FUD_1	A	NBS-LRR class disease resistance protein	Oryza sativa subsp. japonica (39947)	0	2018-02-26T00:00:00.000+00:00
+6FUD_2	B	AVR-Pik protein	Magnaporthe oryzae (318829)	1	2018-02-26T00:00:00.000+00:00
+6G10_1	A, B	Resistance protein Pikp-1	Oryza sativa subsp. japonica (39947)	0	2018-03-20T00:00:00.000+00:00
+6G10_2	C	AVR-Pik protein	Magnaporthe oryzae (318829)	1	2018-03-20T00:00:00.000+00:00
+6G11_1	A[auth C], D[auth F]	AVR-Pik protein	Magnaporthe oryzae (318829)	1	2018-03-20T00:00:00.000+00:00
+6G11_2	B[auth A], C[auth B], E[auth D], F[auth E]	Resistance protein Pikp-1	Oryza sativa subsp. japonica 	0	2018-03-20T00:00:00.000+00:00
+6H0I_1	A	Secreted protein	Melampsora larici-populina 98AG31 (747676)	1	2018-07-09T00:00:00.000+00:00
+6Q40_1	A, B, C, D	LysM domain-containing protein	Zymoseptoria tritici IPO323 (336722)	1	2018-12-05T00:00:00.000+00:00
+6Q76_1	A	Resistance protein Pikp-1	Oryza sativa subsp. japonica (39947)	0	2018-12-12T00:00:00.000+00:00
+6Q76_2	B	AVR-Pia protein	Magnaporthe oryzae (318829)	1	2018-12-12T00:00:00.000+00:00
+6QPK_1	A, B	Uncharacterized protein	Zymoseptoria tritici ST99CH_1E4 (1276532)	1	2019-02-14T00:00:00.000+00:00
+6R5J_1	A, B[auth C]	Uncharacterized protein	Magnaporthe oryzae (strain P131) (1143193)	1	2019-03-25T00:00:00.000+00:00
+6SGO_1	A	Secreted protein	Melampsora larici-populina (203908)	1	2019-08-05T00:00:00.000+00:00
+6WES_1	A	Tox3	Phaeosphaeria nodorum (strain SN15 / ATCC MYA-4574 / FGSC 10173) (321614)	1	2020-04-02T00:00:00.000+00:00
+6ZUS_1	A	Extracellular protein 11-1	Passalora fulva (5499)	1	2020-07-23T00:00:00.000+00:00
+7A8X_1	A, B, D, E	NBS-LRR class disease resistance protein	Oryza sativa subsp. japonica (39947)	0	2020-08-31T00:00:00.000+00:00
+7A8X_2	C, F	AVR-Pik protein	Magnaporthe oryzae (strain 70-15 / ATCC MYA-4617 / FGSC 8958) (242507)	1	2020-08-31T00:00:00.000+00:00
+7AD5_1	A	Avirulence protein LmJ1	Leptosphaeria maculans (5022)	1	2020-09-14T00:00:00.000+00:00
+7B1I_1	A[auth B]	OSIGBa0128P10.9 protein	Oryza sativa (4530)	0	2020-11-24T00:00:00.000+00:00
+7B1I_2	B[auth C]	AVR-Pik protein	Magnaporthe oryzae (318829)	1	2020-11-24T00:00:00.000+00:00
+7EAU_1	A	SIN1	Colletotrichum orbiculare (strain 104-T / ATCC 96160 / CBS 514.97 / LARS 414 / MAFF 240422) (1213857)	1	2021-03-08T00:00:00.000+00:00
+7MQQ_1	A	Stem rust effector protein AvrSr50	Puccinia graminis f. sp. tritici (56615)	1	2021-05-06T00:00:00.000+00:00
+7NLJ_1	A	sHMA25	Setaria italica (4555)	0	2021-02-22T00:00:00.000+00:00
+7NLJ_2	B	APikL2A	Pyricularia oryzae Y34 (1143189)	1	2021-02-22T00:00:00.000+00:00
+7NMM_1	A, B, C, D, E, F, G, H	sHMAx	Setaria italica (4555)	0	2021-02-23T00:00:00.000+00:00
+7NMM_2	I, J, K, L, M, N, O, P	APikL2F	Pyricularia oryzae B157 (1348879)	1	2021-02-23T00:00:00.000+00:00
+7PP2_1	A	Exocyst subunit Exo70 family protein	Oryza sativa (4530)	0	2021-09-13T00:00:00.000+00:00
+7PP2_2	B	AVR-Pii protein	Pyricularia oryzae (318829)	1	2021-09-13T00:00:00.000+00:00
+7T69_1	A	Avr3 (SIX1), Secreted in xylem 1	Fusarium oxysporum f. sp. lycopersici (59765)	1	2021-12-13T00:00:00.000+00:00
+7T6A_1	A, B	Avr1 (SIX4), Avirulence protein 1	Fusarium oxysporum f. sp. lycopersici (59765)	1	2021-12-13T00:00:00.000+00:00
+7T6A_2	C, D	Avr1 (FolSIX4), Avirulence protein 1	Fusarium oxysporum f. sp. lycopersici (59765)	0	2021-12-13T00:00:00.000+00:00
+7XC2_1	A, C, E, G, I	CNL9	Triticum monococcum (4568)	0	2022-03-22T00:00:00.000+00:00
+7XC2_2	B, D, F, H, J	Avirulence factor	Puccinia graminis f. sp. tritici (56615)	1	2022-03-22T00:00:00.000+00:00
+7XDS_1	A, B	AvrSr35	Puccinia graminis f. sp. tritici (56615)	1	2022-03-28T00:00:00.000+00:00
+7XE0_1	A, C, D[auth E], E[auth G], F[auth I]	Sr35	Triticum monococcum (4568)	0	2022-03-29T00:00:00.000+00:00
+7XE0_2	B, G[auth D], H[auth F], I[auth H], J	AvrSr35	Puccinia graminis f. sp. tritici (56615)	1	2022-03-29T00:00:00.000+00:00
+7XVG_1	A	Sr35	Triticum monococcum (4568)	0	2022-05-23T00:00:00.000+00:00
+7XVG_2	B	AvrSr35	Puccinia graminis f. sp. tritici (56615)	1	2022-05-23T00:00:00.000+00:00
+7ZJY_1	A	MAX effector protein	Pyricularia oryzae (318829)	1	2022-04-12T00:00:00.000+00:00
+7ZK0_1	A	MAX effector protein	Pyricularia oryzae (318829)	1	2022-04-12T00:00:00.000+00:00
+7ZKD_1	A	MAX effector protein	Pyricularia oryzae (318829)	1	2022-04-12T00:00:00.000+00:00
+8ACX_1	A, B, C, D, E, F, G, H	Hce2 domain-containing protein	Zymoseptoria tritici (1047171)	1	2022-07-07T00:00:00.000+00:00
+8C8A_1	A	But2 domain-containing protein	Pyricularia oryzae 70-15 (242507)	1	2023-01-19T00:00:00.000+00:00
+8DP8_1	A, B, C	AvrM14-A	Melampsora lini (5261)	1	2022-07-15T00:00:00.000+00:00
+8DP9_1	A, B	AvrM14-B	Melampsora lini (5261)	1	2022-07-15T00:00:00.000+00:00
+8EB9_1	A	Secreted in xylem Six8	Fusarium oxysporum f. sp. lycopersici (59765)	1	2022-08-30T00:00:00.000+00:00
+8EBB_1	A, B	Secreted in xylem Six6	Fusarium oxysporum f. sp. lycopersici (59765)	1	2022-08-30T00:00:00.000+00:00
+8EBB_2	C	Secreted in xylem Six6	Fusarium oxysporum f. sp. lycopersici (59765)	0	2022-08-30T00:00:00.000+00:00
+8OXH_1	A, B	AVRA6	Blumeria hordei (2867405)	1	2023-05-02T00:00:00.000+00:00
+8OXI_1	A	BgtE-5845_p	Blumeria graminis f. sp. tritici (62690)	1	2023-05-02T00:00:00.000+00:00
+8OXJ_1	A, B	AVRA22	Blumeria hordei (2867405)	1	2023-05-02T00:00:00.000+00:00
+8OXK_1	A	CSEP0141 putative effector protein	Blumeria hordei (2867405)	1	2023-05-02T00:00:00.000+00:00
+8OXL_1	A, B	AVRA7	Blumeria hordei DH14 (546991)	1	2023-05-02T00:00:00.000+00:00
+8R7A_1	A	Os01g0507700 protein	Oryza sativa (4530)	0	2023-11-24T00:00:00.000+00:00
+8R7A_2	B	Pwl2 protein	Pyricularia oryzae (318829)	1	2023-11-24T00:00:00.000+00:00
+8V1J_1	A, B	AvrSr27	Puccinia graminis f. sp. tritici (56615)	1	2023-11-20T00:00:00.000+00:00
+9FEI_1	A	Defoliating protein: protein D	Fusarium oxysporum (5507)	1	2024-05-20T00:00:00.000+00:00
+9FYC_1	A	CC-NBS-LRR resistance protein MLA13	Hordeum vulgare (4513)	0	2024-07-03T00:00:00.000+00:00
+9FYC_2	B	CSEP0372 putative effector protein	Blumeria graminis (34373)	1	2024-07-03T00:00:00.000+00:00

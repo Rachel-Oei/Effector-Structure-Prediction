@@ -1,10 +1,16 @@
 # Effector-Structure-Prediction
-Pipeline for predicting effector structures. Using BioPython and mmCIF files. 
+Pipeline for predicting effector structures. 
 
 **Background**: 
-I would like to use ESMFold, AF2 and AF3 to predict fungal effector structures. Effectors are secreted virulent proteins by pathogens that evoke an immune response in the host organism. They are structurally very diverse, and little is known on how to predict their structures from their amino sequence.
+I would like to use ESMFold, AF2 and AF3 to predict fungal effector structures. Pathogens can secrete effectors, which are virulent proteins that evoke an immune response in a host organism. They are structurally diverse, and little is known on how to predict their structures from their amino sequence.
 
-I already collected 80 fungal effector structures that are experimentally resolved and available in the PDB database. I based this on literature reviews and recent papers. 
+I collected 80 fungal effector structures that are experimentally resolved and available in the PDB database. I based this on literature reviews and recent papers. The metadata for this is under 
+
+```
+/workspaces/Effector-Structure-Prediction/04_results_tsv/pdb_metadata_with_dates.tsv
+```
+
+`pdb_metadata_with_dates.tsv`
 
 Note on chain identifiers: author chain ID (_atom_site.auth_asym_id) and mmCIF (_atom_site.label_asym_id) exist. Since auth_asym_id is more often used, and also in literature, we use that chain.
 

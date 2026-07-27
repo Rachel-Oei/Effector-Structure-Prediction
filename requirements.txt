@@ -7,3 +7,5 @@ subprocess
 pandas
 matplotlib
 openpyxl
+os 
+re
