@@ -65,8 +65,9 @@ def results_to_tsv (tmalign_folder, output_dir, model, metadata_file, runtime_fi
         f"RMSD_{model}": float(rmsd.group(1)) if rmsd else None,
         f"Aligned_length_{model}": int(aligned_length.group(1)) if aligned_length else None,
         f"Seq_ID_{model}": float(seq_id.group(1)) if seq_id else None,
-        f"Fold_length_{model}": int(pred_length.group(1)) if pred_length else None,
-        f"Experimental_length_{model}": int(exp_length.group(1)) if exp_length else None
+        f"Pred_length_{model}": int(pred_length.group(1)) if pred_length else None,
+        f"Experimental_length_{model}": int(exp_length.group(1)) if exp_length else None,
+        f"Coverage_{model}":int(exp_length.group(1))/int(pred_length.group(1)) if pred_length and exp_length else None 
     })
 
     tm_df = pd.DataFrame(results)
@@ -82,7 +83,7 @@ def results_to_tsv (tmalign_folder, output_dir, model, metadata_file, runtime_fi
 
         # Remove failed runs with runtime 0
         runtime_df = runtime_df[runtime_df[f"runtime_seconds_{model}"] > 0]
-        
+
         merged = merged.merge(
             runtime_df,
             on="PDB_ID",
@@ -107,6 +108,7 @@ def results_to_tsv (tmalign_folder, output_dir, model, metadata_file, runtime_fi
     f"Seq_ID_{model}",
     f"Fold_length_{model}",
     f"Experimental_length_{model}",
-    f"runtime_seconds if available",
+    f"Coverage_{model}",
+    f"Runtime_seconds if available",
     ])
 
