@@ -6,6 +6,10 @@ sys.path.append("/home/rachel/01_prepare_cif")
 from prepare_cif_models import create_directory
 from create_json import create_json
 
+# If there is a permission denied message, do: chmod +x /home/rachel/02_folding/af3/run_alphafold.sh
+# Need to make sure the model parameters are inside "/home/rachel/02_folding/af3/alphafold-models-3.0.3/af3.bin"
+
+
 def main():
     cif_directory = "/home/rachel/01_prepare_cif"
     input_text_entity = cif_directory+"/input_pdb_lists/pdb_list_entity.txt"

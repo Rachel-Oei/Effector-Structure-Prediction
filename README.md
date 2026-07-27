@@ -50,6 +50,9 @@ Again, the chains are according to auth_asym_id.
 **Running**
 
 To run the pipeline, first make sure you have all the requirements installed. It is recommended to use a virtual environment. 
+```bash
+pip install --upgrade pip
+```
 
 ```bash
 python3 -m venv venv
@@ -60,7 +63,7 @@ source venv/bin/activate
 ```
 
 ```bash
-pip install -r requirements.txt
+pip install -r ~/requirements.txt
 ```
 
 Then the pipeline is as follows:
@@ -80,4 +83,11 @@ Then the pipeline is as follows:
     |
 04_results_tsv
 (run main_tsv.py)
+    |
+05_graphs
+
 ```
+
+Note: the current scripts use esm and af3 running on the same server, with each using 1 GPU. 
+
+
