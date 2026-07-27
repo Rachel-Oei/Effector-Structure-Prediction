@@ -2,7 +2,7 @@ import os
 import re
 import pandas as pd
 
-def results_to_tsv (tmalign_folder, output_dir, model, metadata_file):
+def results_to_tsv (tmalign_folder, output_dir, model, metadata_file, runtime_file=None):
     tmalign_dir = f"{tmalign_folder}/results_{model}"
     output_file = f"{output_dir}/pdb_metadata_{model}.tsv"
 
@@ -60,13 +60,13 @@ def results_to_tsv (tmalign_folder, output_dir, model, metadata_file):
 
         results.append({
         "PDB_ID": pdb_id,
-        "TM_score_crystal": float(tm_crystal.group(1)) if tm_crystal else None,
-        "TM_score_pred": float(tm_pred.group(1)) if tm_pred else None,
-        "RMSD": float(rmsd.group(1)) if rmsd else None,
-        "Aligned_length": int(aligned_length.group(1)) if aligned_length else None,
-        "Seq_ID": float(seq_id.group(1)) if seq_id else None,
-        "Fold_length": int(pred_length.group(1)) if pred_length else None,
-        "Experimental_length": int(exp_length.group(1)) if exp_length else None
+        f"TM_score_crystal_{model}": float(tm_crystal.group(1)) if tm_crystal else None,
+        f"TM_score_pred_{model}": float(tm_pred.group(1)) if tm_pred else None,
+        f"RMSD_{model}": float(rmsd.group(1)) if rmsd else None,
+        f"Aligned_length_{model}": int(aligned_length.group(1)) if aligned_length else None,
+        f"Seq_ID_{model}": float(seq_id.group(1)) if seq_id else None,
+        f"Fold_length_{model}": int(pred_length.group(1)) if pred_length else None,
+        f"Experimental_length_{model}": int(exp_length.group(1)) if exp_length else None
     })
 
     tm_df = pd.DataFrame(results)
@@ -76,6 +76,18 @@ def results_to_tsv (tmalign_folder, output_dir, model, metadata_file):
         on="PDB_ID",
         how="left"
     )
+
+    if runtime_file:
+        runtime_df = pd.read_csv(runtime_file,names=["PDB_ID", f"runtime_seconds_{model}"])
+
+        # Remove failed runs with runtime 0
+        runtime_df = runtime_df[runtime_df[f"runtime_seconds_{model}"] > 0]
+        
+        merged = merged.merge(
+            runtime_df,
+            on="PDB_ID",
+            how="left"
+        )  
 
     merged.to_csv(
         output_file,
@@ -88,12 +100,13 @@ def results_to_tsv (tmalign_folder, output_dir, model, metadata_file):
 
     print("\nAdded columns:")
     print([
-    "TM_score_crystal",
-    "TM_score_pred",
-    "RMSD",
-    "Aligned_length",
-    "Seq_ID",
-    "Fold_length",
-    "Experimental_length",
+    f"TM_score_crystal_{model}",
+    f"TM_score_pred_{model}",
+    f"RMSD_{model}",
+    f"Aligned_length_{model}",
+    f"Seq_ID_{model}",
+    f"Fold_length_{model}",
+    f"Experimental_length_{model}",
+    f"runtime_seconds if available",
     ])
 
