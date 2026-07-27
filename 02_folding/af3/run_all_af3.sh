@@ -1,6 +1,5 @@
 #!/bin/bash
 
-# Need to create model parameters inside "/home/rachel/02_folding/af3/alphafold3-3.0.3/af3.bin.zst"
 # Create other folder 
 AF3_DIR="/home/rachel/02_folding/af3/run_alphafold.sh"
 JSON_DIR="/home/rachel/02_folding/af3/json"

@@ -9,6 +9,9 @@ ESMFOLD=/home/jankees-esmfold-103/esmfold-1.0.3/run_esmfold.sh
 HOME_DIR=/home/rachel/02_folding/esm
 RUNTIME_CSV="/home/rachel/02_folding/esm/esm_runtime.csv"
 
+mkdir -p "$HOME_DIR/esmfold-results"
+mkdir -p "$HOME_DIR/esmfold-logs"
+
 for fasta in ${FASTA_DIR}/*.fasta
 do
     name=$(basename "$fasta" .fasta)
