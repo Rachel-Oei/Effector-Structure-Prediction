@@ -7,7 +7,7 @@ I would like to use ESMFold, AF2 and AF3 to predict fungal effector structures. 
 I collected 80 fungal effector structures that are experimentally resolved and available in the PDB database. I based this on literature reviews and recent papers. The metadata for this is under 
 
 ```
-~/04_results_tsv/pdb_metadata_with_dates.tsv
+~/04_results_tsv/pdb_metadata.tsv
 ```
 
 The first few rows look like:
