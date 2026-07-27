@@ -63,4 +63,21 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-Then 
+Then the pipeline is as follows:
+
+```text
+01_prepare_cif 
+(run prepare_cif_main.py)
+    |
+02_folding
+(run 'run_all_esm.sh')
+(run af2, note: code not in this repository)
+(run 'af3_main.py')
+    |
+03_tm_align
+(run tm_align_esm.sh)
+(run tm_align_af3.sh)
+    |
+04_results_tsv
+(run main_tsv.py)
+```
