@@ -6,14 +6,14 @@ from prepare_cif_models import (create_directory,
 )
 
 def main():
-    home_directory = "/home/rachel"
+    cif_directory = "/home/rachel"
 
-    input_text_chain = home_directory + "/01_prepare_cif/input_pdb_lists/pdb_list_chain.txt"
-    input_text_entity = home_directory + "/01_prepare_cif/input_pdb_lists/pdb_list_entity.txt"
+    input_text_chain = cif_directory + "/input_pdb_lists/pdb_list_chain.txt"
+    input_text_entity = cif_directory + "/input_pdb_lists/pdb_list_entity.txt"
 
-    cif_fasta_directory = home_directory + "/01_prepare_cif/cif_fasta/"
-    cif_download_directory = home_directory + "/01_prepare_cif/cif_downloads/"
-    cif_single_chain_directory = home_directory + "/01_prepare_cif/cif_single_chain/"
+    cif_fasta_directory = cif_directory + "/cif_fasta/"
+    cif_download_directory = cif_directory + "/cif_downloads/"
+    cif_single_chain_directory = cif_directory + "/cif_single_chain/"
 
     create_directory(cif_download_directory)
     create_directory(cif_fasta_directory)
