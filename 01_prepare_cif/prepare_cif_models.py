@@ -6,7 +6,7 @@ from Bio.PDB.MMCIF2Dict import MMCIF2Dict
 
 def create_directory (nested_directory: str):
     """
-    Creates directory
+    Creates directory if it not already exists
     """
     os.makedirs(nested_directory, exist_ok=True)
 
@@ -55,7 +55,7 @@ def map_chain_to_entity (input_text: str, cif_directory, new_text_directory):
         1KG1.A
         1KPT.A
         4GVB.B
-    Return: .txt file delimited by new-lines.
+    Return: .txt file delimited by new-lines, with entity numbers.
         Example: 
         1FN8_1
         1KG1_1
@@ -125,6 +125,9 @@ def cif_single_chain (input_text_chain,
                       cif_download_directory, 
                       cif_single_chain_directory
                       ):
+    """
+    Removes irrelevant chains from cif file.
+    """
     chain_list = pdb_text_to_list(input_text_chain)
     entity_list = pdb_text_to_list(input_text_entity)
 
