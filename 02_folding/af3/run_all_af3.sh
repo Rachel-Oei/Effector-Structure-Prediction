@@ -1,12 +1,15 @@
 #!/bin/bash
 
-# Create other folder 
-AF3_DIR="/home/rachel/02_folding/af3/run_alphafold.sh"
-JSON_DIR="/home/rachel/02_folding/af3/json"
-MODEL_DIR="/home/rachel/02_folding/af3/alphafold-models-3.0.3"
+# This script uses GPU 0. Runs AF3 for each protein and appends runtime in a .csv file. 
+
+AF3_FOLDER="/home/rachel/02_folding/af3"
+
+AF3_DIR="${AF3_FOLDER}/run_alphafold.sh"
+JSON_DIR="${AF3_FOLDER}/json"
+MODEL_DIR="${AF3_FOLDER}/alphafold-models-3.0.3"
 DB_DIR="/net/leca/linuxhome/alphafold/alphafold-db-3.0.3"
-OUTPUT_DIR="/home/rachel/02_folding/af3/alphafold3-3.0.3/output"
-RUNTIME_CSV="/home/rachel/02_folding/af3/af3_runtime.csv"
+OUTPUT_DIR="${AF3_FOLDER}/alphafold3-3.0.3/output"
+RUNTIME_CSV="${AF3_FOLDER}/af3_runtime.csv"
 
 mkdir -p ${MODEL_DIR}
 
@@ -24,7 +27,7 @@ do
 
     echo "Starting AF3 for ${json_file}"
 
-    # collect the runtime times 
+    # Collect runtime 
     start=$(date +%s)
 
     # Use specifically GPU 0 
