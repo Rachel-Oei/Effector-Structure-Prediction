@@ -3,8 +3,8 @@ import re
 import pandas as pd
 
 def results_to_tsv (tmalign_folder, output_dir, model, metadata_file, runtime_file=None):
-    tmalign_dir = f"{tmalign_folder}/results_{model}"
-    output_file = f"{output_dir}/pdb_metadata_{model}.tsv"
+    tmalign_dir = tmalign_folder+"/results_{model}"
+    output_file = output_dir+"/pdb_metadata_{model}.tsv"
 
     df = pd.read_csv(metadata_file, sep="\t")
 
@@ -78,6 +78,7 @@ def results_to_tsv (tmalign_folder, output_dir, model, metadata_file, runtime_fi
         how="left"
     )
 
+    # If there is no runtime file, do not collect it
     if runtime_file:
         runtime_df = pd.read_csv(runtime_file,names=["PDB_ID", f"runtime_seconds_{model}"])
 
@@ -111,4 +112,3 @@ def results_to_tsv (tmalign_folder, output_dir, model, metadata_file, runtime_fi
     f"Coverage_{model}",
     f"Runtime_seconds if available",
     ])
-
