@@ -82,8 +82,8 @@ def results_to_tsv (tmalign_folder, output_dir, model, metadata_file, runtime_fi
     if runtime_file:
         runtime_df = pd.read_csv(runtime_file,names=["PDB_ID", f"runtime_seconds_{model}"])
 
-        # Remove failed runs with runtime 0
-        runtime_df = runtime_df[runtime_df[f"runtime_seconds_{model}"] > 0]
+        # Remove failed runs with runtime 0 or 1
+        runtime_df = runtime_df[runtime_df[f"runtime_seconds_{model}"] > 1]
 
         merged = merged.merge(
             runtime_df,
