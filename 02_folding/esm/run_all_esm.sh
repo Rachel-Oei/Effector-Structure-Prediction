@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# This script uses GPU 1. Runs ESMFOLD for each protein and appends runtime in a .csv file. 
+
 FASTA_DIR=/home/rachel/01_prepare_cif/cif_fasta
 OUT_DIR=/linuxhome/tmp/rachel/esmfold-results
 LOG_DIR=/linuxhome/tmp/rachel/esmfold-logs
