@@ -8,7 +8,7 @@ from prepare_cif_models import (create_directory,
 # Make sure that the following file and directory exists: "/01_prepare_cif/input_pdb_lists/pdb_list_chain.txt"
 
 def main():
-    cif_directory = "/home/rachel"
+    cif_directory = "/home/rachel/01_prepare_cif"
 
     input_text_chain = cif_directory + "/input_pdb_lists/pdb_list_chain.txt"
     input_text_entity = cif_directory + "/input_pdb_lists/pdb_list_entity.txt"
