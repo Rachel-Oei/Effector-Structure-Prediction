@@ -83,7 +83,7 @@ Then the pipeline is as follows:
 (run main_tsv.py)
     |
 05_graphs
-
+(run graphs_tsv.ipynb)
 ```
 
 **Notes:**
