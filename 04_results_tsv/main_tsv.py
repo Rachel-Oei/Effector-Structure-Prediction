@@ -17,7 +17,7 @@ def main():
 
     model3="af3"
     metadata_file_af3 = output_dir+"/pdb_metadata_af2.tsv"
-    runtime_file_af3= home_dir+"/02_folding/esm/esm_runtime.csv"
+    runtime_file_af3= home_dir+"/02_folding/af3/af3_runtime.csv"
     results_to_tsv(tmalign_folder, output_dir, model3, metadata_file_af3, runtime_file_af3)
 
 if __name__ == "__main__":
