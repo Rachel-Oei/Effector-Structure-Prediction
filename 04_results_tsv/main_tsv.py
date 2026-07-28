@@ -6,7 +6,7 @@ def main():
     output_dir = home_dir+"/04_results_tsv"
 
     model1="esm"
-    metadata_file_esm = output_dir+"/pdb_metadata_with_dates.tsv"
+    metadata_file_esm = output_dir+"/pdb_metadata.tsv"
     runtime_file_esm=home_dir+"/02_folding/esm/esm_runtime.csv"
     results_to_tsv(tmalign_folder, output_dir, model1, metadata_file_esm, runtime_file_esm)
 
