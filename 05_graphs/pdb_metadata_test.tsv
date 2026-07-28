@@ -1,0 +1,84 @@
+PDB_ID	Chain	Annotation	Organism	Deposition_date	Structural family (inferred from La Naour Vernet et al. (2025))	How many protein identities in crystal structure	Method	Resolution
+1FN8_1	A	TRYPSIN	Fusarium oxysporum (5507)	2000-08-21T00:00:00.000+00:00	HYDROLASE/HYDROLASE SUBSTRATE (non secreted)	2.0	0	0.81
+1KG1_1	A	Necrosis Inducing Protein 1	Rhynchosporium secalis (38038)	2001-11-26T00:00:00.000+00:00	/	1.0	Solution NMR 	0
+1KPT_1	A, B	KP4 TOXIN	Ustilago maydis (5270)	1995-06-06T00:00:00.000+00:00	KP4-like	1.0	X-ray	1.75
+1ZLD_1	A	Ptr necrosis toxin	Pyrenophora tritici-repentis (45151)	2005-05-06T00:00:00.000+00:00	ToxA-like	1.0	X-ray	1.65
+1ZLE_1	A, B, C	Ptr necrosis toxin	Pyrenophora tritici-repentis (45151)	2005-05-06T00:00:00.000+00:00	ToxA-like	1.0	X-ray	1.9
+2LW6_1	A	AvrPiz-t protein	Magnaporthe oryzae (318829)	2012-07-23T00:00:00.000+00:00	MAX	1.0	Solution NMR 	0
+2MM0_1	A	Host-selective toxin protein	Pyrenophora tritici-repentis (45151)	2014-03-06T00:00:00.000+00:00	MAX	1.0	Solution NMR 	0
+2MM2_1	A	Toxb	Pyrenophora tritici-repentis (45151)	2014-03-06T00:00:00.000+00:00	MAX 	1.0	Solution NMR 	0
+2MYV_1	A	Uncharacterized protein	Magnaporthe grisea (148305)	2015-01-30T00:00:00.000+00:00	MAX 	1.0	Solution NMR 	0
+2MYW_1	A	AVR-Pia protein	Magnaporthe oryzae (318829)	2015-01-30T00:00:00.000+00:00	MAX 	1.0	Solution NMR 	0
+2N37_1	A	AVR-Pia protein	Magnaporthe oryzae (318829)	2015-05-25T00:00:00.000+00:00	MAX	1.0	Solution NMR 	0
+2N4O_1	A	Hydrophobin-like protein MPG1	Magnaporthe oryzae 70-15 (242507)	2015-06-25T00:00:00.000+00:00	/	1.0	Solution NMR 	0
+2OPC_1	A	AvrL567-A	Melampsora lini (5261)	2007-01-29T00:00:00.000+00:00	ToxA-like	1.0	X-ray	1.43
+2QVT_1	A	AvrL567-D	Melampsora lini (5261)	2007-08-08T00:00:00.000+00:00	ToxA-like	1.0	X-ray	2.26
+31EE_1	A, B	Cyclodipeptide synthase (FoCDPS)	Fusarium oxysporum (5507)	2026-05-28T00:00:00.000+00:00	RNA BINDING PROTEIN (non secreted)	2.0	0	1.81
+4B8V_1	A	EXTRACELLULAR PROTEIN 6	PASSALORA FULVA (5499)	2012-08-30T00:00:00.000+00:00	LysM	1.0	X-ray	1.59
+4B9H_1	A	EXTRACELLULAR PROTEIN 6	PASSALORA FULVA (5499)	2012-09-04T00:00:00.000+00:00	LysM	1.0	X-ray	2.1
+4BJM_1	A, B, C, D	AVRM	MELAMPSORA LINI (5261)	2013-04-19T00:00:00.000+00:00	SIB1-like	1.0	X-ray	2.6
+4BJN_1	A, B, C, D, E, F, G, H	AVRM-A	MELAMPSORA LINI (5261)	2013-04-19T00:00:00.000+00:00	SIB1-like	1.0	X-ray	2.9
+4FPQ_1	A, B, C, D	Avirulence Effector AvrLm4-7	Leptosphaeria maculans (985895)	2012-06-22T00:00:00.000+00:00	LARS	1.0	X-ray	2.3
+4FPR_1	A, B, C, D	Avirulence Effector AvrLm4-7	Leptosphaeria maculans (985895)	2012-06-22T00:00:00.000+00:00	LARS	1.0	X-ray	2.4
+4GVB_1	A	KP6 killer toxin subunit alpha	Ustilago maydis virus P6 (11010)	2012-08-30T00:00:00.000+00:00	KP6-like	2.0	X-ray	1.8
+4GVB_2	B	KP6 killer toxin subunit beta	Ustilago maydis virus P6 (11010)	2012-08-30T00:00:00.000+00:00	KP6-like	2.0	X-ray	1.8
+4Z4A_1	A, B	Carbohydrate-binding module family 14 protein	Pseudocercospora fuligena (685502)	2015-04-01T00:00:00.000+00:00	Avr4	1.0	X-ray	1.7
+5A6W_2	C	AVR-PIK PROTEIN	MAGNAPORTHE ORYZAE (318829)	2015-07-01T00:00:00.000+00:00	MAX 	2.0	X-ray	1.6
+5FID_1	A, B	Elicitor protein Hrip2	Magnaporthe oryzae (318829)	2015-12-23T00:00:00.000+00:00	MoHrip2	1.0	X-ray	1.809
+5FNO_1	A, B	MANGANESE LIPOXYGENASE	MAGNAPORTHE ORYZAE (318829)	2015-11-16T00:00:00.000+00:00	/	1.0	X-ray	2.038
+5JHJ_1	A	Antivirulence protein AVR-Pia	Magnaporthe oryzae (318829)	2016-04-21T00:00:00.000+00:00	MAX 	1.0	Solution NMR 	0
+5LOS_1	A	PIIN_05872	Piriformospora indica (1109443)	2016-08-09T00:00:00.000+00:00	/	1.0	X-ray	2
+5OD4_1	A	Secreted in xylem 3	Fusarium oxysporum (5507)	2017-07-04T00:00:00.000+00:00	ToxA-like	1.0	X-ray	1.1
+5VJJ_1	A, B	Avirulence protein AvrP123	Melampsora lini (5261)	2017-04-19T00:00:00.000+00:00	/	1.0	X-ray	2.52
+5XMZ_1	A	Effector protein PevD1	Verticillium dahliae (27337)	2017-05-17T00:00:00.000+00:00	PevD1-like	1.0	X-ray	1.85
+5Z1V_1	A, B, C, D	AvrPib protein	Magnaporthe oryzae (318829)	2017-12-28T00:00:00.000+00:00	MAX	1.0	X-ray	1.66
+5ZNG_2	B[auth C]	AVR1-CO39	Magnaporthe grisea (148305)	2018-04-09T00:00:00.000+00:00	MAX	2.0	X-ray	2.19
+6BN0_1	A, B, C, D	Race-specific elicitor A4	Passalora fulva (5499)	2017-11-15T00:00:00.000+00:00	Avr4	1.0	X-ray	1.95
+6FMB_1	A	CSEP0064 putative effector protein	Blumeria graminis f. sp. hordei (2867405)	2018-01-30T00:00:00.000+00:00	RALPH	1.0	X-ray	1.3
+6FU9_2	B, D	AVR-Pik protein	Magnaporthe oryzae (318829)	2018-02-26T00:00:00.000+00:00	MAX 	2.0	X-ray	1.2
+6FUB_1	A[auth B]	AVR-Pik protein	Magnaporthe oryzae (318829)	2018-02-26T00:00:00.000+00:00	MAX 	2.0	X-ray	1.3
+6FUD_2	B	AVR-Pik protein	Magnaporthe oryzae (318829)	2018-02-26T00:00:00.000+00:00	MAX 	2.0	X-ray	1.3
+6G10_2	C	AVR-Pik protein	Magnaporthe oryzae (318829)	2018-03-20T00:00:00.000+00:00	MAX	2.0	X-ray	1.35
+6G11_1	A[auth C], D[auth F]	AVR-Pik protein	Magnaporthe oryzae (318829)	2018-03-20T00:00:00.000+00:00	MAX 	2.0	X-ray	1.9
+6H0I_1	A	Secreted protein	Melampsora larici-populina 98AG31 (747676)	2018-07-09T00:00:00.000+00:00	/	1.0	Solution NMR 	0
+6Q40_1	A, B, C, D	LysM domain-containing protein	Zymoseptoria tritici IPO323 (336722)	2018-12-05T00:00:00.000+00:00	LysM	1.0	X-ray	2.412
+6Q76_2	B	AVR-Pia protein	Magnaporthe oryzae (318829)	2018-12-12T00:00:00.000+00:00	MAX 	2.0	X-ray	1.9
+6QPK_1	A, B	Uncharacterized protein	Zymoseptoria tritici ST99CH_1E4 (1276532)	2019-02-14T00:00:00.000+00:00	KP6-like	1.0	X-ray	1.36
+6R5J_1	A, B[auth C]	Uncharacterized protein	Magnaporthe oryzae (strain P131) (1143193)	2019-03-25T00:00:00.000+00:00	MAX	1.0	X-ray	1.38
+6SGO_1	A	Secreted protein	Melampsora larici-populina (203908)	2019-08-05T00:00:00.000+00:00	MLP124017-like	1.0	Solution NMR 	0
+6WES_1	A	Tox3	Phaeosphaeria nodorum (strain SN15 / ATCC MYA-4574 / FGSC 10173) (321614)	2020-04-02T00:00:00.000+00:00	SnTox3-like	1.0	X-ray	1.36
+6ZUS_1	A	Extracellular protein 11-1	Passalora fulva (5499)	2020-07-23T00:00:00.000+00:00	LARS	1.0	X-ray	1.62
+7A8X_2	C, F	AVR-Pik protein	Magnaporthe oryzae (strain 70-15 / ATCC MYA-4617 / FGSC 8958) (242507)	2020-08-31T00:00:00.000+00:00	MAX 	2.0	X-ray	 2.30
+7AD5_1	A	Avirulence protein LmJ1	Leptosphaeria maculans (5022)	2020-09-14T00:00:00.000+00:00	LARS	1.0	X-ray	2.14
+7B1I_2	B[auth C]	AVR-Pik protein	Magnaporthe oryzae (318829)	2020-11-24T00:00:00.000+00:00	MAX 	2.0	X-ray	1.9
+7EAU_1	A	SIN1	Colletotrichum orbiculare (strain 104-T / ATCC 96160 / CBS 514.97 / LARS 414 / MAFF 240422) (1213857)	2021-03-08T00:00:00.000+00:00	SIB1-like	1.0	Solution NMR 	0
+7MQQ_1	A	Stem rust effector protein AvrSr50	Puccinia graminis f. sp. tritici (56615)	2021-05-06T00:00:00.000+00:00	AvrSr50-like	1.0	X-ray	1.15
+7NLJ_2	B	APikL2A	Pyricularia oryzae Y34 (1143189)	2021-02-22T00:00:00.000+00:00	MAX	2.0	X-ray	1.8
+7NMM_2	I, J, K, L, M, N, O, P	APikL2F	Pyricularia oryzae B157 (1348879)	2021-02-23T00:00:00.000+00:00	MAX 	2.0	X-ray	2.3
+7PP2_2	B	AVR-Pii protein	Pyricularia oryzae (318829)	2021-09-13T00:00:00.000+00:00	ZiF	2.0	X-ray	2.69
+7T69_1	A	Avr3 (SIX1), Secreted in xylem 1	Fusarium oxysporum f. sp. lycopersici (59765)	2021-12-13T00:00:00.000+00:00	FOLD	1.0	X-ray	1.68
+7T6A_1	A, B	Avr1 (SIX4), Avirulence protein 1	Fusarium oxysporum f. sp. lycopersici (59765)	2021-12-13T00:00:00.000+00:00	FOLD	2.0	X-ray	1.65
+7XC2_2	B, D, F, H, J	Avirulence factor	Puccinia graminis f. sp. tritici (56615)	2022-03-22T00:00:00.000+00:00	AvrSr35-like	2.0	Electron microscopy	3
+7XDS_1	A, B	AvrSr35	Puccinia graminis f. sp. tritici (56615)	2022-03-28T00:00:00.000+00:00	AvrSr35-like	1.0	X-ray	2.06
+7XE0_2	B, G[auth D], H[auth F], I[auth H], J	AvrSr35	Puccinia graminis f. sp. tritici (56615)	2022-03-29T00:00:00.000+00:00	AvrSr35-like	2.0	Electron microscopy	3.33
+7XVG_2	B	AvrSr35	Puccinia graminis f. sp. tritici (56615)	2022-05-23T00:00:00.000+00:00	AvrSr35-like	2.0	Electron microscopy	3.6
+7ZJY_1	A	MAX effector protein	Pyricularia oryzae (318829)	2022-04-12T00:00:00.000+00:00	MAX 	1.0	Solution NMR 	0
+7ZK0_1	A	MAX effector protein	Pyricularia oryzae (318829)	2022-04-12T00:00:00.000+00:00	MAX 	1.0	Solution NMR 	0
+7ZKD_1	A	MAX effector protein	Pyricularia oryzae (318829)	2022-04-12T00:00:00.000+00:00	MAX 	1.0	Solution NMR 	0
+8ACX_1	A, B, C, D, E, F, G, H	Hce2 domain-containing protein	Zymoseptoria tritici (1047171)	2022-07-07T00:00:00.000+00:00	KP4-like	1.0	X-ray	1.9
+8C8A_1	A	But2 domain-containing protein	Pyricularia oryzae 70-15 (242507)	2023-01-19T00:00:00.000+00:00	MAX 	1.0	Solution NMR 	0
+8DP8_1	A, B, C	AvrM14-A	Melampsora lini (5261)	2022-07-15T00:00:00.000+00:00	AvrM14-like	1.0	X-ray	2.3
+8DP9_1	A, B	AvrM14-B	Melampsora lini (5261)	2022-07-15T00:00:00.000+00:00	AvrM14-like	1.0	X-ray	1.76
+8EB9_1	A	Secreted in xylem Six8	Fusarium oxysporum f. sp. lycopersici (59765)	2022-08-30T00:00:00.000+00:00	ToxA-like	1.0	X-ray	1.28
+8EB9_1	A	Secreted in xylem Six8	Fusarium oxysporum f. sp. lycopersici (59765)	2022-08-30T00:00:00.000+00:00	ToxA-like	1.0	X-ray	1.28
+8EBB_1	A, B	Secreted in xylem Six6	Fusarium oxysporum f. sp. lycopersici (59765)	2022-08-30T00:00:00.000+00:00	FOLD	2.0	X-ray	1.88
+8EBB_1	A, B	Secreted in xylem Six6	Fusarium oxysporum f. sp. lycopersici (59765)	2022-08-30T00:00:00.000+00:00	FOLD	2.0	X-ray	1.88
+8OXH_1	A, B	AVRA6	Blumeria hordei (2867405)	2023-05-02T00:00:00.000+00:00	RALPH	1.0	X-ray	2.5
+8OXI_1	A	BgtE-5845_p	Blumeria graminis f. sp. tritici (62690)	2023-05-02T00:00:00.000+00:00	RALPH	1.0	X-ray	1.51
+8OXJ_1	A, B	AVRA22	Blumeria hordei (2867405)	2023-05-02T00:00:00.000+00:00	RALPH	1.0	X-ray	1.64
+8OXK_1	A	CSEP0141 putative effector protein	Blumeria hordei (2867405)	2023-05-02T00:00:00.000+00:00	RALPH	1.0	X-ray	1.37
+8OXL_1	A, B	AVRA7	Blumeria hordei DH14 (546991)	2023-05-02T00:00:00.000+00:00	RALPH	1.0	X-ray	1.56
+8R7A_2	B	Pwl2 protein	Pyricularia oryzae (318829)	2023-11-24T00:00:00.000+00:00	MAX 	2.0	X-ray	1.8
+8V1J_1	A, B	AvrSr27	Puccinia graminis f. sp. tritici (56615)	2023-11-20T00:00:00.000+00:00	/	1.0	X-ray	2.42
+9FEI_1	A	Defoliating protein: protein D	Fusarium oxysporum (5507)	2024-05-20T00:00:00.000+00:00	D Effector 	1.0	X-ray	1.47
+9FYC_2	B	CSEP0372 putative effector protein	Blumeria graminis (34373)	2024-07-03T00:00:00.000+00:00	RALPH	2.0	Electron microscopy	3.8
