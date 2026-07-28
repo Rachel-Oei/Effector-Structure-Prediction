@@ -7,20 +7,18 @@ I would like to use ESMFold, AF2 and AF3 to predict fungal effector structures. 
 I collected 80 fungal effector structures that are experimentally resolved and available in the PDB database. I based this on literature reviews and recent papers. The metadata for this is under 
 
 ```
-~/04_results_tsv/pdb_metadata_with_dates.tsv
+~/04_results_tsv/pdb_metadata.tsv
 ```
 
 The first few rows look like:
 
-| PDB_ID   | Chain   | Annotation                  | Organism                             |   Effector | Deposition_date               |
-|:---------|:--------|:----------------------------|:-------------------------------------|-----------:|:------------------------------|
-| 1FN8_1   | A       | TRYPSIN                     | Fusarium oxysporum (5507)            |          1 | 2000-08-21T00:00:00.000+00:00 |
-| 1FN8_2   | B       | GLY-ALA-ARG                 | nan                                  |          0 | 2000-08-21T00:00:00.000+00:00 |
-| 1KG1_1   | A       | Necrosis Inducing Protein 1 | Rhynchosporium secalis (38038)       |          1 | 2001-11-26T00:00:00.000+00:00 |
-| 1KPT_1   | A, B    | KP4 TOXIN                   | Ustilago maydis (5270)               |          1 | 1995-06-06T00:00:00.000+00:00 |
-| 1ZLD_1   | A       | Ptr necrosis toxin          | Pyrenophora tritici-repentis (45151) |          1 | 2005-05-06T00:00:00.000+00:00 |
-
-It shows all the PDB_ID's collected, the specific chain, their annotation, what the host organism is, whether the entity is considered an effector, and the deposition date. 
+| PDB_ID   | Chain   | Annotation                  | Organism                             | Deposition_date               | Structural family (inferred from La Naour Vernet et al. (2025))   |   How many protein identities in crystal structure | Method       |   Resolution |
+|:---------|:--------|:----------------------------|:-------------------------------------|:------------------------------|:------------------------------------------------------------------|---------------------------------------------------:|:-------------|-------------:|
+| 1FN8_1   | A       | TRYPSIN                     | Fusarium oxysporum (5507)            | 2000-08-21T00:00:00.000+00:00 | HYDROLASE/HYDROLASE SUBSTRATE (non secreted)                      |                                                  2 | 0            |         0.81 |
+| 1KG1_1   | A       | Necrosis Inducing Protein 1 | Rhynchosporium secalis (38038)       | 2001-11-26T00:00:00.000+00:00 | /                                                                 |                                                  1 | Solution NMR |         0    |
+| 1KPT_1   | A, B    | KP4 TOXIN                   | Ustilago maydis (5270)               | 1995-06-06T00:00:00.000+00:00 | KP4-like                                                          |                                                  1 | X-ray        |         1.75 |
+| 1ZLD_1   | A       | Ptr necrosis toxin          | Pyrenophora tritici-repentis (45151) | 2005-05-06T00:00:00.000+00:00 | ToxA-like                                                         |                                                  1 | X-ray        |         1.65 |
+| 1ZLE_1   | A, B, C | Ptr necrosis toxin          | Pyrenophora tritici-repentis (45151) | 2005-05-06T00:00:00.000+00:00 | ToxA-like                                                         |                                                  1 | X-ray        |         1.9  |
 
 The PDB_ID contains the 4 letter code, and underscore of the protein entity. 1FN8_1 and 1FN8_2 belong to the same resolved crystal structure, but only the first entity is an effector. 
 
