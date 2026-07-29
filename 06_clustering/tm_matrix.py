@@ -57,7 +57,7 @@ def plot_umap (matrix):
 
     return embedding
 
-def plot_umap_clusters (esm_clusters_dir, embedding):
+def plot_umap_clusters (esm_clusters_dir, embedding, matrix):
     clusters = pd.read_csv(
         esm_clusters_dir,
         sep="\t",
@@ -74,7 +74,7 @@ def plot_umap_clusters (esm_clusters_dir, embedding):
 
     colors = [
         cluster_map[p]
-        for p in esm_matrix.index
+        for p in matrix.index
     ]
 
     plt.figure(figsize=(8,8))
