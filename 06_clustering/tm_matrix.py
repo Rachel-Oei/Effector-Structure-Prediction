@@ -1,6 +1,6 @@
 import pandas as pd
 import numpy as np
-from umap import UMAP
+import umap 
 import matplotlib.pyplot as plt
 
 def tm_matrix (foldseek_dir):
@@ -27,10 +27,10 @@ def tm_matrix (foldseek_dir):
     return matrix
 
 def plot_umap (matrix):
-    distance = 1 - matrix.values
+    distance = 1 - matrix.to_numpy()
 
-    reducer = UMAP(
-        metric="precomputed",
+    reducer = umap.UMAP(
+        metric='precomputed',
         n_neighbors=15,
         min_dist=0.1,
         random_state=42
