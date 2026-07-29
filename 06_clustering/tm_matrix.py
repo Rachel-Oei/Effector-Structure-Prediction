@@ -29,6 +29,9 @@ def tm_matrix (foldseek_dir):
 def plot_umap (matrix):
     distance = 1 - matrix.to_numpy()
 
+    # Force the diagonal to be 0 
+    distance[distance < 0] = 0
+
     reducer = umap.UMAP(
         metric='precomputed',
         n_neighbors=15,
