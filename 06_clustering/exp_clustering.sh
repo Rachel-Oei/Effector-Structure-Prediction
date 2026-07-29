@@ -10,7 +10,7 @@ cd "${HOME_DIR}/06_clustering"
 
 export PATH=$(pwd)/foldseek/bin/:$PATH
 
-# Move af3.cif files to clustering folder 
+# Move exp.cif files to clustering folder 
 EXP_CIF="/home/rachel/01_prepare_cif/cif_single_chain"
 EXP_TMP="/linuxhome/tmp/${USER}/experimental_structures/"
 FDSK_OUT="/home/rachel/06_clustering/experimental/foldseek_output"

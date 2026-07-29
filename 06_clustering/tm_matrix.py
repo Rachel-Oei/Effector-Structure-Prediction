@@ -54,3 +54,5 @@ def plot_umap (matrix):
     plt.title("Foldseek structural similarity landscape")
 
     plt.show()
+
+    return embedding
