@@ -43,7 +43,7 @@ def plot_umap (matrix):
 
     return embedding
 
-def plot_umap_clusters (clusters_dir, embedding, matrix):
+def plot_umap_clusters (clusters_dir, embedding, matrix, title):
     clusters = pd.read_csv(
         clusters_dir,
         sep="\t",
@@ -74,6 +74,6 @@ def plot_umap_clusters (clusters_dir, embedding, matrix):
 
     plt.xlabel("UMAP 1")
     plt.ylabel("UMAP 2")
-    plt.title("Foldseek structural clusters")
+    plt.title(title)
 
     plt.show()
