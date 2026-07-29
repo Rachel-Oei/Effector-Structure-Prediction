@@ -84,6 +84,12 @@ Then the pipeline is as follows:
     |
 05_graphs
 (run graphs_tsv.ipynb)
+    |
+06_clustering
+(run exp_clustering.sh)
+(run esm_clustering.sh)
+(run af3_clustering.sh)
+(run umap.ipynb)
 ```
 
 **Notes:**
