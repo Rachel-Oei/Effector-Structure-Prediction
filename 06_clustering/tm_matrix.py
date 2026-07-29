@@ -18,7 +18,7 @@ def tm_matrix (foldseek_dir):
     )
 
     for _, row in df.iterrows():
-        matrix.loc[row["query"], row["target"]] = row["tmscore"]
+        matrix.loc[row["query"], row["target"]] = row["alntmscore"]
 
     # make symmetric
     matrix = (matrix + matrix.T) / 2
