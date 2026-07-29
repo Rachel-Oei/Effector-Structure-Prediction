@@ -56,3 +56,38 @@ def plot_umap (matrix):
     plt.show()
 
     return embedding
+
+def plot_umap_clusters (esm_clusters_dir, embedding):
+    clusters = pd.read_csv(
+        esm_clusters_dir,
+        sep="\t",
+        header=None,
+        names=["cluster","protein"]
+    )
+
+    cluster_map = dict(
+        zip(
+            clusters["protein"],
+            clusters["cluster"]
+        )
+    )
+
+    colors = [
+        cluster_map[p]
+        for p in esm_matrix.index
+    ]
+
+    plt.figure(figsize=(8,8))
+
+    plt.scatter(
+        embedding[:,0],
+        embedding[:,1],
+        c=pd.factorize(colors)[0],
+        s=30
+    )
+
+    plt.xlabel("UMAP 1")
+    plt.ylabel("UMAP 2")
+    plt.title("Foldseek structural clusters")
+
+    plt.show()
