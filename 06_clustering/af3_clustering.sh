@@ -38,5 +38,15 @@ for folder in "$AF3_DIR"/*; do
 
 done 
 
-#Run foldseek on GPU 0 
+# Run foldseek easy-cluster on GPU 0 
 CUDA_VISIBLE_DEVICES=0 foldseek easy-cluster ${AF3_CIF} "${FDSK_OUT}/af3_clusters" ${AF3_TMP}
+
+# Run foldseek easy-search on GPU 0 
+CUDA_VISIBLE_DEVICES=0 foldseek easy-search \
+    ${AF3_CIF} \
+    ${AF3_CIF} \
+    ${FDSK_OUT}/_af3_foldseek_results.tsv \
+    ${AF3_TMP} \
+    --format-output "query,target,alnlen,alntmscore,rmsd"
+
+# Use tmscore normalized by alignment length: alntmscore
