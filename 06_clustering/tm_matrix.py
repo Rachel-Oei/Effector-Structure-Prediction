@@ -34,7 +34,7 @@ def plot_umap (matrix):
 
     reducer = umap.UMAP(
         metric='precomputed',
-        n_neighbors=30,
+        n_neighbors=50,
         min_dist=0.0,
         random_state=42
     )
