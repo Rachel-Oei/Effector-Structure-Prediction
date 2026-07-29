@@ -1,5 +1,6 @@
 import pandas as pd
 import numpy as np
+import umap
 import matplotlib.pyplot as plt
 
 def tm_matrix (foldseek_dir):
@@ -25,7 +26,7 @@ def tm_matrix (foldseek_dir):
 
     return matrix
 
-def umap (matrix):
+def plot_umap (matrix):
     distance = 1 - matrix
 
     reducer = umap.UMAP(
