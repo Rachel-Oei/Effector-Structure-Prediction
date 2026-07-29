@@ -41,25 +41,11 @@ def plot_umap (matrix):
 
     embedding = reducer.fit_transform(distance)
 
-    plt.figure(figsize=(8,8))
-
-    plt.scatter(
-        embedding[:,0],
-        embedding[:,1],
-        s=20
-    )
-
-    plt.xlabel("UMAP 1")
-    plt.ylabel("UMAP 2")
-    plt.title("Foldseek structural similarity landscape")
-
-    plt.show()
-
     return embedding
 
-def plot_umap_clusters (esm_clusters_dir, embedding, matrix):
+def plot_umap_clusters (clusters_dir, embedding, matrix):
     clusters = pd.read_csv(
-        esm_clusters_dir,
+        clusters_dir,
         sep="\t",
         header=None,
         names=["cluster","protein"]
