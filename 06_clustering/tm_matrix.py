@@ -27,7 +27,7 @@ def tm_matrix (foldseek_dir):
     return matrix
 
 def plot_umap (matrix):
-    distance = 1 - matrix
+    distance = 1 - matrix.values
 
     reducer = umap.UMAP(
         metric="precomputed",
