@@ -98,6 +98,9 @@ def plot_umap_clusters (clusters_dir, embedding, matrix, title):
             if c == cluster
         ]
 
+        if len(indices) <= 6:
+            continue
+
         x = embedding[indices, 0].mean()
         y = embedding[indices, 1].mean()
 
