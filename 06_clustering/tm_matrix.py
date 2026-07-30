@@ -82,7 +82,7 @@ def plot_umap_clusters (clusters_dir, embedding, matrix, title):
     # Convert cluster labels to numeric values for plotting
     cluster_numbers = pd.factorize(colors)[0]
 
-    plt.figure(figsize=(8,8))
+    plt.figure(figsize=(7,7))
 
     plt.scatter(
         embedding[:,0],
