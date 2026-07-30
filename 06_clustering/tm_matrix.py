@@ -7,7 +7,7 @@ def tm_matrix (foldseek_dir):
     df = pd.read_csv(
         foldseek_dir,
         sep="\t",
-        names=["query","target","alnlen","alntmscore","rmsd"]
+        names=["query","target","alnlen","alntmscore","qtmscore", "ttmscore","rmsd"]
     )
 
     # Collecting all the proteins in the query and target, and sorting them
@@ -34,7 +34,7 @@ def tm_matrix (foldseek_dir):
     #  C     0.??   0.??   1.00
 
     for _, row in df.iterrows():
-        matrix.loc[row["query"], row["target"]] = row["alntmscore"]
+        matrix.loc[row["query"], row["target"]] = row["qtmscore"]
 
     # Make symmetric by averaging in both normal and transposed directions 
     matrix = (matrix + matrix.T) / 2
