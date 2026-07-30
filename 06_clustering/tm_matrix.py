@@ -7,12 +7,11 @@ def tm_matrix (foldseek_dir):
     df = pd.read_csv(
         foldseek_dir,
         sep="\t",
-        names=["query","target","alnlen","alntmscore","rmsd"]
+        names=["query","target","alnlen","alntmscore","qtmscore", "ttmscore","rmsd"]
     )
 
     # Collecting all the proteins in the query and target, and sorting them
     proteins = sorted(set(df["query"]).union(df["target"]))
-    print(proteins)
 
     # Create an identity matrix with length of n(proteins) x n(proteins)
     matrix = pd.DataFrame(
@@ -35,7 +34,7 @@ def tm_matrix (foldseek_dir):
     #  C     0.??   0.??   1.00
 
     for _, row in df.iterrows():
-        matrix.loc[row["query"], row["target"]] = row["alntmscore"]
+        matrix.loc[row["query"], row["target"]] = row["qtmscore"]
 
     # Make symmetric by averaging in both normal and transposed directions 
     matrix = (matrix + matrix.T) / 2
@@ -43,6 +42,7 @@ def tm_matrix (foldseek_dir):
     return matrix
 
 def plot_umap (matrix):
+    # Subtract 1 because the higher the TMscore, the lower the distance should be 
     distance = 1 - matrix.to_numpy()
 
     # Force the diagonal to be 0 
@@ -79,14 +79,45 @@ def plot_umap_clusters (clusters_dir, embedding, matrix, title):
         for p in matrix.index
     ]
 
-    plt.figure(figsize=(8,8))
+    # Convert cluster labels to numeric values for plotting
+    cluster_numbers = pd.factorize(colors)[0]
+
+    plt.figure(figsize=(7,7))
 
     plt.scatter(
         embedding[:,0],
         embedding[:,1],
-        c=pd.factorize(colors)[0],
+        c=cluster_numbers,
         s=30
     )
+
+    # Add cluster labels at the centre of each cluster
+    for cluster in sorted(set(colors)):
+        indices = [
+            i for i, c in enumerate(colors)
+            if c == cluster
+        ]
+
+        if len(indices) <= 3:
+            continue
+
+        x = embedding[indices, 0].mean()
+        y = embedding[indices, 1].mean()
+
+        plt.text(
+            x,
+            y,
+            str(cluster),
+            fontsize=12,
+            fontweight="bold",
+            ha="center",
+            va="center",
+            bbox=dict(
+                facecolor="white",
+                edgecolor="none",
+                alpha=0.7
+            )
+        )
 
     plt.xlabel("UMAP 1")
     plt.ylabel("UMAP 2")

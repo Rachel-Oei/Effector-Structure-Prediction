@@ -27,6 +27,6 @@ CUDA_VISIBLE_DEVICES=0 foldseek easy-search \
     ${EXP_CIF} \
     ${FDSK_OUT}/exp_foldseek_results.tsv \
     ${EXP_TMP} \
-    --format-output "query,target,alnlen,alntmscore,rmsd"
+    --format-output "query,target,alnlen,alntmscore,qtmscore,ttmscore,rmsd"
 
 # Use tmscore normalized by alignment length: alntmscore
