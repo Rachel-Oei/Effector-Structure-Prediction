@@ -19,10 +19,12 @@ def main():
 
     json_output_dir=folding_directory+"/af3/json"
     af3_script=folding_directory+"/af3/run_all_af3.sh"
+    output_af3="/home/rachel/02_folding/af3/alphafold3-3.0.3/output"
 
     create_directory(json_output_dir)
     create_json(input_text_entity, input_text_chain, fasta_dir, json_output_dir)
 
+    create_directory(output_af3)
     subprocess.run(["bash", af3_script], check=True)
 
 if __name__ == "__main__":
