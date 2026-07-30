@@ -36,7 +36,6 @@ The text file is under
 It looks like: 
 
 ```
-PDB_ID
 1FN8.A
 1KG1.A
 1KPT.A
