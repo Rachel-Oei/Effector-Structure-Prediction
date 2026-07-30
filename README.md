@@ -97,4 +97,5 @@ The code for running AF2 is not documented in this repository. For AF2, the TM-a
 
 The current scripts use ESM and AF3 running on the same server, with each using 1 GPU. 
 
-30 July: Realized that for solution NMR there are multiple models present. I will use model 1 as the representative one. 
+Next: 
+AF3 look at how many homologs it found in the database. Color the graphs by that. runtime and the tm score.
