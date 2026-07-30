@@ -139,6 +139,9 @@ def cif_single_chain (input_text_chain,
         cif_file=f"{cif_download_directory}{protein_id}.cif"
         structure = gemmi.read_structure(cif_file)
 
+        if len(structure)>1:
+            del structure[1:]
+
         found_chain = False
         for model in structure:
             chains_to_remove=[]
