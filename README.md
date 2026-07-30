@@ -98,10 +98,3 @@ The code for running AF2 is not documented in this repository. For AF2, the TM-a
 The current scripts use ESM and AF3 running on the same server, with each using 1 GPU. 
 
 30 July: Realized that for solution NMR there are multiple models present. I will use model 1 as the representative one. 
-
-Rerun main_tsv.py 
-
-Download the metadatafile to my laptop
-
-Rerun graphs again 
-
