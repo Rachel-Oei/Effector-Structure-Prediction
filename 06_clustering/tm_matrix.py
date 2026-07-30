@@ -79,14 +79,42 @@ def plot_umap_clusters (clusters_dir, embedding, matrix, title):
         for p in matrix.index
     ]
 
+    # Convert cluster labels to numeric values for plotting
+    cluster_numbers = pd.factorize(colors)[0]
+
     plt.figure(figsize=(8,8))
 
     plt.scatter(
         embedding[:,0],
         embedding[:,1],
-        c=pd.factorize(colors)[0],
+        c=cluster_numbers,
         s=30
     )
+
+    # Add cluster labels at the centre of each cluster
+    for cluster in sorted(set(colors)):
+        indices = [
+            i for i, c in enumerate(colors)
+            if c == cluster
+        ]
+
+        x = embedding[indices, 0].mean()
+        y = embedding[indices, 1].mean()
+
+        plt.text(
+            x,
+            y,
+            str(cluster),
+            fontsize=12,
+            fontweight="bold",
+            ha="center",
+            va="center",
+            bbox=dict(
+                facecolor="white",
+                edgecolor="none",
+                alpha=0.7
+            )
+        )
 
     plt.xlabel("UMAP 1")
     plt.ylabel("UMAP 2")
