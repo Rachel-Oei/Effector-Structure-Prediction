@@ -12,7 +12,6 @@ def tm_matrix (foldseek_dir):
 
     # Collecting all the proteins in the query and target, and sorting them
     proteins = sorted(set(df["query"]).union(df["target"]))
-    print(proteins)
 
     # Create an identity matrix with length of n(proteins) x n(proteins)
     matrix = pd.DataFrame(
@@ -43,6 +42,7 @@ def tm_matrix (foldseek_dir):
     return matrix
 
 def plot_umap (matrix):
+    # Subtract 1 because the higher the TMscore, the lower the distance should be 
     distance = 1 - matrix.to_numpy()
 
     # Force the diagonal to be 0 
