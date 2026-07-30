@@ -10,19 +10,34 @@ def tm_matrix (foldseek_dir):
         names=["query","target","alnlen","alntmscore","rmsd"]
     )
 
+    # Collecting all the proteins in the query and target, and sorting them
     proteins = sorted(set(df["query"]).union(df["target"]))
     print(proteins)
 
+    # Create an identity matrix with length of n(proteins) x n(proteins)
     matrix = pd.DataFrame(
         np.eye(len(proteins)),
         index=proteins,
         columns=proteins
     )
 
+    # From:  
+    #  query    target    alntmscore
+    #     A        B         0.72
+    #     A        C         0.31
+    #     B        A         0.68
+    #     B        C         0.45
+
+    # Convert to: 
+    #           A      B      C
+    #  A     1.00   0.72   0.31
+    #  B     0.68   1.00   0.45
+    #  C     0.??   0.??   1.00
+
     for _, row in df.iterrows():
         matrix.loc[row["query"], row["target"]] = row["alntmscore"]
 
-    # make symmetric
+    # Make symmetric by averaging in both normal and transposed directions 
     matrix = (matrix + matrix.T) / 2
 
     return matrix

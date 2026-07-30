@@ -97,3 +97,5 @@ Then the pipeline is as follows:
 The code for running AF2 is not documented in this repository. For AF2, the TM-align version 2024 was used (?), whereas for ESM and AF3, TM-align 2022 was used. Also, AF2 uses the experimentally resolved structures from .pdb files. It contains missing data for 4BJM_1, 8DP8_1, 8DP9_1. ESMFold and AF3 have complete datasets, and use the .cif files for the experimentally resolved structures. 
 
 The current scripts use ESM and AF3 running on the same server, with each using 1 GPU. 
+
+30 July: Realized that for solution NMR there are multiple models present. I will use model 1 as the representative one. 
