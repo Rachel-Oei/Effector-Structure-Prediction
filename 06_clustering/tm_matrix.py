@@ -11,6 +11,7 @@ def tm_matrix (foldseek_dir):
     )
 
     proteins = sorted(set(df["query"]).union(df["target"]))
+    print(proteins)
 
     matrix = pd.DataFrame(
         np.eye(len(proteins)),
