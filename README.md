@@ -107,3 +107,9 @@ There are currently 36273 .fasta files cut in the effector_p pipeline.
 There are currently 2745 .fasta files cut in foec_2 pipeline.
 - I got 240 for race4
 - I got 192 for race1 
+
+After removing non-effectors from effector_p pipeline:
+- I got ... for race4
+- I got ... for race1 
+
+We are assuming that the foec_2 pipeline are all effectors.

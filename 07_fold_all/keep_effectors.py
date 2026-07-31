@@ -49,6 +49,8 @@ for filename in os.listdir(annotations_dir):
         fasta_sequence= "".join(lines[1:])
         protein_id = header.replace(">", "")
 
+        keep_or_not = columns[4].strip()
+        
         if effector[protein_id]=="Non-effector":
             continue
         elif effector[protein_id]==None:
