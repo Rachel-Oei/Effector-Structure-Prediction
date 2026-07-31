@@ -2,7 +2,7 @@
 Pipeline for predicting effector structures. 
 
 **Background**: 
-I would like to use ESMFold, AF2 and AF3 to predict fungal effector structures. Pathogens can secrete effectors, which are virulent proteins that evoke an immune response in a host organism. They are structurally diverse, and little is known on how to predict their structures from their amino sequence.
+I would like to use ESMFold, AF2 and AF3 to predict fungal effector three-dimensional structures. Plant pathogens can secrete effectors, which are virulent proteins that can manipulate plant immunity. They are structurally diverse, and little is known on how to accurately predict their structures from their amino sequence.
 
 I collected 80 fungal effector structures that are experimentally resolved and available in the PDB database. I based this on literature reviews and recent papers. The metadata for this is under 
 
@@ -36,7 +36,6 @@ The text file is under
 It looks like: 
 
 ```
-PDB_ID
 1FN8.A
 1KG1.A
 1KPT.A
@@ -83,9 +82,20 @@ Then the pipeline is as follows:
 (run main_tsv.py)
     |
 05_graphs
-
+(run graphs_tsv.ipynb)
+    |
+06_clustering
+(run exp_clustering.sh)
+(run esm_clustering.sh)
+(run af3_clustering.sh)
+(run umap.ipynb)
 ```
 
-Note: the current scripts use esm and af3 running on the same server, with each using 1 GPU. 
+**Notes:**
 
+The code for running AF2 is not documented in this repository. For AF2, the TM-align version 2024 was used (?), whereas for ESM and AF3, TM-align 2022 was used. Also, AF2 uses the experimentally resolved structures from .pdb files. It contains missing data for 4BJM_1, 8DP8_1, 8DP9_1. ESMFold and AF3 have complete datasets, and use the .cif files for the experimentally resolved structures. 
 
+The current scripts use ESM and AF3 running on the same server, with each using 1 GPU. 
+
+Next: 
+AF3 look at how many homologs it found in the database. Color the graphs by that. runtime and the tm score.
