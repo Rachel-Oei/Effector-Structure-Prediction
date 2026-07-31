@@ -12,7 +12,7 @@ OUTDIR="${HOME}/03_tm_align/results_af2"
 
 mkdir -p "$OUTDIR"
 
-# Loop through AF3 folders
+# Loop through AF2 folders
 for folder in "$PREDICTED"/*; do
 
     # Get folder name (example: 2MYW_1)
