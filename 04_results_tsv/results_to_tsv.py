@@ -3,8 +3,8 @@ import re
 import pandas as pd
 
 def results_to_tsv (tmalign_folder, output_dir, model, metadata_file, runtime_file=None):
-    tmalign_dir = tmalign_folder+"/results_{model}"
-    output_file = output_dir+"/pdb_metadata_{model}.tsv"
+    tmalign_dir = f"{tmalign_folder}/results_{model}"
+    output_file = f"{output_dir}/pdb_metadata_{model}.tsv"
 
     df = pd.read_csv(metadata_file, sep="\t")
 
@@ -13,8 +13,6 @@ def results_to_tsv (tmalign_folder, output_dir, model, metadata_file, runtime_fi
     for filename in os.listdir(tmalign_dir):
         if filename.endswith("_tmalign.txt"):
             pdb_id = filename.replace("_tmalign.txt", "")
-        elif filename.endswith(".txt"):
-            pdb_id = filename.replace(".txt", "")
         else:
             continue
 

@@ -12,7 +12,7 @@ def main():
 
     model2="af2"
     metadata_file_af2 = output_dir+"/pdb_metadata_esm.tsv"
-    runtime_file_af2=None
+    runtime_file_af2=home_dir+"/02_folding/af2/af2_runtime.csv"
     results_to_tsv(tmalign_folder, output_dir, model2, metadata_file_af2, runtime_file_af2)
 
     model3="af3"
