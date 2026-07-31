@@ -49,11 +49,13 @@ for filename in os.listdir(annotations_dir):
         fasta_sequence= "".join(lines[1:])
         protein_id = header.replace(">", "")
 
-        keep_or_not = columns[4].strip()
-        
-        if effector[protein_id]=="Non-effector":
+        keep_or_not = effector[protein_id].strip()
+        print(f"keep or not: {keep_or_not}")
+
+        if keep_or_not == "Non-effector":
+            print(f"Skipping {fasta_name}: Non-effector")
             continue
-        elif effector[protein_id]==None:
+        elif keep_or_not==None:
             continue
             
         with open (output_file, "w") as f:

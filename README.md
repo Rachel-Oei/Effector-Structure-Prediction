@@ -100,16 +100,12 @@ The current scripts use ESM, AF2, AF3 running on the same server, with each usin
 Next: 
 AF3 look at how many homologs it found in the database. Color the graphs by that. runtime and the tm score.
 
-There are currently 36273 .fasta files cut in the effector_p pipeline.
+There are currently 36273 effectors in the effector_p pipeline.
 - I got 1860 for race4
 - I got 1796 for race1 
 
-There are currently 2745 .fasta files cut in foec_2 pipeline.
+There are currently 2745 effectors in the foec_2 pipeline.
 - I got 240 for race4
 - I got 192 for race1 
 
-After removing non-effectors from effector_p pipeline:
-- I got ... for race4
-- I got ... for race1 
-
-We are assuming that the foec_2 pipeline are all effectors.
+I want to only fold 1 for each cluster. 
