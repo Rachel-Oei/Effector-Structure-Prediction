@@ -2,7 +2,7 @@
 
 # Download through wget https://zhanggroup.org/TM-align/TMalign.cpp
 # Compile through g++ -O3 -ffast-math -lm -o TMalign TMalign.cpp
-# I have the 2022 version, could not find the 2024 version. 
+# I have the 2019 version, could not find the 2024 version. 
 
 # Paths
 HOME="/home/rachel"

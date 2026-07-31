@@ -71,11 +71,12 @@ Then the pipeline is as follows:
     |
 02_folding
 (run 'run_all_esm.sh')
-(run af2, note: code not in this repository)
+(run 'run_all_af2.sh')
 (run 'af3_main.py')
     |
 03_tm_align
 (run tm_align_esm.sh)
+(run tm_align_af2.sh)
 (run tm_align_af3.sh)
     |
 04_results_tsv
@@ -87,15 +88,14 @@ Then the pipeline is as follows:
 06_clustering
 (run exp_clustering.sh)
 (run esm_clustering.sh)
+(run af2_clustering.sh)
 (run af3_clustering.sh)
 (run umap.ipynb)
 ```
 
 **Notes:**
 
-The code for running AF2 is not documented in this repository. For AF2, the TM-align version 2024 was used (?), whereas for ESM and AF3, TM-align 2022 was used. Also, AF2 uses the experimentally resolved structures from .pdb files. It contains missing data for 4BJM_1, 8DP8_1, 8DP9_1. ESMFold and AF3 have complete datasets, and use the .cif files for the experimentally resolved structures. 
-
-The current scripts use ESM and AF3 running on the same server, with each using 1 GPU. 
+The current scripts use ESM, AF2, AF3 running on the same server, with each using 1 GPU. 
 
 Next: 
 AF3 look at how many homologs it found in the database. Color the graphs by that. runtime and the tm score.
