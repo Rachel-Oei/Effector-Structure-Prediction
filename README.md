@@ -99,3 +99,11 @@ The current scripts use ESM, AF2, AF3 running on the same server, with each usin
 
 Next: 
 AF3 look at how many homologs it found in the database. Color the graphs by that. runtime and the tm score.
+
+There are currently 36273 .fasta files cut in the effector_p pipeline.
+- I got 1860 for race4
+- I got 1796 for race1 
+
+There are currently 2745 .fasta files cut in foec_2 pipeline.
+- I got 240 for race4
+- I got 192 for race1 
