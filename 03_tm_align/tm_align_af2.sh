@@ -7,7 +7,7 @@
 # Paths
 HOME="/home/rachel"
 EXPERIMENTAL="${HOME}/01_prepare_cif/cif_single_chain"
-PREDICTED="${HOME}/02_folding/af2/alphafold-2.3.2/output"
+PREDICTED="${HOME}/02_folding/af2/alphafold-2.3.2/output/results"
 OUTDIR="${HOME}/03_tm_align/results_af2"
 
 mkdir -p "$OUTDIR"
