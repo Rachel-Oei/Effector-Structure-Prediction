@@ -5,9 +5,9 @@ import os
 sys.path.append("/home/rachel/01_prepare_cif")
 from prepare_cif_models import create_directory
 
-folding_directory="/home/rachel/07_fold_all/effector_p"
-fasta_dir="/home/rachel/07_fold_all/effector_p/single_cut_fasta"
-group_dir="/home/rachel/07_fold_all/effector_p/annotations"
+folding_directory="/home/rachel/07_fold_all/foec_2"
+fasta_dir="/home/rachel/07_fold_all/foec_2/single_cut_fasta"
+group_dir="/home/rachel/07_fold_all/foec_2/multi_fasta"
 
 output_dir=folding_directory+"/af3/json"
 create_directory(output_dir)
@@ -34,8 +34,8 @@ def create_json (fasta_dir, output_dir, n_files):
 
     """    
     for group in os.listdir(group_dir):
-        if group.endswith(".txt"):
-            group_name = group.replace(".txt", "")
+        if group.endswith("_08_putative_effectors_protein.fasta"):
+            group_name = group.replace("_08_putative_effectors_protein.fasta", "")
         else:
             continue 
 
