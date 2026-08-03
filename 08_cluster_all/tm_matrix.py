@@ -50,8 +50,8 @@ def plot_umap (matrix):
 
     reducer = umap.UMAP(
         metric='precomputed',
-        n_neighbors=15,
-        min_dist=0.1,
+        n_neighbors=30,
+        min_dist=0.3,
         random_state=42
     )
 
@@ -59,7 +59,7 @@ def plot_umap (matrix):
 
     return embedding
 
-def plot_umap_clusters (clusters_dir, embedding, matrix, title):
+def plot_umap_clusters (clusters_dir, embedding, matrix, title, n_clusters):
     clusters = pd.read_csv(
         clusters_dir,
         sep="\t",
@@ -98,7 +98,7 @@ def plot_umap_clusters (clusters_dir, embedding, matrix, title):
             if c == cluster
         ]
 
-        if len(indices) <= 3:
+        if len(indices) <= int(n_clusters):
             continue
 
         x = embedding[indices, 0].mean()
