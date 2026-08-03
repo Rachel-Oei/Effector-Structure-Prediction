@@ -14,6 +14,8 @@ RUNTIME_CSV="${HOME_DIR}/esm_runtime.csv"
 #Loop through annotations for group names 
 ANNOTATIONS="/home/rachel/07_fold_all/foec_2/multi_fasta"
 
+N_FILES=3 
+
 mkdir -p "$HOME_DIR/esmfold-results"
 mkdir -p "$HOME_DIR/esmfold-logs"
 
@@ -23,47 +25,51 @@ for annotation in "$ANNOTATIONS"/*_08_putative_effectors_protein.fasta; do
     group=$(basename "$annotation" _08_putative_effectors_protein.fasta)
 
     # Find FASTA files belonging to this group
-    fasta=$(find "$FASTA_DIR" -maxdepth 1 -name "${group}_*.fasta" | head -n 1)
+    fastas=$(find "$FASTA_DIR" -maxdepth 1 -name "${group}_*.fasta" | head -n "$N_FILES")
 
-    if [ -n "$fasta" ]; then
+    if [ -n "$fastas" ]; then
         
-        name=$(basename "$fasta" .fasta)
-
-        echo "Group: $group"
-        echo "Folding: $fasta"
+        while IFS= read -r fasta; do
         
-        output_folder="${OUT_DIR}/${name}"
+            name=$(basename "$fasta" .fasta)
 
-        # Skip if ESMFolder already exists
-        if [ -f "${output_folder}/${name}.pdb" ]; then
-            echo "Skipping ${name}: already completed"
-            continue
-        fi
+            echo "Group: $group"
+            echo "Folding: $fasta"
+            
+            output_folder="${HOME_DIR}/esmfold-results/${name}"
 
-        echo "Running ESMFold on ${name}"
+            # Skip if ESMFolder already exists
+            if [ -r "${output_folder}" ]; then
+                echo "Skipping ${name}: already completed"
+                continue
+            fi
 
-        mkdir -p "${OUT_DIR}/${name}"
-        mkdir -p "${LOG_DIR}"
+            echo "Running ESMFold on ${name}"
 
-        # collect the runtime times 
-        start=$(date +%s)
+            mkdir -p "${OUT_DIR}/${name}"
+            mkdir -p "${LOG_DIR}"
 
-        # Run on GPU 1 
-        CUDA_VISIBLE_DEVICES=0 ${ESMFOLD} \
-        "$fasta" \
-        "${OUT_DIR}/${name}/" \
-        |& tee "${LOG_DIR}/${name}.log"
+            # collect the runtime times 
+            start=$(date +%s)
 
-        end=$(date +%s)
-        runtime=$((end - start))
+            # Run on GPU 1 
+            CUDA_VISIBLE_DEVICES=0 ${ESMFOLD} \
+            "$fasta" \
+            "${OUT_DIR}/${name}/" \
+            |& tee "${LOG_DIR}/${name}.log"
 
-        echo "Finished ${name}"
+            end=$(date +%s)
+            runtime=$((end - start))
+
+            echo "Finished ${name}"
+            
+            echo "${name},${runtime}" >> $RUNTIME_CSV
+
+            cp -r "${OUT_DIR}/${name}" "$HOME_DIR/esmfold-results"
+            cp "${LOG_DIR}/${name}.log" "$HOME_DIR/esmfold-logs"
         
-        echo "${name},${runtime}" >> $RUNTIME_CSV
+        done <<< "$fastas"
 
-        cp -r "${OUT_DIR}/${name}" "$HOME_DIR/esmfold-results"
-        cp "${LOG_DIR}/${name}.log" "$HOME_DIR/esmfold-logs"
-        
     else
         echo "WARNING: No FASTA found for group ${group}"
     fi
