@@ -1,4 +1,4 @@
-# Will run on GPU 0
+# Will run on GPU 1
 
 HOME_DIR="/home/rachel"
 mkdir -p "${HOME_DIR}/08_cluster_all"
@@ -11,10 +11,10 @@ cd "${HOME_DIR}/08_cluster_all"
 export PATH=$(pwd)/foldseek/bin/:$PATH
 
 # Move esm.pdb files to clustering folder 
-ESM_DIR="/home/rachel/07_fold_all/effector_p/esm/esmfold-results"
-ESM_PDB="/home/rachel/08_cluster_all/effector_p/esm/pdb"
-ESM_TMP="/linuxhome/tmp/${USER}/effector_p/esm/"
-FDSK_OUT="/home/rachel/08_cluster_all/effector_p/esm/foldseek_output"
+ESM_DIR="/home/rachel/07_fold_all/foec_2/esm/esmfold-results"
+ESM_PDB="/home/rachel/08_cluster_all/foec_2/esm/pdb"
+ESM_TMP="/linuxhome/tmp/${USER}/foec_2/esm/"
+FDSK_OUT="/home/rachel/08_cluster_all/foec_2/esm/foldseek_output"
 
 mkdir -p ${ESM_PDB}
 mkdir -p ${ESM_TMP}
@@ -45,13 +45,13 @@ for folder in "$ESM_DIR"/*; do
 
 done
 
-# Run foldseek easy-cluster on GPU 0 
-CUDA_VISIBLE_DEVICES=0 foldseek easy-cluster ${ESM_PDB} "${FDSK_OUT}/esm_clusters" ${ESM_TMP}
+# Run foldseek easy-cluster on GPU 1
+CUDA_VISIBLE_DEVICES=1 foldseek easy-cluster ${ESM_PDB} "${FDSK_OUT}/esm_clusters" ${ESM_TMP}
 
-# Run foldseek easy-search on GPU 0 
-CUDA_VISIBLE_DEVICES=0 foldseek easy-search \
+# Run foldseek easy-search on GPU 1 
+CUDA_VISIBLE_DEVICES=1 foldseek easy-search \
     ${ESM_PDB} \
     ${ESM_PDB} \
-    ${FDSK_OUT}/esm_foldseek_results.tsv \
+    ${FDSK_OUT}/esm_foldseek_results_foec_2.tsv \
     ${ESM_TMP} \
     --format-output "query,target,alnlen,alntmscore,qtmscore,ttmscore,rmsd"
