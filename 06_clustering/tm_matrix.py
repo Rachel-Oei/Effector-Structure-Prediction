@@ -59,7 +59,7 @@ def plot_umap (matrix):
 
     return embedding
 
-def plot_umap_clusters (clusters_dir, embedding, matrix, title, n_clusters, cluster_names=None):
+def plot_umap_clusters (clusters_dir, embedding, matrix, title, n_clusters, cluster_names):
     clusters = pd.read_csv(
         clusters_dir,
         sep="\t",
