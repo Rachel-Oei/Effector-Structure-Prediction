@@ -42,13 +42,13 @@ def create_json (fasta_dir, output_dir, n_files):
         matching_fastas=[]
         for fasta_file in os.listdir(fasta_dir):
             if fasta_file.endswith(".fasta") and group_name in fasta_file:
-                pdb_id = fasta_file.replace(".fasta", "")
                 matching_fastas.append(fasta_file)
             else:
                 continue 
 
         for fasta_file in matching_fastas[:int(n_files)]:
             fasta_path = os.path.join(fasta_dir, fasta_file)
+            pdb_id = fasta_file.replace(".fasta", "")
 
             with open(fasta_path) as f:
                 sequence_lines = []
