@@ -2,6 +2,8 @@ import pandas as pd
 import numpy as np
 import umap 
 import matplotlib.pyplot as plt
+from scipy.cluster.hierarchy import linkage, leaves_list
+from scipy.spatial.distance import squareform
 
 def tm_matrix (foldseek_dir):
     df = pd.read_csv(
@@ -130,12 +132,43 @@ def plot_umap_clusters (clusters_dir, embedding, matrix, title, n_clusters, clus
 
     plt.show()
 
-def order_by_clusters(matrix, clusters_dir):
+def order_by_tm_score(matrix, clusters_dir):
     """
-    Reorder the matrix so proteins belonging to the same
-    Foldseek cluster are grouped together.
+    Reorder the matrix so that structurally similar proteins
+    (high TM-score) are positioned close together.
     """
 
+    # Convert TM-score similarity to distance
+    distance = 1 - matrix.to_numpy()
+
+    # Force symmetry and zero diagonal
+    distance = (distance + distance.T) / 2
+    np.fill_diagonal(distance, 0)
+
+    # Convert square distance matrix to condensed form
+    condensed_distance = squareform(
+        distance,
+        checks=False
+    )
+
+    # Hierarchical clustering
+    linkage_matrix = linkage(
+        condensed_distance,
+        method="average"
+    )
+
+    # Get order of proteins from dendrogram
+    order = leaves_list(linkage_matrix)
+
+    ordered_proteins = matrix.index[order]
+
+    # Reorder rows and columns
+    matrix_ordered = matrix.loc[
+        ordered_proteins,
+        ordered_proteins
+    ]
+
+    # Read cluster information
     clusters = pd.read_csv(
         clusters_dir,
         sep="\t",
@@ -143,37 +176,10 @@ def order_by_clusters(matrix, clusters_dir):
         names=["cluster", "protein"]
     )
 
-    # Keep only proteins that occur in the matrix
+    # Keep only proteins in matrix
     clusters = clusters[
         clusters["protein"].isin(matrix.index)
     ].copy()
-
-    # Number of members in each cluster
-    cluster_sizes = clusters["cluster"].value_counts()
-
-    # Sort clusters:
-    # largest clusters first
-    cluster_order = (
-        cluster_sizes
-        .sort_values(ascending=False)
-        .index
-    )
-
-    ordered_proteins = []
-
-    for cluster in cluster_order:
-
-        members = clusters.loc[
-            clusters["cluster"] == cluster,
-            "protein"
-        ].tolist()
-
-        ordered_proteins.extend(members)
-
-    matrix_ordered = matrix.loc[
-        ordered_proteins,
-        ordered_proteins
-    ]
 
     return matrix_ordered, clusters
 

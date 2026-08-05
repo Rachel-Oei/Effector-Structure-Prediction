@@ -1,4 +1,6 @@
 # Effector-Structure-Prediction
+(Work-in-progress. Expected completion of repository: 31 Aug 2026).
+
 Pipeline for predicting effector structures. 
 
 **Background**: 
