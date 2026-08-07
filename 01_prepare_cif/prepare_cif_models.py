@@ -9,85 +9,102 @@ def create_directory (nested_directory: str):
     Creates directory if it not already exists
     """
     os.makedirs(nested_directory, exist_ok=True)
-
-def pdb_text_to_list (input_text: str) -> List[str] : 
-    """
-    Converts PDB codes from a .txt separated by new-lines into a list
-    Input: .txt file delimited by new-lines.
-        Example: 
-        1FN8.A
-        1KG1.A
-        1KPT.A
-        4GVB.B
-    Return: [1FN8.A, 1KG1.A, 1KPT.A, 4GVB.B]
-    """
-    lines = []
-    with open(input_text, "r") as f:
-        for line in f:
-            lines.append(line[:6])
-    return lines
     
-def download_cif (input_text, output_directory):
-    """
-    Downloads cif files from RCSB, from PDB codes in the input list
-    Output file name e.g: 1FN8.cif
-    """
-    input_lines = pdb_text_to_list(input_text)
+class Protein:
+    def __init__(self, pdb_id, chain, entity=None, amino_acid_sequence=None):
+        self.pdb_id=pdb_id
+        self.chain=chain
+        self.entity=entity
+        self.amino_acid_sequence=amino_acid_sequence
 
-    for protein_full in input_lines:
-        protein_id=protein_full[:4]
-        url = f"https://files.rcsb.org/download/{protein_id}.cif"
-        output_final_directory=output_directory+f"{protein_id}.cif"
+class ProteinListController:
+    def __init__(self, input_text):
+        self.input_text=input_text
+        self.protein_list=[]
+
+    def generate_input_list (self: str) -> List[str] : 
+        """
+        Converts PDB codes from a .txt separated by new-lines into a list
+        Input: .txt file delimited by new-lines.
+            Example: 
+            1FN8.A
+            1KG1.A
+            1KPT.A
+            4GVB.B
+        Return: [1FN8.A, 1KG1.A, 1KPT.A, 4GVB.B]
+        """
+        with open(self.input_text, "r") as f:
+            for line in f:
+
+                line = line.strip()
+                
+                pdb_id, chain = line.split(".")
+                protein=Protein(pdb_id, chain)
+
+                # Creates protein:
+                # pdb_id = "1FN8"
+                # chain = "A"
+                # entity = None
+                # amino_acid_sequence = None
+
+                self.protein_list.append(protein)
+        return self.protein_list
+
+class ProteinController: 
+    def __init__(self):
+
+    def download_cif (self, protein, output_directory):
+        """
+        Downloads cif files from RCSB, from PDB codes in the input list
+        Output file name e.g: 1FN8.cif
+        """
+        url = f"https://files.rcsb.org/download/{protein.pdb_id}.cif"
+        output_final_directory=output_directory+f"{protein.pdb_id}.cif"
         response = requests.get(url, timeout=30)
 
         with open(output_final_directory, "wb") as out_file:
             out_file.write(response.content)
 
-        print(f"Downloaded {protein_id}")
+        print(f"Downloaded {protein.pdb_id}")
 
-def map_chain_to_entity (input_text: str, cif_directory, new_text_directory):
-    """
-    Maps all pdb chains to entity number and stores it into a 
-    similar format text file. 
-    Input: .txt file delimited by new-lines.
-        Example: 
-        1FN8.A
-        1KG1.A
-        1KPT.A
-        4GVB.B
-    Return: .txt file delimited by new-lines, with entity numbers.
-        Example: 
-        1FN8_1
-        1KG1_1
-        1KPT_1
-        4GVB_1
-    """
-    input_list=pdb_text_to_list(input_text)
+    def add_entity (self, protein, cif_directory):
+        """
+        """
+        protein_directory=f"{cif_directory}{protein.pdb_id}.cif"
 
-    input_list_entity=[]
-    for protein_full in input_list:
-        protein_id=protein_full[:4]
-        protein_directory=f"{cif_directory}{protein_id}.cif"
         d = MMCIF2Dict(protein_directory)
-        cif_entity_ids = d["_atom_site.label_entity_id"]
-        cif_chains = d["_atom_site.auth_asym_id"]
+        entity_per_atom = d["_atom_site.label_entity_id"]
+        chain_per_atom = d["_atom_site.auth_asym_id"]
         
-        protein_chain=protein_full[5]
+        protein_chain=protein.chain
         entity_id=None
-        for cif_entity_id, cif_chain in zip(cif_entity_ids, cif_chains):
+        for cif_entity, cif_chain in zip(entity_per_atom, chain_per_atom):
             if protein_chain == cif_chain:
-                entity_id=cif_entity_id
+                entity_id=cif_entity
                 break
 
         if entity_id is None:
-            print(f"Could not find chain {protein_full}")
-            continue
+            raise ValueError(
+                f"Could not find chain {protein.chain} "
+                f"in {protein.pdb_id}"
+            )
 
-        input_list_entity.append(f"{protein_id}_{entity_id}")
+        protein.entity=entity_id
 
-    with open(new_text_directory, "w") as text_file:
-        for protein_with_entity in input_list_entity:
-            text_file.write(protein_with_entity+"\n")
+def main():
+    # Generate the input list of proteins with information 
+    protein_list_controller=ProteinListController.generate_input_list(
+        "/home/rachel/01_prepare_cif/input_pdb_lists/pdb_list_chain.txt")
+
+    protein_list=protein_list_controller.
+    # Loop over each protein in the list, and perform the different steps:
+    for protein in ProteinListController.protein_list: 
+        ProteinController.download_cif(protein, "/home/rachel/cif/cif_downloads/")
+        ProteinController.add_entity(protein, "/home/rachel/cif/cif_downloads/")
+
+
+        ProteinController.extract_chain_sequence(protein)
+        ProteinController.extract_single_chain_cif(protein)
 
 def extract_chain_sequences(input_text, cif_directory, cif_fasta_directory):
     """
