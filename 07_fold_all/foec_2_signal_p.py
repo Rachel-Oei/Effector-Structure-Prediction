@@ -1,5 +1,5 @@
 # This is for Foec_2 Pipeline
-# # Signal P 6.0  
+# # Signal P 6.0. Runs by default on CPU.
 
 # Directory of the fasta folders per cluster is: 
 cluster_nuc_dir="/home/rachel/07_fold_all/foec_2/clusters"
@@ -62,4 +62,5 @@ out_dir="/home/rachel/07_fold_all/foec_2/single_cut_fasta/"
 # 3. Add amino acid fasta files that are cut to each folder. 
 
 # How to run: 
+# signalp6 --model_dir /home/rachel/07_fold_all/signalp_models/ ...
 # signalp6 --ff all_aa_dir --org eukarya --od out_dir --fmt txt --m slow-sequential
