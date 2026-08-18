@@ -19,7 +19,7 @@ cluster_nuc_dir="/home/rachel/07_fold_all/foec_2/clusters"
 # AAATACTTATACCCTCTTACTTCCCTTGACTTTTCATTTGactctcatcctcatcattaCCTTTGT
 # TTC
 
-all_aa_dir="/home/rachel/07_fold_all/foec_2/all_putative_effectors_protein.fasta"
+all_aa_fasta="/home/rachel/07_fold_all/foec_2/all_putative_effectors_protein.fasta"
 # >JAMSDW010000194.1-rna:854
 # MASMSFKSIAILTFAVLQPAHGAVFPSNIFNRSEIEAMPLEKRGSMDAYQLWDSAEIPYILQSLPHDLS
 # ESIRSAMREWEQSTCIRFLPKTTQSAWANFKKVSCLVPWLKTGRSRLAVR
@@ -42,6 +42,16 @@ cluster_list_txt="/home/rachel/07_fold_all/foec_2/Final_clusters_list.txt"
 # p_effector_335
 
 # The p_effector_n corresponds to the cluster_n naming. E.g p_effector_613 belongs to cluster_613 in the fasta files/
+with open (all_aa_fasta, "r") as f:
+    proteins=f.read().split(">")
+    protein_info={}
+    for protein in proteins:
+        if protein.strip() == "":
+            continue
+        split_fasta=protein.split("\n")
+        name_protein=split_fasta[0]
+        sequence="".join(split_fasta[1:])
+        protein_info[name_protein]=sequence
 
 cluster_filtered_dir="/home/rachel/07_fold_all/foec_2/clusters_filtered"
 os.makedirs(cluster_filtered_dir, exist_ok=True)
@@ -49,6 +59,8 @@ os.makedirs(cluster_filtered_dir, exist_ok=True)
 for filename in os.listdir(cluster_nuc_dir):
     if filename.startswith("multicluster_"):
         cluster_name = filename.replace("multicluster_", "cluster_")
+        with open (filename, "r") as f:
+            
 
     with open(cluster_list_txt, "r") as f:
         for line in f:
@@ -61,13 +73,16 @@ for filename in os.listdir(cluster_nuc_dir):
                     with open(os.path.join(cluster_filtered_dir, name), "w") as outfile:
                         outfile.write(infile.read())
 
-# Signal_p can have input as:
-# >seq1
-# ASTPGHTIIYEAVCLHNDRTTIP
-# >seq2 optional comment
-# ASQKRPSQRHGSKYLATASTMDHARHGFLPRHRDTGILDSIGRFFGGDRGAPK
-# NMYKDSHHPARTAHYGSLPQKSHGRTQDENPVVHFFKNIVTPRTPPPSQGKGR
-# KSAHKGFKGVDAQGTLSKIFKLGGRDSRSGSPMARRELVISLIVES 
+
+# File1: 
+# >JAMSDW010000194.1-rna:854
+# MASMSFKSIAILTFAVLQPAHGAVFPSNIFNRSEIEAMPLEKRGSMDAYQLWDSAEIPYILQSLPHDLS
+# ESIRSAMREWEQSTCIRFLPKTTQSAWANFKKVSCLVPWLKTGRSRLAVR
+
+# File2:
+# >JAMSDW010000230.1-rna:1126
+# MKLLAVVATVLAVFSTAEAQTAQVQRHFSQTPSVDQRGAGGYDGYSQVSRPATKQGICEECRRVSDAAA
+# AK
 
 out_dir = "/home/rachel/07_fold_all/foec_2/single_cut_fasta"
 os.makedirs(out_dir, exist_ok=True)
