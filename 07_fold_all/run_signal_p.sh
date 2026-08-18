@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # Download version 6 through https://services.healthtech.dtu.dk/services/SignalP-6.0/
 
 # tar -xzf signalp-6.0i.slow_sequential.tar.gz
@@ -29,3 +31,12 @@
 # cd ~/07_fold_all/signalp6_slow_sequential/signalp-6-package
 # python -m pip install .
 
+# Fungi are eukaryotic organisms, short output with no graphics, slow prediction mode. 
+
+signalp6 \
+    --model_dir "/home/rachel/07_fold_all/signalp6_slow_sequential/signalp-6-package/models/" \
+    --ff $all_aa_dir \
+    --org eukarya \
+    --od $out_dir \
+    --fmt txt \
+    --mode slow-sequential

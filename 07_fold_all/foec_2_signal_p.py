@@ -1,4 +1,5 @@
-#!/bin/bash
+import os 
+import subprocess 
 
 # This is for Foec_2 Pipeline
 # # Signal P 6.0. Runs by default on CPU.
@@ -40,10 +41,25 @@ cluster_list_txt="/home/rachel/07_fold_all/foec_2/Final_clusters_list.txt"
 # p_effector_290
 # p_effector_335
 
-# The p_effector_n corresponds to the cluster_n naming. E.g p_effector_613 belongs to cluster_613 in the fasta files.
+# The p_effector_n corresponds to the cluster_n naming. E.g p_effector_613 belongs to cluster_613 in the fasta files/
 
-# Run signal_p to see where the peptides start and end. Cut the peptides.
-out_dir="/home/rachel/07_fold_all/foec_2/single_cut_fasta/"
+cluster_filtered_dir="/home/rachel/07_fold_all/foec_2/clusters_filtered"
+os.makedirs(cluster_filtered_dir, exist_ok=True)
+
+for filename in os.listdir(cluster_nuc_dir):
+    if filename.startswith("multicluster_"):
+        cluster_name = filename.replace("multicluster_", "cluster_")
+
+    with open(cluster_list_txt, "r") as f:
+        for line in f:
+            line = line.strip()
+            cluster_number=int(line[11:])
+            name= f"cluster_{cluster_number}.fasta"
+
+            if name == cluster_name:
+                with open(os.path.join(cluster_nuc_dir, filename), "r") as infile:
+                    with open(os.path.join(cluster_filtered_dir, name), "w") as outfile:
+                        outfile.write(infile.read())
 
 # Signal_p can have input as:
 # >seq1
@@ -53,22 +69,32 @@ out_dir="/home/rachel/07_fold_all/foec_2/single_cut_fasta/"
 # NMYKDSHHPARTAHYGSLPQKSHGRTQDENPVVHFFKNIVTPRTPPPSQGKGR
 # KSAHKGFKGVDAQGTLSKIFKLGGRDSRSGSPMARRELVISLIVES 
 
-# Fungi are eukaryotic organisms, short output with no graphics, slow prediction mode. 
+out_dir = "/home/rachel/07_fold_all/foec_2/single_cut_fasta"
+os.makedirs(out_dir, exist_ok=True)
 
-# I would want to run the signal_p on all_aa_dir="/home/rachel/07_fold_all/foec_2/all_putative_effectors_protein.fasta"
+model_dir = "/home/rachel/07_fold_all/signalp6_slow_sequential/signalp-6-package/models"
 
-# It will produce a gff file output. 
+for filename in os.listdir(cluster_filtered_dir):
 
-# 1. Create a folder for each cluster (only the ones that we want to keep)
-# 2. Run signal p and get a .gff output for all 
-# 3. Add amino acid fasta files that are cut to each folder. 
+    if filename.endswith(".fasta"):
 
-# How to run: 
-signalp6 \
-    --model_dir "/home/rachel/07_fold_all/signalp6_slow_sequential/signalp-6-package/models/" \
-    --ff $all_aa_dir \
-    --org eukarya \
-    --od $out_dir \
-    --fmt txt \
-    --mode slow-sequential
+        cluster_name = filename.replace(".fasta", "")
 
+        fasta_file = os.path.join(cluster_filtered_dir, filename)
+
+        cluster_out_dir = os.path.join(out_dir, cluster_name)
+
+        os.makedirs(cluster_out_dir, exist_ok=True)
+
+        subprocess.run([
+            "signalp6",
+            "--model_dir", model_dir,
+            "--fastafile", fasta_file,
+            "--organism", "eukarya",
+            "--output_dir", cluster_out_dir,
+            "--format", "txt",
+            "--mode", "slow-sequential"
+            ], check=True)
+
+
+# STILL NEED TO CONVERT NUCLEOTIDE TO AA SEQEUENCE.
