@@ -41,6 +41,11 @@ cluster_list_txt="/home/rachel/07_fold_all/foec_2/Final_clusters_list.txt"
 # p_effector_290
 # p_effector_335
 
+cluster_filtered_dir="/home/rachel/07_fold_all/foec_2/clusters_filtered"
+os.makedirs(cluster_filtered_dir, exist_ok=True)
+
+# 1. Read all the protein sequences and store them in a dictionary with their name
+
 # The p_effector_n corresponds to the cluster_n naming. E.g p_effector_613 belongs to cluster_613 in the fasta files/
 with open (all_aa_fasta, "r") as f:
     proteins=f.read().split(">")
@@ -53,52 +58,56 @@ with open (all_aa_fasta, "r") as f:
         sequence="".join(split_fasta[1:])
         protein_info[name_protein]=sequence
 
-cluster_filtered_dir="/home/rachel/07_fold_all/foec_2/clusters_filtered"
-os.makedirs(cluster_filtered_dir, exist_ok=True)
+# 2. Save which clusters to keep
+clusters_to_keep = set()
 
+# Make a list of all cluster files to keep in cluster_.fasta format
+with open(cluster_list_txt, "r") as f:
+    for line in f:
+        line = line.strip()
+        cluster_number=int(line[11:])
+        name= f"cluster_{cluster_number}.fasta"
+        clusters_to_keep.add(name)
+        
+# 3. Loop through each cluster file  
 for filename in os.listdir(cluster_nuc_dir):
     if filename.startswith("multicluster_"):
         cluster_name = filename.replace("multicluster_", "cluster_")
-        with open (filename, "r") as f:
-            
+        if cluster_name not in clusters_to_keep:
+            continue
 
-    with open(cluster_list_txt, "r") as f:
-        for line in f:
-            line = line.strip()
-            cluster_number=int(line[11:])
-            name= f"cluster_{cluster_number}.fasta"
+        # Open the cluster file 
+        with open(os.path.join(cluster_nuc_dir, filename), "r") as infile:
+            records = infile.read().split(">")
+            output_file = os.path.join(cluster_filtered_dir, cluster_name)
+            with open(output_file, "w") as outfile:
 
-            if name == cluster_name:
-                with open(os.path.join(cluster_nuc_dir, filename), "r") as infile:
-                    nucl_info={}
-                    for line in infile:
-                        if protein.strip() == "":
-                            continue
-                        split_fasta=line.split("\n")
-                        name_protein=split_fasta[0]
-                        sequence="".join(split_fasta[1:])
-                        nucl_info[name_protein]=sequence
-                        for nucl_name, nucl_sequence in nucl_info:
-                            final_dict={}
-                            for name, sequence in protein_info:
-                                if nucl_name == name:
-                                    final_dict[nucl_name]=sequence
-                                    with open(os.path.join(cluster_filtered_dir, name), "w") as outfile:
-                                        outfile.write(f">{nucl_name}\n")
-                                        outfile.write(sequence + "\n")
-                                else:
-                                    continue 
+                # Go through each nucleotide FASTA record
+                for record in records:
+
+                    if record.strip() == "":
+                        continue
+
+                    lines = record.strip().split("\n")
+
+                    nucl_name = lines[0]
+
+                    # Check whether this nucleotide ID exists
+                    # in the protein FASTA
+                    if nucl_name in protein_info:
+
+                        protein_sequence = protein_info[nucl_name]
+
+                        outfile.write(f">{nucl_name}\n")
+                        outfile.write(protein_sequence + "\n")
+
+                    else:
+
+                        print(
+                            f"WARNING: {nucl_name} "
+                            f"not found in protein FASTA"
+                        )
                                 
-# File1: 
-# >JAMSDW010000194.1-rna:854
-# MASMSFKSIAILTFAVLQPAHGAVFPSNIFNRSEIEAMPLEKRGSMDAYQLWDSAEIPYILQSLPHDLS
-# ESIRSAMREWEQSTCIRFLPKTTQSAWANFKKVSCLVPWLKTGRSRLAVR
-
-# File2:
-# >JAMSDW010000230.1-rna:1126
-# MKLLAVVATVLAVFSTAEAQTAQVQRHFSQTPSVDQRGAGGYDGYSQVSRPATKQGICEECRRVSDAAA
-# AK
-
 out_dir = "/home/rachel/07_fold_all/foec_2/single_cut_fasta"
 os.makedirs(out_dir, exist_ok=True)
 
