@@ -70,10 +70,25 @@ for filename in os.listdir(cluster_nuc_dir):
 
             if name == cluster_name:
                 with open(os.path.join(cluster_nuc_dir, filename), "r") as infile:
-                    with open(os.path.join(cluster_filtered_dir, name), "w") as outfile:
-                        outfile.write(infile.read())
-
-
+                    nucl_info={}
+                    for line in infile:
+                        if protein.strip() == "":
+                            continue
+                        split_fasta=line.split("\n")
+                        name_protein=split_fasta[0]
+                        sequence="".join(split_fasta[1:])
+                        nucl_info[name_protein]=sequence
+                        for nucl_name, nucl_sequence in nucl_info:
+                            final_dict={}
+                            for name, sequence in protein_info:
+                                if nucl_name == name:
+                                    final_dict[nucl_name]=sequence
+                                    with open(os.path.join(cluster_filtered_dir, name), "w") as outfile:
+                                        outfile.write(f">{nucl_name}\n")
+                                        outfile.write(sequence + "\n")
+                                else:
+                                    continue 
+                                
 # File1: 
 # >JAMSDW010000194.1-rna:854
 # MASMSFKSIAILTFAVLQPAHGAVFPSNIFNRSEIEAMPLEKRGSMDAYQLWDSAEIPYILQSLPHDLS
