@@ -194,23 +194,32 @@ def move_fastas(signal_p_out_dir, final_clusters_dir, cluster_filtered_dir):
 def choose_n_proteins_per_cluster (n_proteins, cluster_dir):
     """
     Choose n number of proteins per cluster in a random order. 
-    Default is n=2. Uses .random package. 
+    Uses .random package. If the cluster contains less than the desired 
+    number of proteins, it is skipped. 
+
     Output is dictionary with:
-    {"cluster_1": [{"random_protein1": AA_sequence}, {"random_protein2": AA_sequence}],
-    "cluster_2": [{"random_protein1": AA_sequence}, {"random_protein2": AA_sequence}]}
+        {"cluster_1": ["random_protein1", "random_protein2"],
+        "cluster_2": ["random_protein1", "random_protein2"],
     """
     cluster_files_dict={}
     for cluster in os.listdir(cluster_dir):
-        cluster_name=cluster.replace("fasta","")
-        cluster_file=f"{cluster_dir}/{cluster_name}.fasta"
+        cluster_name=cluster.replace(".fasta","")
+        cluster_file=f"{cluster_dir}/{cluster}"
         protein_dict=create_name_sequence_dict(cluster_file)
-        proteins_chosen=[]
-        for i in range(n_proteins):
-            i+=1
-            protein_chosen=random.sample(list(protein_dict))    # .sample makes sure there is no replacement 
-            proteins_chosen.append(protein_chosen)
 
-        cluster_files_dict[cluster]=proteins_chosen
+        if len(protein_dict) < n_proteins:  # If the cluster contains less than the number of proteins 
+                                            # that we want, then the cluster is skipepd. 
+            print(
+                f"WARNING: {cluster_name} only contains "
+                f"{len(protein_dict)} proteins. This cluster is not considered. "
+            )
+            continue
+
+        proteins_chosen=random.sample(           # .sample makes sure there is no replacement 
+            list(protein_dict.keys()), 
+            n_proteins)    
+
+        cluster_files_dict[cluster_name]=proteins_chosen
 
     return cluster_files_dict
 
