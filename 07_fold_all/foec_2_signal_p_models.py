@@ -136,7 +136,7 @@ def move_fastas(signal_p_out_dir, final_clusters_dir, cluster_filtered_dir):
     """
     If signal P classifies the protein as "OTHER", it does not give a peptide sequence.
     If signal P classifies it as "SP" (signal peptide), give the cut sequence 
-    Output is moved to 'final_clusters_dir': "/home/rachel/07_fold_all/foec_2/single_cut_fasta"
+    Output is moved to 'filtered_clusters_file': "/home/rachel/07_fold_all/foec_2/single_cut_fasta/cluster/_.fasta"
     """
     for cluster in os.listdir(signal_p_out_dir): # Loop through the clusters in signal p output 
         cluster_path=os.path.join(signal_p_out_dir,cluster)
@@ -144,7 +144,7 @@ def move_fastas(signal_p_out_dir, final_clusters_dir, cluster_filtered_dir):
         prediction_txt=os.path.join(cluster_path,"prediction_results.txt")
         processed_entries_file=os.path.join(cluster_path,"processed_entries.fasta")
 
-        final_clusters_file=os.path.join(final_clusters_dir,cluster)
+        final_clusters_file=os.path.join(final_clusters_dir,f"{cluster}.fasta")
         filtered_clusters_file=os.path.join(cluster_filtered_dir,f"{cluster}.fasta")
 
         with open (final_clusters_file, "w") as out_f:
@@ -191,7 +191,7 @@ def move_fastas(signal_p_out_dir, final_clusters_dir, cluster_filtered_dir):
                     out_f.write(f">{protein_name}\n")   # Write the new fasta files with the correct sequence 
                     out_f.write(sequence + "\n")
 
-def choose_n_proteins_per_cluster (n_proteins, cluster_dir):
+def choose_n_proteins_per_cluster (n_proteins, final_clusters_dir):
     """
     Choose n number of proteins per cluster in a random order. 
     Uses .random package. If the cluster contains less than the desired 
@@ -202,9 +202,9 @@ def choose_n_proteins_per_cluster (n_proteins, cluster_dir):
         "cluster_2": ["random_protein1", "random_protein2"],
     """
     cluster_files_dict={}
-    for cluster in os.listdir(cluster_dir):
-        cluster_name=cluster.replace(".fasta","")
-        cluster_file=f"{cluster_dir}/{cluster}"
+    for cluster in os.listdir(final_clusters_dir):
+        cluster_name=cluster.replace(".fasta", "")
+        cluster_file=f"{final_clusters_dir}/{cluster}"
         protein_dict=create_name_sequence_dict(cluster_file)
 
         if len(protein_dict) < n_proteins:  # If the cluster contains less than the number of proteins 
@@ -223,5 +223,24 @@ def choose_n_proteins_per_cluster (n_proteins, cluster_dir):
 
     return cluster_files_dict
 
+def separate_select_fastas (n_proteins, final_clusters_dir, select_clusters_dir):
+    """
+    Create a folder with all the final fasta files, all separated and with naming convention:
+    "foec_2_cluster_27_JAMSDW010000212.1-rna:942.fasta"
+    If it already exists, skip.
+    """
+    cluster_files_dict=choose_n_proteins_per_cluster(n_proteins, final_clusters_dir)
 
+    for cluster, selected_proteins in cluster_files_dict.items():   
+        cluster_file=f"{final_clusters_dir}/{cluster}.fasta"    
+        protein_dict=create_name_sequence_dict(cluster_file)    # Get the sequence of that cluster 
 
+        for protein in selected_proteins:   # Loop through every selected protein of the cluster 
+            fasta_file=f"{select_clusters_dir}/foec_2_{cluster}_{protein}.fasta"
+            if os.path.exists(fasta_file):
+                print(f"Skipping foec_2_{cluster}_{protein}.fasta: SignalP output already exists")
+                continue
+            sequence=protein_dict[protein]
+            with open (fasta_file, "w") as f:
+                f.write(f">{protein}\n")   # Write the new fasta files with the correct sequence 
+                f.write(sequence + "\n")
