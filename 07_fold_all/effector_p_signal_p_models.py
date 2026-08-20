@@ -1,9 +1,6 @@
 import os 
-import subprocess 
+import subprocess
 import random
-
-# This is for Foec_2 Pipeline
-# # Signal P 6.0. Runs by default on CPU.
 
 def create_name_sequence_dict (multifasta):
     """
@@ -36,83 +33,18 @@ def create_clusters_to_keep_set (cluster_list_txt):
     # Make a list of all cluster files to keep in cluster_.fasta format
     with open(cluster_list_txt, "r") as f:
         for line in f:     
-            line = line.strip()     # Removes spaces, tabs, or newlines from begin or end of string 
-            cluster_number=int(line[11:])   # Define the cluster number by the number from the 11th character
-            name= f"cluster_{cluster_number}.fasta"     # Rename the fasta file  
-            clusters_to_keep.add(name)     # Add the cluster file name to the set 
+            line = line.strip()
+            clusters_to_keep.add(line)
     return clusters_to_keep
 
-def write_cluster_fastas (all_aa_fasta, cluster_list_txt, cluster_nuc_dir, cluster_filtered_dir):
-    """"
-    Matches the nucleotide sequences to amino acid sequences, and writes new fastas.
-    Input is 'cluster_list_txt', the txt file containing e.g:
-        p_effector_613
-        p_effector_493
-        p_effector_45
-        p_effector_592
-        p_effector_13
-
-        p_effector naming is consistent with cluster naming. E.g p_effector_13 
-        corresponds to cluster_13.
-        
-        As well as the 'cluster_nuc_dir' which is a directory containing 
-        folders with names e.g 'cluster_109.fasta', 'multicluster_271.fasta' etc. 
-        Contents of 'multicluster_271.fasta' is:
-
-        >JAJGYP010000019.1-rna:1527
-        atgTTGCCGCGGTGTGTATTTCTTGGCGTTGTATATTTGTCTATTGCTACTACTAGAAGCCCTTTG
-        AAATACTTATACCCTCTTACTTCCCTTGACTTTTCATTTGactctcatcctcatcattaCCTTTGT
-        TTC
-        >WJXY01000229.1-rna:667
-        atgTTGCCGCGGTGTGTATTTCTTGGCGTTGTATATTTGTCTATTGCTACTACTAGAAGCCCTTTG
-        AAATACTTATACCCTCTTACTTCCCTTGACTTTTCATTTGactctcatcctcatcattaCCTTTGT
-        TTC
-
-        'cluster_filtered_dir' is the directory where all the output is stored:
-        "/home/rachel/07_fold_all/foec_2/clusters_filtered"
-
-    Output is the newly written fasta files with amino acid sequences of filtered clusters.
-
+def run_signal_p (out_dir, cluster_dir, model_dir): 
     """
-    protein_info=create_name_sequence_dict(all_aa_fasta) # Create protein info dictionary
-    clusters_to_keep=create_clusters_to_keep_set(cluster_list_txt)  # Creates set of clusters to keep
-
-    for filename in os.listdir(cluster_nuc_dir):     
-        cluster_name=filename  
-        if filename.startswith("multicluster_"):    
-            cluster_name = filename.replace("multicluster_", "cluster_") # Rename each multicluster to cluster 
-        if cluster_name not in clusters_to_keep:    # Skip if the cluster name is not in the filtered cluster set  
-            continue
-
-        # Open the cluster file 
-        with open(os.path.join(cluster_nuc_dir, filename), "r") as f:
-            records = f.read().split(">")     # Separate the fastas
-            output_file = os.path.join(cluster_filtered_dir, cluster_name) # Create output file destination
-            with open(output_file, "w") as out_f:
-                # Loop through each separated fasta
-                for record in records:  
-                    if record.strip() == "":    # Skip the first empty
-                        continue
-                    lines = record.strip().split("\n")  # Remove the newlines 
-                    protein_name = lines[0]    # Take the name from the first line 
-                    if protein_name in protein_info:   # Check whether this matches with protein_info dictionary 
-                        protein_sequence = protein_info[protein_name]   # Access the protein sequence from dictionary 
-                        out_f.write(f">{protein_name}\n")   # Write the new fasta files 
-                        out_f.write(protein_sequence + "\n")
-                        # Keep appending the output_file until all fastas per cluster are written
-                    else:
-                        print(
-                            f"WARNING: {protein_name} "
-                            f"not found in protein FASTA"
-                        )
-
-def run_signal_p (out_dir, cluster_filtered_dir, model_dir): 
+    Running SignalP for the Effector_P pipeline
     """
-    Running SignalP for the FOEC_2 pipeline
-    """
+    clusters_to_keep=create_clusters_to_keep_set(cluster_list_txt)
 
-    for filename in os.listdir(cluster_filtered_dir): # Loop over every file inside cluster_filtered_dir
-        fasta_file = os.path.join(cluster_filtered_dir, filename)
+    for filename in os.listdir(cluster_dir): # Loop over every file inside cluster_dir
+        fasta_file = os.path.join(cluster_dir, filename)
         cluster_name = filename.replace(".fasta", "")
         cluster_out_dir = os.path.join(out_dir, cluster_name)
 
@@ -120,6 +52,10 @@ def run_signal_p (out_dir, cluster_filtered_dir, model_dir):
 
         if os.path.exists(signalp_output):
             print(f"Skipping {cluster_name}: SignalP output already exists")
+            continue
+
+        if cluster_name not in clusters_to_keep:
+            print(f"Skipping {cluster_name}: not in clusters to keep set")
             continue
         
         subprocess.run([
@@ -132,7 +68,7 @@ def run_signal_p (out_dir, cluster_filtered_dir, model_dir):
             "--mode", "slow-sequential"
             ], check=True)
 
-def move_fastas(signal_p_out_dir, final_clusters_dir, cluster_filtered_dir):
+def move_fastas(signal_p_out_dir, cluster_dir, final_clusters_dir):
     """
     If signal P classifies the protein as "OTHER", it does not give a peptide sequence.
     If signal P classifies it as "SP" (signal peptide), give the cut sequence 
@@ -145,7 +81,7 @@ def move_fastas(signal_p_out_dir, final_clusters_dir, cluster_filtered_dir):
         processed_entries_file=os.path.join(cluster_path,"processed_entries.fasta")
 
         final_clusters_file=os.path.join(final_clusters_dir,f"{cluster}.fasta")
-        filtered_clusters_file=os.path.join(cluster_filtered_dir,f"{cluster}.fasta")
+        filtered_clusters_file=os.path.join(cluster_dir,f"{cluster}.fasta")
 
         with open (final_clusters_file, "w") as out_f:
             # Get dictionary with protein: sequence info 
@@ -226,7 +162,7 @@ def choose_n_proteins_per_cluster (n_proteins, final_clusters_dir):
 def separate_select_fastas (n_proteins, final_clusters_dir, select_clusters_dir):
     """
     Create a folder with all the final fasta files, all separated and with naming convention:
-    "foec_2_cluster_27_JAMSDW010000212.1-rna:942.fasta"
+    "effector_p_cluster_27_JAMSDW010000212.1-rna:942.fasta"
     If it already exists, skip.
     """
     cluster_files_dict=choose_n_proteins_per_cluster(n_proteins, final_clusters_dir)
@@ -236,9 +172,9 @@ def separate_select_fastas (n_proteins, final_clusters_dir, select_clusters_dir)
         protein_dict=create_name_sequence_dict(cluster_file)    # Get the sequence of that cluster 
 
         for protein in selected_proteins:   # Loop through every selected protein of the cluster 
-            fasta_file=f"{select_clusters_dir}/foec_2_{cluster}_{protein}.fasta"
+            fasta_file=f"{select_clusters_dir}/effector_p_{cluster}_{protein}.fasta"
             if os.path.exists(fasta_file):
-                print(f"Skipping foec_2_{cluster}_{protein}.fasta: SignalP output already exists")
+                print(f"Skipping effector_p_{cluster}_{protein}.fasta: SignalP output already exists")
                 continue
             sequence=protein_dict[protein]
             with open (fasta_file, "w") as f:
