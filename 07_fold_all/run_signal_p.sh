@@ -37,3 +37,6 @@ signalp6 \
     --od $out_dir \
     --fmt txt \
     --mode slow-sequential
+
+## For both pipelines signal P are now running, but I still need to run the moving and separate fastas.
+##  Then we can fold with each folding method. 
