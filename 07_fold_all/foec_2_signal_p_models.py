@@ -130,3 +130,62 @@ def signal_p (out_dir, cluster_filtered_dir, model_dir):
             "--format", "txt",
             "--mode", "slow-sequential"
             ], check=True)
+
+def move_fastas(signal_p_out_dir, final_clusters_dir, cluster_filtered_dir):
+    """
+    If signal P classifies the protein as "OTHER", it does not give a peptide sequence.
+    If signal P classifies it as "SP" (signal peptide), give the cut sequence 
+    Output is moved to 'final_clusters_dir': "/home/rachel/07_fold_all/foec_2/single_cut_fasta"
+    """
+    for cluster in os.listdir(signal_p_out_dir): # Loop through the clusters in signal p output 
+        cluster_path=os.path.join(signal_p_out_dir,cluster)
+
+        prediction_txt=os.path.join(cluster_path,"prediction_results.txt")
+        processed_entries_file=os.path.join(cluster_path,"processed_entries.fasta")
+
+        final_clusters_file=os.path.join(final_clusters_dir,cluster)
+        filtered_clusters_file=os.path.join(cluster_filtered_dir,f"{cluster}.fasta")
+
+        with open (final_clusters_file, "w") as out_f:
+            # Get dictionary with protein: sequence info 
+            filtered_info=create_name_sequence_dict(filtered_clusters_file) 
+            # Get dictionary with protein: sequence info processed after signal P
+            signal_p_info=create_name_sequence_dict(processed_entries_file) 
+            with open (prediction_txt, "r") as f:   # Open the prediction to see what category the peptide belongs to 
+                lines=f.read().split("\n")
+                for line in lines:
+                    if line.startswith("#") or line == "":     # Do not look at the first two lines
+                        continue
+
+                    split_line = line.split()   # Make a list out of the columns
+
+                    protein_name = split_line[0]
+                    prediction = split_line[1]
+
+                    if prediction == "SP":  # If the peptide is a signal peptide 
+                        if protein_name in signal_p_info:   # Then use the processed sequence from signal p
+                            sequence=signal_p_info[protein_name]
+                        else:
+                            print(
+                                    f"WARNING: {protein_name} "
+                                    f"not found in {processed_entries_file}"
+                                )
+                            continue 
+
+                    elif prediction == "OTHER":
+                        if protein_name in filtered_info:
+                            sequence=filtered_info[protein_name]
+                        else:
+                            print(
+                                    f"WARNING: {protein_name} "
+                                    f"not found in {filtered_clusters_file}"
+                                )
+                            continue 
+                    else: 
+                        print (f"WARNING: {protein_name} "
+                                f"does not have a prediction by Signal P"
+                                )
+                        continue 
+
+                    out_f.write(f">{protein_name}\n")   # Write the new fasta files with the correct sequence 
+                    out_f.write(sequence + "\n")
