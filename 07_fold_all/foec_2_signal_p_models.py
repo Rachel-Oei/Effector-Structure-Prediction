@@ -105,32 +105,22 @@ def write_cluster_fastas (all_aa_fasta, cluster_list_txt, cluster_nuc_dir, clust
                             f"not found in protein FASTA"
                         )
 
-### RUN:
-all_aa_fasta="/home/rachel/07_fold_all/foec_2/all_putative_effectors_protein.fasta"
-cluster_list_txt="/home/rachel/07_fold_all/foec_2/Final_clusters_list.txt"
-cluster_nuc_dir="/home/rachel/07_fold_all/foec_2/clusters"
-cluster_filtered_dir="/home/rachel/07_fold_all/foec_2/clusters_filtered"
+def signal_p (out_dir, cluster_filtered_dir, model_dir): 
+    """
+    Running SignalP for the FOEC_2 pipeline
+    """
 
-write_cluster_fastas (all_aa_fasta, cluster_list_txt, cluster_nuc_dir, cluster_filtered_dir)
-
-### NOW have to do signal p. 
-out_dir = "/home/rachel/07_fold_all/foec_2/single_cut_fasta"
-os.makedirs(out_dir, exist_ok=True)
-
-model_dir = "/home/rachel/07_fold_all/signalp6_slow_sequential/signalp-6-package/models"
-
-for filename in os.listdir(cluster_filtered_dir):
-
-    if filename.endswith(".fasta"):
-
-        cluster_name = filename.replace(".fasta", "")
-
+    for filename in os.listdir(cluster_filtered_dir): # Loop over every file inside cluster_filtered_dir
         fasta_file = os.path.join(cluster_filtered_dir, filename)
-
+        cluster_name = filename.replace(".fasta", "")
         cluster_out_dir = os.path.join(out_dir, cluster_name)
 
-        os.makedirs(cluster_out_dir, exist_ok=True)
+        signalp_output = os.path.join(cluster_out_dir, "prediction_results.txt")
 
+        if os.path.exists(signalp_output):
+            print(f"Skipping {cluster_name}: SignalP output already exists")
+            continue
+        
         subprocess.run([
             "signalp6",
             "--model_dir", model_dir,
