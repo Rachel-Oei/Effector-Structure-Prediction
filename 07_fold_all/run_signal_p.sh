@@ -8,7 +8,7 @@
 # pip install "numpy<2"
 
 ## Because signal p only operates with python 3.10, and I had 3.12, 
-## I had to activate a conda environmnet with version 3.10
+## I had to activate a conda environmnet with version 3.9
 
 # Download miniconda to get conda inside the server:
 # cd ~
@@ -16,15 +16,12 @@
 # bash Miniconda3-latest-Linux-x86_64.sh
 
 # export PATH="$HOME/miniconda3/bin:$PATH"
-# conda create -n signalp310 python=3.10
-# source "$HOME/miniconda3/bin/activate" signalp310 to activate the python 3.10 environment. 
+# conda create -n signalp310 python=3.9
+# source "$HOME/miniconda3/bin/activate" signalp39 to activate the python 3.9 environment. 
 # python --version
 
 ## To activate everytime:
 # export PATH="$HOME/miniconda3/bin:$PATH" 
-# source "$HOME/miniconda3/bin/activate" signalp310
-
-# Need to change to Python 3.9
 # source "$HOME/miniconda3/bin/activate" signalp39
 
 ## Installing the signal-p package 
