@@ -1,25 +1,29 @@
 from foec_2_signal_p_models import (write_cluster_fastas,
-                                    signal_p,
+                                    run_signal_p,
                                     move_fastas
                                     )
 import os 
 
 def main():
 
-    all_aa_fasta="/home/rachel/07_fold_all/foec_2/all_putative_effectors_protein.fasta"
-    cluster_list_txt="/home/rachel/07_fold_all/foec_2/Final_clusters_list.txt"
+    project_dir="/home/rachel/07_fold_all/foec_2"
 
-    cluster_nuc_dir="/home/rachel/07_fold_all/foec_2/clusters"
+    all_aa_fasta=f"{project_dir}/all_putative_effectors_protein.fasta"
 
-    cluster_filtered_dir="/home/rachel/07_fold_all/foec_2/clusters_filtered"
+    cluster_list_txt=f"{project_dir}/Final_clusters_list.txt"
+
+    cluster_nuc_dir=f"{project_dir}/clusters"
+
+    cluster_filtered_dir=f"{project_dir}/clusters_filtered"
     os.makedirs(cluster_filtered_dir, exist_ok=True)
 
-    out_dir = "/home/rachel/07_fold_all/foec_2/signal_p_output"
+    out_dir = f"{project_dir}/signal_p_output"
     os.makedirs(out_dir, exist_ok=True)
 
     model_dir = "/home/rachel/07_fold_all/signalp6_slow_sequential/signalp-6-package/models"
 
-    final_clusters_dir = "/home/rachel/07_fold_all/foec_2/single_cut_fasta"
+    final_clusters_dir = f"{project_dir}/single_cut_fasta"
+    os.makedirs(final_clusters_dir, exist_ok=True)
 
     write_cluster_fastas (all_aa_fasta, 
                           cluster_list_txt, 
@@ -27,7 +31,7 @@ def main():
                           cluster_filtered_dir
                           )
     
-    signal_p(out_dir, 
+    run_signal_p(out_dir, 
             cluster_filtered_dir, 
             model_dir
             )

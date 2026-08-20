@@ -1,10 +1,11 @@
 import os 
 import subprocess 
+import random
 
 # This is for Foec_2 Pipeline
 # # Signal P 6.0. Runs by default on CPU.
 
-def create_name_sequence_dict (all_aa_fasta):
+def create_name_sequence_dict (multifasta):
     """
     Input is a multifasta of each protein and their amino acid sequences.
     Returns a dictionary containing, e.g:
@@ -15,7 +16,7 @@ def create_name_sequence_dict (all_aa_fasta):
     VSRPATKQGICEECRRVSDAAAAK'
     }
     """
-    with open (all_aa_fasta, "r") as f:
+    with open (multifasta, "r") as f:
         proteins=f.read().split(">")    # split the sequences
         protein_info={}     # create dictionary to store 
         for protein in proteins:
@@ -105,7 +106,7 @@ def write_cluster_fastas (all_aa_fasta, cluster_list_txt, cluster_nuc_dir, clust
                             f"not found in protein FASTA"
                         )
 
-def signal_p (out_dir, cluster_filtered_dir, model_dir): 
+def run_signal_p (out_dir, cluster_filtered_dir, model_dir): 
     """
     Running SignalP for the FOEC_2 pipeline
     """
@@ -189,3 +190,29 @@ def move_fastas(signal_p_out_dir, final_clusters_dir, cluster_filtered_dir):
 
                     out_f.write(f">{protein_name}\n")   # Write the new fasta files with the correct sequence 
                     out_f.write(sequence + "\n")
+
+def choose_n_proteins_per_cluster (n_proteins, cluster_dir):
+    """
+    Choose n number of proteins per cluster in a random order. 
+    Default is n=2. Uses .random package. 
+    Output is dictionary with:
+    {"cluster_1": [{"random_protein1": AA_sequence}, {"random_protein2": AA_sequence}],
+    "cluster_2": [{"random_protein1": AA_sequence}, {"random_protein2": AA_sequence}]}
+    """
+    cluster_files_dict={}
+    for cluster in os.listdir(cluster_dir):
+        cluster_name=cluster.replace("fasta","")
+        cluster_file=f"{cluster_dir}/{cluster_name}.fasta"
+        protein_dict=create_name_sequence_dict(cluster_file)
+        proteins_chosen=[]
+        for i in range(n_proteins):
+            i+=1
+            protein_chosen=random.sample(list(protein_dict))    # .sample makes sure there is no replacement 
+            proteins_chosen.append(protein_chosen)
+
+        cluster_files_dict[cluster]=proteins_chosen
+
+    return cluster_files_dict
+
+
+
