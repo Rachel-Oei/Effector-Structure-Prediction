@@ -4,10 +4,6 @@ HOME_DIR="/home/rachel"
 mkdir -p "${HOME_DIR}/06_clustering"
 cd "${HOME_DIR}/06_clustering"
 
-# Download Foldseek through:
-# wget https://mmseqs.com/foldseek/foldseek-linux-gpu.tar.gz
-# tar xvzf foldseek-linux-gpu.tar.gz
-
 export PATH=$(pwd)/foldseek/bin/:$PATH
 
 # Move af3.cif files to clustering folder 

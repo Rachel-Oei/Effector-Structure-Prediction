@@ -53,7 +53,8 @@ def run_signal_p (cluster_list_txt, out_dir, cluster_dir, model_dir):
         if cluster_name not in clusters_to_keep:
             print(f"Skipping {cluster_name}: not in clusters to keep set")
             continue
-        
+
+        # Run SignalP. Settings: fungi are eukaryotic organisms, short output with no graphics, slow prediction mode. 
         subprocess.run([
             "signalp6",
             "--model_dir", model_dir,

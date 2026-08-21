@@ -8,13 +8,10 @@ import os
 def main():
 
     project_dir="/home/rachel/07_fold_all/foec_2"
-
     all_aa_fasta=f"{project_dir}/all_putative_effectors_protein.fasta"
-
     cluster_list_txt=f"{project_dir}/Final_clusters_list.txt"
-
     cluster_nuc_dir=f"{project_dir}/clusters"
-
+    
     cluster_filtered_dir=f"{project_dir}/clusters_filtered"
     os.makedirs(cluster_filtered_dir, exist_ok=True)
 
@@ -26,8 +23,7 @@ def main():
     final_clusters_dir = f"{project_dir}/single_cut_fasta"
     os.makedirs(final_clusters_dir, exist_ok=True)
 
-    n_proteins=2    # Default number of proteins folded per cluster is 2. 
-                    # If the cluster contains less, it is skipped
+    n_proteins=2
 
     select_clusters_dir=f"{project_dir}/select_separate_fasta"
     os.makedirs(select_clusters_dir, exist_ok=True)
