@@ -1,6 +1,7 @@
 import requests 
 import gemmi
 from Bio.PDB.MMCIF2Dict import MMCIF2Dict
+import json
 
 class Protein:
     """
@@ -34,11 +35,11 @@ class Protein:
 
         print(f"Downloaded {self.pdb_id}")
 
-    def map_entity (self, cif_directory):
+    def map_entity (self, cif_download_directory):
         """
         Finds the entity from the chain (auth_asym_id) using the MMCIF2Dict.
         """
-        protein_directory=f"{cif_directory}{self.pdb_id}.cif"
+        protein_directory=f"{cif_download_directory}{self.pdb_id}.cif"
         
         d = MMCIF2Dict(protein_directory)
         entity_per_atom = d["_atom_site.label_entity_id"]
@@ -60,12 +61,12 @@ class Protein:
         self.entity=entity_id
         return self.entity
 
-    def extract_chain_sequence(self, cif_directory, cif_fasta_directory):
+    def extract_chain_sequence(self, cif_download_directory, cif_fasta_directory):
         """
         Obtain fasta sequences from only the single chains that are used.
         Store them in a new directory and in the Protein class. 
         """    
-        protein_directory=f"{cif_directory}{self.pdb_id}.cif"
+        protein_directory=f"{cif_download_directory}{self.pdb_id}.cif"
         d = MMCIF2Dict(protein_directory)
         strand_ids = d["_entity_poly.entity_id"]
         sequences = d["_entity_poly.pdbx_seq_one_letter_code_can"]
@@ -126,6 +127,57 @@ class Protein:
         structure.make_mmcif_document().write_file(output_file)
     
         print(f"Created {output_file}")
+
+    def create_json (self, output_dir):
+        """
+        Reads fasta file for each protein, creates json file in the format of:
+        {
+        "name": "2PV7_1",
+        "sequences": [
+        {
+        "protein": {
+                "id": ["A"],
+                "sequence": "GMRESYANENQFGFKTINSDIHKIVIVGGYGKLGGLFARYLRASGYPISILDREDWAVAESILANADVVIVSVPINLTLETIERLKPYLTENMLLADLTSVKREPLAKMLEVHTGAVLGLHPMFGADIASMAKQVVVRCDGRFPERYEWLLEQIQIWGAKIYQTNATEHDHNMTYIQALRHFSTFANGLHLSKQPINLANLLALSSPIYRLELAMIGRLFAQDAELYADIIMDKSENLAVIETLKQTYDEALTFFENNDRQGFIDAFHKVRDWFGDYSEQFLKESRQLLQQANDLKQG"
+        }
+        }
+        ],
+        "modelSeeds": [1],
+        "dialect": "alphafold3",
+        "version": 1
+        }
+
+        Output name is e.g 2PV7_1.json
+
+        """
+        if self.amino_acid_sequence is None:
+            print(
+                f"WARNING: No sequence available for "
+                f"{self.pdb_id}_{self.entity}. JSON not created."
+            )
+            return
+        
+        json_data={
+            "name":f"{self.pdb_id}_{self.entity}",
+            "sequences": [
+            {
+                "protein": {
+                "id": [self.chain],
+                "sequence": self.amino_acid_sequence
+                }
+            }
+            ],
+            "modelSeeds": [1],
+            "dialect": "alphafold3",
+            "version": 1
+        }
+        
+        output_file = f"{output_dir}/{self.pdb_id}_{self.entity}.json"
+
+        # Write the json file 
+        with open(output_file, "w") as f:
+            json.dump(json_data, f, indent=2)
+
+        print(f"{output_file} created")
     
 class AllProteins:
     """
@@ -184,10 +236,14 @@ class AllProteins:
         for protein in self.protein_list:
             protein.map_entity(cif_download_directory)
 
-    def extract_chain_sequences(self, cif_directory, cif_fasta_directory):
+    def extract_chain_sequences(self, cif_download_directory, cif_fasta_directory):
         for protein in self.protein_list:
-            protein.extract_chain_sequence(cif_directory, cif_fasta_directory)
+            protein.extract_chain_sequence(cif_download_directory, cif_fasta_directory)
 
     def cif_single_chain_all(self, cif_download_directory, cif_single_chain_directory):
         for protein in self.protein_list:
             protein.cif_single_chain(cif_download_directory, cif_single_chain_directory)
+
+    def create_json_all(self, output_dir):
+        for protein in self.protein_list:
+            protein.create_json(output_dir)

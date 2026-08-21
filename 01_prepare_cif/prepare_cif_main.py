@@ -1,5 +1,12 @@
-from prepare_cif_models import Protein, AllProteins
+from prepare_cif_models import AllProteins
 import os
+
+"""
+01_prepare_cif:
+    - downloads and stores the separate fasta files and cif files for each protein.
+    - for AlphaFold3 folding also creates json files. 
+    - uses Class logic 
+"""
 
 def main():
     cif_directory = "/home/rachel/01_prepare_cif"
@@ -14,11 +21,15 @@ def main():
     cif_single_chain_directory = cif_directory + "/cif_single_chain/"
     os.makedirs(cif_single_chain_directory, exist_ok=True)
 
+    json_output_dir="/home/rachel/02_folding/af3/json"
+    os.makedirs(json_output_dir, exist_ok=True)
+
     proteins = AllProteins(input_text_chain)
     proteins.download_all(cif_download_directory)
     proteins.map_entities(cif_download_directory)
     proteins.extract_chain_sequences(cif_download_directory, cif_fasta_directory)
     proteins.cif_single_chain_all(cif_download_directory, cif_single_chain_directory)
+    proteins.create_json_all(json_output_dir)
 
 if __name__ == "__main__":
     main()
