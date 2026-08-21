@@ -17,8 +17,6 @@
 
 # export PATH="$HOME/miniconda3/bin:$PATH"
 # conda create -n signalp310 python=3.9
-# source "$HOME/miniconda3/bin/activate" signalp39 to activate the python 3.9 environment. 
-# python --version
 
 ## To activate everytime:
 # export PATH="$HOME/miniconda3/bin:$PATH" 

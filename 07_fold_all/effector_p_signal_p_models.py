@@ -5,13 +5,9 @@ import random
 def create_name_sequence_dict (multifasta):
     """
     Input is a multifasta of each protein and their amino acid sequences.
-    Returns a dictionary containing, e.g:
-    {
-    'JAMSDW010000194.1-rna:854': 'MASMSFKSIAILTFAVLQPAHGAVFPSNIFNRSEIEAMPLEKRGS
-    MDAYQLWDSAEIPYILQSLPHDLSESIRSAMREWEQSTCIRFLPKTTQSAWANFKKVSCLVPWLKTGRSRLAVR',
-    'JAMSDW010000230.1-rna:1126': 'MKLLAVVATVLAVFSTAEAQTAQVQRHFSQTPSVDQRGAGGYDGYSQ
-    VSRPATKQGICEECRRVSDAAAAK'
-    }
+    Returns a dictionary containing name change 
+    >AJ516_race4.FUN_002745-T1 FUN_002745 -> 
+    >AJ516_race4.FUN_002745-T1
     """
     with open (multifasta, "r") as f:
         proteins=f.read().split(">")    # split the sequences
@@ -37,7 +33,7 @@ def create_clusters_to_keep_set (cluster_list_txt):
             clusters_to_keep.add(line)
     return clusters_to_keep
 
-def run_signal_p (out_dir, cluster_dir, model_dir): 
+def run_signal_p (cluster_list_txt, out_dir, cluster_dir, model_dir): 
     """
     Running SignalP for the Effector_P pipeline
     """
@@ -143,19 +139,26 @@ def choose_n_proteins_per_cluster (n_proteins, final_clusters_dir):
         cluster_file=f"{final_clusters_dir}/{cluster}"
         protein_dict=create_name_sequence_dict(cluster_file)
 
-        if len(protein_dict) < n_proteins:  # If the cluster contains less than the number of proteins 
-                                            # that we want, then the cluster is skipepd. 
-            print(
-                f"WARNING: {cluster_name} only contains "
-                f"{len(protein_dict)} proteins. This cluster is not considered. "
-            )
+        if len(protein_dict) == 0:
             continue
 
-        proteins_chosen=random.sample(           # .sample makes sure there is no replacement 
-            list(protein_dict.keys()), 
-            n_proteins)    
+        elif len(protein_dict) < n_proteins:  # If the cluster contains less than the number of proteins 
+                                            # that we want, then we just take that sequence 
+            print(
+                f"WARNING: {cluster_name} only contains "
+                f"{len(protein_dict)} proteins. We still consider this "
+            )
 
-        cluster_files_dict[cluster_name]=proteins_chosen
+            proteins_chosen = list(protein_dict.keys())
+            cluster_files_dict[cluster_name]=proteins_chosen
+            continue
+        
+        else: 
+            proteins_chosen=random.sample(           # .sample makes sure there is no replacement 
+                list(protein_dict.keys()), 
+                n_proteins)    
+
+            cluster_files_dict[cluster_name]=proteins_chosen
 
     return cluster_files_dict
 
