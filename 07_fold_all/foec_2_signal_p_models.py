@@ -121,7 +121,8 @@ def run_signal_p (out_dir, cluster_filtered_dir, model_dir):
         if os.path.exists(signalp_output):
             print(f"Skipping {cluster_name}: SignalP output already exists")
             continue
-        
+
+        # Run SignalP. Settings: fungi are eukaryotic organisms, short output with no graphics, slow prediction mode. 
         subprocess.run([
             "signalp6",
             "--model_dir", model_dir,
@@ -220,7 +221,7 @@ def choose_n_proteins_per_cluster (n_proteins, final_clusters_dir):
             proteins_chosen = list(protein_dict.keys())
             cluster_files_dict[cluster_name]=proteins_chosen
             continue
-        
+
         else: 
             proteins_chosen=random.sample(           # .sample makes sure there is no replacement 
                 list(protein_dict.keys()), 

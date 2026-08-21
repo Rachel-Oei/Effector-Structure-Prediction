@@ -2,6 +2,9 @@
 
 # This script uses GPU 0. Runs AF3 for each protein and appends runtime in a .csv file. 
 
+# If there is a permission denied message, do: chmod +x /home/rachel/02_folding/af3/run_alphafold.sh
+# Need to make sure the model parameters are inside "/home/rachel/02_folding/af3/alphafold-models-3.0.3/af3.bin"
+
 AF3_FOLDER="/home/rachel/02_folding/af3"
 
 AF3_DIR="${AF3_FOLDER}/run_alphafold.sh"
@@ -12,6 +15,7 @@ OUTPUT_DIR="${AF3_FOLDER}/alphafold3-3.0.3/output"
 RUNTIME_CSV="${AF3_FOLDER}/af3_runtime.csv"
 
 mkdir -p ${MODEL_DIR}
+mkdir -p ${OUTPUT_DIR}
 
 for json_file in ${JSON_DIR}/*.json
 do

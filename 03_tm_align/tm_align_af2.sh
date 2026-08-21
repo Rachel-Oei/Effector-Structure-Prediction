@@ -1,9 +1,5 @@
 #!/bin/bash
 
-# Download through wget https://zhanggroup.org/TM-align/TMalign.cpp
-# Compile through g++ -O3 -ffast-math -lm -o TMalign TMalign.cpp
-# I have the 2019 version, could not find the 2024 version. 
-
 # Paths
 HOME="/home/rachel"
 EXPERIMENTAL="${HOME}/01_prepare_cif/cif_single_chain"
