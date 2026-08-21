@@ -17,8 +17,6 @@
 
 # export PATH="$HOME/miniconda3/bin:$PATH"
 # conda create -n signalp310 python=3.9
-# source "$HOME/miniconda3/bin/activate" signalp39 to activate the python 3.9 environment. 
-# python --version
 
 ## To activate everytime:
 # export PATH="$HOME/miniconda3/bin:$PATH" 
@@ -37,6 +35,3 @@ signalp6 \
     --od $out_dir \
     --fmt txt \
     --mode slow-sequential
-
-## For both pipelines signal P are now running, but I still need to run the moving and separate fastas.
-##  Then we can fold with each folding method. 

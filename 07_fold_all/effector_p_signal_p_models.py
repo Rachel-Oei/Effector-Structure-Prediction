@@ -139,19 +139,26 @@ def choose_n_proteins_per_cluster (n_proteins, final_clusters_dir):
         cluster_file=f"{final_clusters_dir}/{cluster}"
         protein_dict=create_name_sequence_dict(cluster_file)
 
-        if len(protein_dict) < n_proteins:  # If the cluster contains less than the number of proteins 
-                                            # that we want, then the cluster is skipepd. 
-            print(
-                f"WARNING: {cluster_name} only contains "
-                f"{len(protein_dict)} proteins. This cluster is not considered. "
-            )
+        if len(protein_dict) == 0:
             continue
 
-        proteins_chosen=random.sample(           # .sample makes sure there is no replacement 
-            list(protein_dict.keys()), 
-            n_proteins)    
+        elif len(protein_dict) < n_proteins:  # If the cluster contains less than the number of proteins 
+                                            # that we want, then we just take that sequence 
+            print(
+                f"WARNING: {cluster_name} only contains "
+                f"{len(protein_dict)} proteins. We still consider this "
+            )
 
-        cluster_files_dict[cluster_name]=proteins_chosen
+            proteins_chosen = list(protein_dict.keys())
+            cluster_files_dict[cluster_name]=proteins_chosen
+            continue
+        
+        else: 
+            proteins_chosen=random.sample(           # .sample makes sure there is no replacement 
+                list(protein_dict.keys()), 
+                n_proteins)    
+
+            cluster_files_dict[cluster_name]=proteins_chosen
 
     return cluster_files_dict
 
