@@ -6,8 +6,7 @@ def create_name_sequence_dict (multifasta):
     """
     Input is a multifasta of each protein and their amino acid sequences.
     Returns a dictionary containing name change 
-    >AJ516_race4.FUN_002745-T1 FUN_002745 -> 
-    >AJ516_race4.FUN_002745-T1
+    >AJ516_race4.FUN_002745-T1 FUN_002745
     """
     with open (multifasta, "r") as f:
         proteins=f.read().split(">")    # split the sequences
@@ -93,8 +92,8 @@ def move_fastas(signal_p_out_dir, cluster_dir, final_clusters_dir):
 
                     split_line = line.split()   # Make a list out of the columns
 
-                    protein_name = split_line[0]
-                    prediction = split_line[1]
+                    protein_name = split_line[0]+" "+split_line[1]
+                    prediction = split_line[2]
 
                     if prediction == "SP":  # If the peptide is a signal peptide 
                         if protein_name in signal_p_info:   # Then use the processed sequence from signal p
