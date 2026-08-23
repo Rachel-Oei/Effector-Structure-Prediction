@@ -148,6 +148,10 @@ Then the pipeline is as follows:
 (python effector_p/af3/effector_p_create_json.py)
 (python foec_2/af3/foec_2_create_json.py)
 
+(bash effector_p/af3/effector_p_run_all_af3.sh)
+(bash foec_2/af3/foec_2_run_all_af3.sh)
+
+()
     |
 08_cluster_all
 ```
