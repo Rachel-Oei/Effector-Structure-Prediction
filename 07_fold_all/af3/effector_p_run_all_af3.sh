@@ -3,7 +3,6 @@
 # This script uses GPU 0. Runs AF3 for each protein and appends runtime in a .csv file. 
 
 AF3_FOLDER="/home/rachel/07_fold_all/effector_p/af3"
-
 AF3_DIR="/home/rachel/02_folding/af3/run_alphafold.sh"
 JSON_DIR="${AF3_FOLDER}/json"
 MODEL_DIR="/home/rachel/02_folding/af3/alphafold-models-3.0.3"
@@ -13,7 +12,7 @@ RUNTIME_CSV="${AF3_FOLDER}/af3_runtime.csv"
 
 mkdir -p ${OUTPUT_DIR}
 
-for json_file in ${JSON_DIR}/*.json
+for json_file in "${JSON_DIR}"/*.json
 do
     protein_identity=$(basename "$json_file" .json)
 
