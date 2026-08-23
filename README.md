@@ -139,8 +139,15 @@ python -m pip install .
 Then the pipeline is as follows:
 ```text
 07_fold_all
-(python foec_2_signal_p_main.py)
 (python effector_p_signal_p_main.py)
+(python foec_2_signal_p_main.py)
+
+(bash effector_p/esm/effector_p_fold_all_esm.sh)
+(bash foec_2/esm/foec_2_fold_all_esm.sh)
+
+(python effector_p/af3/effector_p_create_json.py)
+(python foec_2/af3/foec_2_create_json.py)
+
     |
 08_cluster_all
 ```

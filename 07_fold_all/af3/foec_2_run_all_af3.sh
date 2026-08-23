@@ -15,7 +15,7 @@ RUNTIME_CSV="${AF3_FOLDER}/af3_runtime.csv"
 
 mkdir -p ${OUTPUT_DIR}
 
-for json_file in ${JSON_DIR}/*.json
+for json_file in "${JSON_DIR}"/*.json
 do
     protein_identity=$(basename "$json_file" .json)
 

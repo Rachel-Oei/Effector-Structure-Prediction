@@ -175,9 +175,9 @@ def separate_select_fastas (n_proteins, final_clusters_dir, select_clusters_dir)
         protein_dict=create_name_sequence_dict(cluster_file)    # Get the sequence of that cluster 
 
         for protein in selected_proteins:   # Loop through every selected protein of the cluster 
-            fasta_file=f"{select_clusters_dir}/effector_p_{cluster}_{protein}.fasta"
+            fasta_file=f"{select_clusters_dir}/effector_p_{cluster.lower()}_{protein}.fasta"
             if os.path.exists(fasta_file):
-                print(f"Skipping effector_p_{cluster}_{protein}.fasta: SignalP output already exists")
+                print(f"Skipping effector_p_{cluster.lower()}_{protein}.fasta: SignalP output already exists")
                 continue
             sequence=protein_dict[protein]
             with open (fasta_file, "w") as f:
