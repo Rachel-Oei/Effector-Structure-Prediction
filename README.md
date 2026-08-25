@@ -136,6 +136,14 @@ pip install "numpy<2"
 python -m pip install .
 ```
 
+**Foldseek**
+```bash 
+# Download Foldseek through:
+wget https://mmseqs.com/foldseek/foldseek-linux-gpu.tar.gz
+tar xvzf foldseek-linux-gpu.tar.gz
+export PATH=/home/rachel/08_cluster_all/foldseek/bin/:$PATH
+```
+
 Then the pipeline is as follows:
 ```text
 07_fold_all
@@ -150,10 +158,10 @@ Then the pipeline is as follows:
 
 (bash effector_p/af3/effector_p_run_all_af3.sh)
 (bash foec_2/af3/foec_2_run_all_af3.sh)
-
-()
     |
 08_cluster_all
+
+
 ```
 
 **Notes:**

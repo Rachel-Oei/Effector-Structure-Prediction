@@ -1,14 +1,6 @@
+#!/bin/bash
+
 # Will run on GPU 0
-
-HOME_DIR="/home/rachel"
-mkdir -p "${HOME_DIR}/08_cluster_all"
-cd "${HOME_DIR}/08_cluster_all"
-
-# Download Foldseek through:
-# wget https://mmseqs.com/foldseek/foldseek-linux-gpu.tar.gz
-# tar xvzf foldseek-linux-gpu.tar.gz
-
-export PATH=$(pwd)/foldseek/bin/:$PATH
 
 # Move esm.pdb files to clustering folder 
 ESM_DIR="/home/rachel/07_fold_all/effector_p/esm/esmfold-results"
