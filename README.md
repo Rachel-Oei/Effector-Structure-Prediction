@@ -160,7 +160,8 @@ Then the pipeline is as follows:
 (bash foec_2/af3/foec_2_run_all_af3.sh)
     |
 08_cluster_all
-
+(bash cluster_all_esm.sh effector_p 0)
+(bash cluster_all_esm.sh foec_2 1)
 
 ```
 

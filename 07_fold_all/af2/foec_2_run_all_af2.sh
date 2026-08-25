@@ -24,6 +24,18 @@ do
         continue
     fi
 
+    # Everytime it runs, create a touch file. 
+    # So that another process cannot run it at the same time.
+
+    touch_file="${OUTPUT_DIR}/${protein_identity}.running"
+
+    if [ -f "$touch_file" ]; then
+    echo "Skipping ${protein_identity}: another process is running"
+    continue
+    fi
+
+    touch "$touch_file"
+
     start=$(date +%s)
 
     # Uses GPU 0. The "0" specifies GPU
@@ -39,4 +51,6 @@ do
 
     echo "${protein_identity},${runtime}" >> $RUNTIME_CSV
 
+    # Remove the touch file at the end 
+    rm -f "$touch_file"
 done 
