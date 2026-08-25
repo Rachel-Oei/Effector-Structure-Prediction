@@ -36,6 +36,18 @@ do
         continue
     fi
 
+    # Everytime it runs, create a touch file. 
+    # So that another process cannot run it at the same time.
+
+    touch_file="${OUTPUT_DIR}/${af2_identity}.running"
+
+    if [ -f "$touch_file" ]; then
+    echo "Skipping ${af2_identity}: another process is running"
+    continue
+    fi
+
+    touch "$touch_file"
+
     start=$(date +%s)
 
     # Uses GPU 1. The "1" specifies GPU
@@ -51,4 +63,6 @@ do
 
     echo "${af2_identity},${runtime}" >> "${RUNTIME_CSV}"
 
+    # Remove the touch file at the end 
+    rm -f "$touch_file"
 done

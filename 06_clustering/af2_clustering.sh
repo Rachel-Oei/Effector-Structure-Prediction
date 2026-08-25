@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # Will run on GPU 0
 
 HOME_DIR="/home/rachel"
