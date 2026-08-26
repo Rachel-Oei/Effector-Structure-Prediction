@@ -83,9 +83,12 @@ def tree_construction(pipeline, folding_method):
 
     for leaf in tree.get_terminals():
         protein = leaf.name
+        safe_protein = protein.replace(":", "_").replace(" ", "_")
+
         cluster = protein_to_cluster.get(protein, "Unknown")
 
-        leaf.name = f"{protein} | Cluster {cluster}"
+        leaf.name = f"{safe_protein} | Cluster {cluster}"
+        
 
     output_file=f"/home/rachel/08_cluster_all/{pipeline}/{folding_method}/{pipeline}_{folding_method}_foldseek_structural_tree.nwk"
     Phylo.write(tree, output_file, "newick")
