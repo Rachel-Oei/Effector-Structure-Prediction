@@ -41,7 +41,7 @@ for fasta in "$FASTA_DIR"/*.fasta; do
     output_folder="${OUT_DIR}/${filename}"
 
     # Skip if ESMFold output already exists
-    if [ -d "$output_folder" ]; then
+    if [ -d "$HOME_DIR/esmfold-results/${filename}" ]; then
         echo "Skipping ${filename}: already completed"
         continue
     fi
