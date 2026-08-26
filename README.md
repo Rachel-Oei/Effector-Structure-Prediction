@@ -162,6 +162,10 @@ Then the pipeline is as follows:
 08_cluster_all
 (bash cluster_all_esm.sh effector_p 0)
 (bash cluster_all_esm.sh foec_2 1)
+    |
+09_Fo4287_reference
+(bash fold_reference_esm.sh effector_p 0)
+(bash fold_reference_esm.sh foec_2 1)
 
 ```
 
