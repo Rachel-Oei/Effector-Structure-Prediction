@@ -51,7 +51,7 @@ To run the pipeline, first make sure you have all the requirements installed. It
 ```bash
 pip install --upgrade pip
 python3 -m venv venv
-source venv/bin/activate
+source /home/rachel/08_cluster_all/venv/bin/activate
 pip install -r ~/requirements.txt
 ```
 
