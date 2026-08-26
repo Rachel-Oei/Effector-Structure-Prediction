@@ -150,19 +150,29 @@ Then the pipeline is as follows:
 (python effector_p_signal_p_main.py)
 (python foec_2_signal_p_main.py)
 
-(bash effector_p/esm/effector_p_fold_all_esm.sh)
-(bash foec_2/esm/foec_2_fold_all_esm.sh)
+(bash effector_p/esm/effector_p_fold_all_esm.sh)    - FINISHED
+(bash foec_2/esm/foec_2_fold_all_esm.sh)            - FINISHED
 
-(python effector_p/af3/effector_p_create_json.py)
-(python foec_2/af3/foec_2_create_json.py)
+(python effector_p/af3/effector_p_create_json.py)   - RUNNING 
+(python foec_2/af3/foec_2_create_json.py)           - RUNNING 
 
-(bash effector_p/af3/effector_p_run_all_af3.sh)
-(bash foec_2/af3/foec_2_run_all_af3.sh)
+(bash effector_p/af3/effector_p_run_all_af3.sh)     - RUNNING 
+(bash foec_2/af3/foec_2_run_all_af3.sh)             - RUNNING 
     |
 08_cluster_all
-(bash cluster_all_esm.sh effector_p 0)
-(bash cluster_all_esm.sh foec_2 1)
+(bash cluster_all_esm.sh effector_p 0)              
+(bash cluster_all_esm.sh foec_2 1)                  
+    |
+09_Fo4287_reference
+(bash fold_reference_esm.sh effector_p 0)           - RUNNING 
+(bash fold_reference_esm.sh foec_2 1)               - FINISHED
 
+(python create_json_main.py)
+(bash fold_reference_af3.sh effector_p 0)           - RUNNING 
+(bash fold_reference_af3.sh foec_2 1)               - RUNNING 
+
+(bash effector_p_run_reference_af2.sh)              - RUNNING 
+(bash foec_2_run_reference_af2.sh)                  - RUNNING 
 ```
 
 **Notes:**

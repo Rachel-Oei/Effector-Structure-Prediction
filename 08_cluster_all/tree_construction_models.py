@@ -86,8 +86,9 @@ def tree_construction(pipeline, folding_method):
         safe_protein = protein.replace(":", "_").replace(" ", "_")
 
         cluster = protein_to_cluster.get(protein, "Unknown")
+        safe_cluster = cluster.replace(":", "_").replace(" ", "_")
 
-        leaf.name = f"{safe_protein} | Cluster {cluster}"
+        leaf.name = f"{safe_protein} | Cluster {safe_cluster}"
         
 
     output_file=f"/home/rachel/08_cluster_all/{pipeline}/{folding_method}/{pipeline}_{folding_method}_foldseek_structural_tree.nwk"
