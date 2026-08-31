@@ -85,9 +85,9 @@ Then the pipeline is as follows:
 (python prepare_cif_main.py)
     |
 02_folding
-(bash 'run_all_esm.sh')
-(bash 'run_all_af2.sh')
-(bash 'run_all_af3.sh')
+(bash run_all_esm.sh)
+(bash run_all_af2.sh)
+(bash run_all_af3.sh)
     |
 03_tm_align
 (bash tm_align_esm.sh)
@@ -150,29 +150,32 @@ Then the pipeline is as follows:
 (python effector_p_signal_p_main.py)
 (python foec_2_signal_p_main.py)
 
-(bash effector_p/esm/effector_p_fold_all_esm.sh)    - FINISHED
-(bash foec_2/esm/foec_2_fold_all_esm.sh)            - FINISHED
+(bash effector_p/esm/effector_p_fold_all_esm.sh)    
+(bash foec_2/esm/foec_2_fold_all_esm.sh)            
 
-(python effector_p/af3/effector_p_create_json.py)   - RUNNING 
-(python foec_2/af3/foec_2_create_json.py)           - RUNNING 
+(python effector_p/af3/effector_p_create_json.py)    
+(python foec_2/af3/foec_2_create_json.py)           
 
-(bash effector_p/af3/effector_p_run_all_af3.sh)     - RUNNING 
-(bash foec_2/af3/foec_2_run_all_af3.sh)             - RUNNING 
+(bash effector_p/af3/effector_p_run_all_af3.sh)     - RUNNING | bingfgpu7, gpu 0 (active since 23-08 12:00)
+(bash foec_2/af3/foec_2_run_all_af3.sh)             - RUNNING | bingfgpu7, gpu 1 (active since 23-08 12:02)
+
+(bash effector_p/af2/effector_p_run_all_af2.sh)     - RUNNING | binfgpu5, gpu 0 (since 25-08 12:05) & binfgpu8, gpu 0 (since 25-08 12:08)
+(bash foec_2/af2/foec_2_run_all_af2.sh)             - RUNNING | binfgpu5, gpu 1 (since 25-08 12:17) & binfgpu8, gpu 1 (since 25-08 12:18) 
     |
 08_cluster_all
-(bash cluster_all_esm.sh effector_p 0)              
-(bash cluster_all_esm.sh foec_2 1)                  
+(bash cluster_all_esm.sh effector_p 0)              - FINISHED 
+(bash cluster_all_esm.sh foec_2 1)                  - FINISHED 
     |
 09_Fo4287_reference
-(bash fold_reference_esm.sh effector_p 0)           - RUNNING 
+(bash fold_reference_esm.sh effector_p 0)           - RUNNING | bingfgpu2, gpu 0 (active since 26-08 21:55)
 (bash fold_reference_esm.sh foec_2 1)               - FINISHED
 
 (python create_json_main.py)
-(bash fold_reference_af3.sh effector_p 0)           - RUNNING 
-(bash fold_reference_af3.sh foec_2 1)               - RUNNING 
+(bash fold_reference_af3.sh effector_p 0)           - RUNNING | binfgpu3, gpu 0 (active since 26-08 23:18)
+(bash fold_reference_af3.sh foec_2 1)               - RUNNING | binfgpu6, gpu 1 (active since 26-08 22:45)
 
-(bash effector_p_run_reference_af2.sh)              - RUNNING 
-(bash foec_2_run_reference_af2.sh)                  - RUNNING 
+(bash effector_p_run_reference_af2.sh)              - RUNNING | binfgpu2, gpu 1 (active since 26-08 23:36)
+(bash foec_2_run_reference_af2.sh)                  - RUNNING | binfgpu8, gpu 1 (active since 26-08 23:44)
 ```
 
 **Notes:**
