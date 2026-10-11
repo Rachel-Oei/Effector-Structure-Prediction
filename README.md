@@ -157,12 +157,12 @@ Then the pipeline is as follows:
 (python foec_2/af3/foec_2_create_json.py)           
 
 AF3 (effector_p: 700s/protein, exp. finish: 09-09)
-(bash effector_p/af3/effector_p_run_all_af3.sh)     - RUNNING | bingfgpu7, gpu 0 (active since 23-08 12:00). Exp. finish = 09-09.
+(bash effector_p/af3/effector_p_run_all_af3.sh)     - FINISHED
 (bash foec_2/af3/foec_2_run_all_af3.sh)             - FINISHED 
 
 AF2 (effector_p: 2200s/protein, exp. finish: 21-09, foec_2: 1800s/protein, exp. finish: 03-09)
-(bash effector_p/af2/effector_p_run_all_af2.sh)     - RUNNING | binfgpu5, gpu 0 (since 25-08 12:05) & binfgpu8, gpu 0 (since 25-08 12:08)
-(bash foec_2/af2/foec_2_run_all_af2.sh)             - RUNNING | binfgpu5, gpu 1 (since 25-08 12:17) & binfgpu8, gpu 1 (since 25-08 12:18) 
+(bash effector_p/af2/effector_p_run_all_af2.sh)     - FINISHED
+(bash foec_2/af2/foec_2_run_all_af2.sh)             - FINISHED
     |
 08_cluster_all
 (bash cluster_all_esm.sh effector_p 0)              
