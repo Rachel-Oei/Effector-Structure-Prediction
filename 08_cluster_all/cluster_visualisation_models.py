@@ -100,14 +100,14 @@ def PCoA_construction(pipeline, folding_method):
     matrix, distance = tm_matrix (pipeline, folding_method)
     proteins = matrix.index
 
-    cmds = ClassicalMDS(n_components=2, metric="precomputed", random_state=42)
+    cmds = ClassicalMDS(n_components=2, metric="precomputed")
     coordinates_cmds = cmds.fit_transform(distance)
 
     plt.figure(figsize=(6, 5))
-    plt.scatter(coordinates_cmds[:, 0], coordinates_cmds[:, 1], color='teal', s=100)
+    plt.scatter(coordinates_cmds[:, 0], coordinates_cmds[:, 1], color='teal', s=20)
 
-    for i, (x, y) in enumerate(coordinates_cmds):
-        plt.text(x, y, proteins[i], fontsize=8)
+    # for i, (x, y) in enumerate(coordinates_cmds):
+    #     plt.text(x, y, proteins[i], fontsize=8)
 
     plt.title("PCoA / Classical MDS Plot")
     plt.xlabel("Coordinate 1")
@@ -115,4 +115,11 @@ def PCoA_construction(pipeline, folding_method):
     plt.grid(True, linestyle='--', alpha=0.6)
     plt.axhline(0, color='black', linewidth=0.5)
     plt.axvline(0, color='black', linewidth=0.5)
-    plt.show()
+
+    output_file = (
+    f"/home/rachel/08_cluster_all/{pipeline}/{folding_method}/"
+    f"{pipeline}_{folding_method}_PCoA.png")
+
+    plt.tight_layout()
+    plt.savefig(output_file, dpi=300)
+    plt.close()
