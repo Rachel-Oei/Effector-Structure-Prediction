@@ -76,6 +76,7 @@ g++ -O3 -ffast-math -lm -o TMalign TMalign.cpp
 # Download and extract
 wget https://mmseqs.com/foldseek/foldseek-linux-gpu.tar.gz
 tar xvzf foldseek-linux-gpu.tar.gz
+export PATH=/home/rachel/08_cluster_all/foldseek/bin/:$PATH
 ```
 
 Then the pipeline is as follows:
