@@ -40,9 +40,11 @@ for fasta in "$FASTA_DIR"/*.fasta; do
 
     output_folder="${OUT_DIR}/${filename}"
 
+    pdb=("$HOME_DIR/esmfold-results/${filename}"/*.pdb)
+
     # Skip if ESMFold output already exists
-    if [ -d "$HOME_DIR/esmfold-results/${filename}" ]; then
-        echo "Skipping ${filename}: already completed"
+    if [ -f "${pdb[0]}" ]; then
+        echo "Skipping ${filename}: PDB already exists"
         continue
     fi
 
@@ -51,7 +53,7 @@ for fasta in "$FASTA_DIR"/*.fasta; do
     # Collect runtime
     start=$(date +%s)
 
-    # Run on GPU 1
+    # Run on GPU 
     CUDA_VISIBLE_DEVICES=${GPU} "$ESMFOLD" \
         "$fasta" \
         "${output_folder}/" \
