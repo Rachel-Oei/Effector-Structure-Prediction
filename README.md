@@ -171,7 +171,7 @@ AF2 (effector_p: 2200s/protein, exp. finish: 21-09, foec_2: 1800s/protein, exp. 
     |
 09_Fo4287_reference (FOEC_2 = 40 proteins, EFFECTOR_P = 1462 proteins)
 
-(bash fold_reference_esm.sh effector_p 0)           - FINISHED -> Crashed so have to run again, binfgpu7 gpu0 12/10 20:05 
+(bash fold_reference_esm.sh effector_p 0)           - FINISHED -> Crashed so have to run again.
 (bash fold_reference_esm.sh foec_2 1)               - FINISHED -> Crashed so have to run again, binfgpu3, gpu1 12/10 
 
 (python create_json_main.py)
