@@ -12,6 +12,11 @@ def main():
     PCoA_construction("effector_p", "af3")
     PCoA_construction("foec_2", "af3")
 
+    tree_construction("effector_p", "af2")
+    tree_construction("foec_2", "af2")
+    PCoA_construction("effector_p", "af2")
+    PCoA_construction("foec_2", "af2")
+
 
 if __name__ == "__main__":
     main()
