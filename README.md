@@ -185,6 +185,7 @@ AF2 (effector_p: 5000s/protein, exp finish date = 18-11).
 
 **Notes:**
 The current scripts use ESM, AF2, AF3 running on the same server, with each using 1 GPU. 
+Current foldseek scripts use gpu options but it runs on cpu 
 
 Next: 
 AF3 look at how many homologs it found in the database. Color the graphs by that. runtime and the tm score.
