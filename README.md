@@ -171,21 +171,31 @@ AF2 (effector_p: 2200s/protein, exp. finish: 21-09, foec_2: 1800s/protein, exp. 
     |
 09_Fo4287_reference (FOEC_2 = 40 proteins, EFFECTOR_P = 1462 proteins)
 
-(bash fold_reference_esm.sh effector_p 0)           - FINISHED -> Crashed so have to run again.
-(bash fold_reference_esm.sh foec_2 1)               - FINISHED -> Crashed so have to run again, binfgpu3, gpu1 12/10 
+(bash fold_reference_esm.sh effector_p 1)           - FINISHED -> Crashed so have to run again (binfgpu5, 13/10)
+(bash fold_reference_esm.sh foec_2 1)               - FINISHED 
 
 (python create_json_main.py)
-(bash fold_reference_af3.sh effector_p 0)           - FINISHED 
+(bash fold_reference_af3.sh effector_p 0)           - FINISHED -> Misses 3 so have to run again binfgpu1, 13/10 
 (bash fold_reference_af3.sh foec_2 1)               - FINISHED
 
 AF2 (effector_p: 5000s/protein, exp finish date = 18-11). 
 (bash effector_p_run_reference_af2.sh)              - RUNNING | binfgpu2, gpu 1 (active since 26-08 23:36). 
 (bash foec_2_run_reference_af2.sh)                  - FINISHED 
+
+10_cluster_reference
+(bash cluster_all_esm.sh effector_p 0)        - finished wildtype1      13/10
+(bash cluster_all_esm.sh foec_2 1)             - finished wildtype1 13/10
+(bash cluster_all_af3.sh effector_p 0)          
+(bash cluster_all_af3.sh foec_2 1)              - finished wildtype1 13/10
+(bash cluster_all_af2.sh effector_p 0)      
+(bash cluster_all_af2.sh foec_2 1)              - finished wildtype1 13/10
 ```
 
 **Notes:**
 The current scripts use ESM, AF2, AF3 running on the same server, with each using 1 GPU. 
 Current foldseek scripts use gpu options but it runs on cpu 
+AF3 effector_p reference misses 3 files, need to fold those 3 again.
+
 
 Next: 
 AF3 look at how many homologs it found in the database. Color the graphs by that. runtime and the tm score.
