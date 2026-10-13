@@ -171,7 +171,7 @@ AF2 (effector_p: 2200s/protein, exp. finish: 21-09, foec_2: 1800s/protein, exp. 
     |
 09_Fo4287_reference (FOEC_2 = 40 proteins, EFFECTOR_P = 1462 proteins)
 
-(bash fold_reference_esm.sh effector_p 1)           - FINISHED -> Crashed so have to run again (binfgpu5, 13/10)
+(bash fold_reference_esm.sh effector_p 1)           - FINISHED -> Crashed so have to run again. Required too much memory, some crashed. 
 (bash fold_reference_esm.sh foec_2 1)               - FINISHED 
 
 (python create_json_main.py)
@@ -183,19 +183,22 @@ AF2 (effector_p: 5000s/protein, exp finish date = 18-11).
 (bash foec_2_run_reference_af2.sh)                  - FINISHED 
 
 10_cluster_reference
-(bash cluster_all_esm.sh effector_p 0)        - finished wildtype1      13/10
-(bash cluster_all_esm.sh foec_2 1)             - finished wildtype1 13/10
-(bash cluster_all_af3.sh effector_p 0)          
-(bash cluster_all_af3.sh foec_2 1)              - finished wildtype1 13/10
-(bash cluster_all_af2.sh effector_p 0)      
-(bash cluster_all_af2.sh foec_2 1)              - finished wildtype1 13/10
+(bash cluster_all_esm.sh effector_p 0)        - finished, got 1416/1462 proteins folded
+(bash cluster_all_esm.sh foec_2 1)             - finished, got 40/40 proteins folded
+(bash cluster_all_af3.sh effector_p 0)         - finished, got 1459/1462 proteins folded
+(bash cluster_all_af3.sh foec_2 1)              - finished, got 40/40 proteins folded
+(bash cluster_all_af2.sh effector_p 0)          
+(bash cluster_all_af2.sh foec_2 1)              - finished, got 40/40 proteins folded
+
+currently running cluster_visualisation_main.py 
 ```
 
 **Notes:**
 The current scripts use ESM, AF2, AF3 running on the same server, with each using 1 GPU. 
 Current foldseek scripts use gpu options but it runs on cpu 
 AF3 effector_p reference misses 3 files, need to fold those 3 again.
-
+Still need to make the neural x graphs after foldseek (for 10 and 8 clusters)
+Still need to make the PCoA more interpretable 
 
 Next: 
 AF3 look at how many homologs it found in the database. Color the graphs by that. runtime and the tm score.

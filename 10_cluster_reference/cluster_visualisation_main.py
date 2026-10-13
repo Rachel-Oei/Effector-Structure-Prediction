@@ -1,6 +1,3 @@
-import sys
-sys.path.append("/home/rachel/08_cluster_all")
-
 from cluster_visualisation_models import tree_construction, PCoA_construction
 
 def main():
