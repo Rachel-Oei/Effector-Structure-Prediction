@@ -4,6 +4,7 @@ from Bio.Phylo.TreeConstruction import DistanceMatrix, DistanceTreeConstructor
 from Bio import Phylo
 from sklearn.manifold import ClassicalMDS
 import matplotlib.pyplot as plt
+import networkx as nx
 
 def tm_matrix (pipeline, folding_method):
 
@@ -121,5 +122,63 @@ def PCoA_construction(pipeline, folding_method):
     f"{pipeline}_{folding_method}_PCoA.png")
 
     plt.tight_layout()
+    plt.savefig(output_file, dpi=300)
+    plt.close()
+
+def neural_network(pipeline, folding_method, threshold):
+    G = nx.Graph()
+
+    foldseek_dir=f"/home/rachel/10_cluster_reference/{pipeline}/{folding_method}/foldseek_output/{folding_method}_foldseek_results.tsv"
+    
+    df = pd.read_csv(
+        foldseek_dir,
+        sep="\t",
+        names=["query","target","alnlen","alntmscore","qtmscore", "ttmscore","rmsd"]
+    )
+
+    for _, row in df.iterrows():
+
+        score = row["qtmscore"]
+
+        if (
+        row["query"] != row["target"]
+        and score >= threshold
+    ):
+
+            G.add_edge(
+                row["query"],
+                row["target"],
+                weight=score
+            )
+
+    components = list(nx.connected_components(G))
+    print(f"Nodes: {G.number_of_nodes()}")
+    print(f"Edges: {G.number_of_edges()}")
+    print(f"Components: {components}")
+
+    plt.figure(figsize=(12, 12))
+
+    pos = nx.spring_layout(
+        G,
+        seed=42
+    )
+
+    nx.draw(
+        G,
+        pos,
+        node_size=20,
+        width=0.2,
+        with_labels=False
+    )
+
+    plt.title(
+        f"Protein similarity network (qtmscore ≥ {threshold})"
+    )
+
+    output_file = (
+    f"/home/rachel/10_cluster_reference/{pipeline}/{folding_method}/"
+    f"{pipeline}_{folding_method}_network_threshold_{threshold}.png"
+    )
+
     plt.savefig(output_file, dpi=300)
     plt.close()

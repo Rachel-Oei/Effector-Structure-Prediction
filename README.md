@@ -189,8 +189,6 @@ AF2 (effector_p: 5000s/protein, exp finish date = 18-11).
 (bash cluster_all_af3.sh foec_2 1)              - finished, got 40/40 proteins folded
 (bash cluster_all_af2.sh effector_p 0)          
 (bash cluster_all_af2.sh foec_2 1)              - finished, got 40/40 proteins folded
-
-currently running cluster_visualisation_main.py 
 ```
 
 **Notes:**

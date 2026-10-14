@@ -9,6 +9,7 @@ umap-learn
 scikit-learn==1.9.1
 numpy==2.5.4
 scipy==1.18.1
+networkx==3.7
 
 #For signal p (Works up to Python version 2.10)
 #scipy==1.5.0
