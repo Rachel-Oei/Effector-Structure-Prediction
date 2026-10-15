@@ -307,6 +307,15 @@ def neural_network(folder, folding_method, threshold):
     
     plt.close()
 
+    statistics={
+        "Nodes:": G.number_of_nodes(),
+        "Edges:": G.number_of_edges(),
+        "Edges_per_node": G.number_of_edges() / G.number_of_nodes(),
+        "Transitivity:": nx.transitivity(G)
+    }
+
+    return statistics 
+
 def visualisation_pipeline(folder, folding_method, threshold1, threshold2):
     """
     Tree reconstruction, PCoA and the neural network.
@@ -322,5 +331,12 @@ def visualisation_pipeline(folder, folding_method, threshold1, threshold2):
     PCoA_construction(folder, folding_method, threshold1)
     PCoA_construction(folder, folding_method, threshold2)
 
-    neural_network(folder, folding_method, threshold1)
-    neural_network(folder, folding_method, threshold2)
+    statistics_1=neural_network(folder, folding_method, threshold1)
+    statistics_2=neural_network(folder, folding_method, threshold2)
+
+    statistics={}
+
+    statistics[f"{folding_method}_threshold_{threshold1}"]=statistics_1
+    statistics[f"{folding_method}_threshold_{threshold2}"]=statistics_2
+
+    return statistics

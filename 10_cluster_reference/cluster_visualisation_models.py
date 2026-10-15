@@ -212,6 +212,15 @@ def neural_network(folder, pipeline, folding_method, threshold):
             )
         
     plt.close()
+
+    statistics={
+    "Nodes:": G.number_of_nodes(),
+    "Edges:": G.number_of_edges(),
+    "Edges_per_node": G.number_of_edges() / G.number_of_nodes(),
+    "Transitivity:": nx.transitivity(G)
+}
+
+    return statistics 
     
 def visualisation_pipeline(folder, pipeline, folding_method, threshold1, threshold2):
     """
@@ -228,5 +237,12 @@ def visualisation_pipeline(folder, pipeline, folding_method, threshold1, thresho
     PCoA_construction(folder, pipeline, folding_method, threshold1)
     PCoA_construction(folder, pipeline, folding_method, threshold2)
 
-    neural_network(folder, pipeline, folding_method, threshold1)
-    neural_network(folder, pipeline, folding_method, threshold2)
+    statistics_1=neural_network(folder, pipeline, folding_method, threshold1)
+    statistics_2=neural_network(folder, pipeline, folding_method, threshold2)
+
+    statistics={}
+
+    statistics[f"{pipeline}_{folding_method}_threshold_{threshold1}"]=statistics_1
+    statistics[f"{pipeline}_{folding_method}_threshold_{threshold2}"]=statistics_2
+
+    return statistics
