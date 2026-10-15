@@ -7,6 +7,70 @@ import matplotlib.pyplot as plt
 import networkx as nx
 from matplotlib.lines import Line2D
 
+def get_family_colors():
+
+    metadata = pd.read_csv(
+        "/home/rachel/04_results_tsv/pdb_metadata_af3.tsv",
+        sep="\t"
+    )
+
+    families = {
+        "AvrSr35-like",
+        "FOLD",
+        "KP4-like",
+        "LARS",
+        "MAX",
+        "RALPH",
+        "ToxA-like",
+    }
+
+    def simplify_family(family):
+        family = str(family).strip()
+        return family if family in families else "Other"
+
+    metadata["Structural_family_simplified"] = metadata[
+        "Structural family (inferred from La Naour Vernet et al. (2025))"
+    ].apply(simplify_family)
+
+    family_order = [
+        "AvrSr35-like",
+        "FOLD",
+        "KP4-like",
+        "LARS",
+        "MAX",
+        "RALPH",
+        "ToxA-like",
+        "Other"
+    ]
+
+    colors = plt.cm.tab10.colors
+
+    category_colors = {
+        family: colors[i]
+        for i, family in enumerate(family_order)
+    }
+
+    protein_to_family = dict(
+        zip(
+            metadata["PDB_ID"].astype(str).str.strip(),
+            metadata["Structural_family_simplified"]
+        )
+    )
+
+    return protein_to_family, category_colors
+    
+def make_legend(category_colors):
+    return [
+        Line2D(
+            [0], [0],
+            marker="o",
+            color="w",
+            label=family,
+            markerfacecolor=color,
+            markersize=8
+        )
+        for family, color in category_colors.items()
+    ]
 
 def tm_matrix (folder, folding_method, threshold):
 
@@ -18,7 +82,8 @@ def tm_matrix (folder, folding_method, threshold):
         names=["query","target","alnlen","alntmscore","qtmscore", "ttmscore","rmsd"]
     )
 
-    df = df[df["qtmscore"] >= threshold]
+    df = df[df["query"] != df["target"]] # remove self-hits 
+    df = df[df["qtmscore"] >= threshold] # remove below threshold
 
     # Collecting all the proteins in the query and target, and sorting them
     proteins = sorted(set(df["query"]).union(df["target"]))
@@ -108,8 +173,24 @@ def PCoA_construction(folder, folding_method, threshold):
     cmds = ClassicalMDS(n_components=2, metric="precomputed")
     coordinates_cmds = cmds.fit_transform(distance)
 
+    protein_to_family, category_colors = get_family_colors()
+
+    point_colors = [
+    category_colors.get(
+        protein_to_family.get(protein.replace("_model", ""), "Other"),
+        category_colors["Other"]
+    )
+    for protein in matrix.index
+    ]
+    
     plt.figure(figsize=(6, 5))
-    plt.scatter(coordinates_cmds[:, 0], coordinates_cmds[:, 1], color='teal', s=20)
+
+    plt.scatter(
+    coordinates_cmds[:, 0],
+    coordinates_cmds[:, 1],
+    c=point_colors,
+    s=20
+    )
 
     plt.title(f"PCoA Plot {folder} {folding_method} (qtmscore ≥ {threshold}) n_proteins={n_proteins}")
     plt.xlabel("Coordinate 1")
@@ -117,6 +198,8 @@ def PCoA_construction(folder, folding_method, threshold):
     plt.grid(True, linestyle='--', alpha=0.6)
     plt.axhline(0, color='black', linewidth=0.5)
     plt.axvline(0, color='black', linewidth=0.5)
+
+    plt.legend(handles=make_legend(category_colors))
 
     output_file = (
     f"/home/rachel/{folder}/{folding_method}/"
@@ -136,57 +219,6 @@ def neural_network(folder, folding_method, threshold):
         Threshold2 is the second threshold for the TM score, usually >= 0.5 
     
     """
-    # Read tsv
-    metadata = pd.read_csv(
-        "/home/rachel/04_results_tsv/pdb_metadata_af3.tsv",
-        sep="\t"
-    )
-
-    def simplify_family(family):
-        family = str(family).strip()
-        return family if family in families else "Other"
-
-    # Choose structural families to color 
-    families = {
-        "AvrSr35-like",
-        "FOLD",
-        "KP4-like",
-        "LARS",
-        "MAX",
-        "RALPH",
-        "ToxA-like",
-    }
-
-    metadata["Structural_family_simplified"] = metadata[
-        "Structural family (inferred from La Naour Vernet et al. (2025))"
-    ].apply(simplify_family)
-
-    family_order = [
-            "AvrSr35-like",
-            "FOLD",
-            "KP4-like",
-            "LARS",
-            "MAX",
-            "RALPH",
-            "ToxA-like",
-            "Other"
-    ]
-    
-    colors = plt.cm.tab10.colors
-    category_colors = {
-        category: colors[i % len(colors)]
-        for i, category in enumerate(family_order)
-    }
-
-    metadata["PDB_ID"] = metadata["PDB_ID"].astype(str).str.strip()
-
-    protein_to_family = dict(
-            zip(
-                metadata["PDB_ID"],
-                metadata["Structural_family_simplified"]
-            )
-        )
-    
     G = nx.Graph()
 
     foldseek_dir=f"/home/rachel/{folder}/{folding_method}/foldseek_output/{folding_method}_foldseek_results.tsv"
@@ -212,65 +244,40 @@ def neural_network(folder, folding_method, threshold):
                 weight=score
             )
 
-    components = list(nx.connected_components(G))
     print(f"Threshold: {threshold}")
     print(f"Nodes: {G.number_of_nodes()}")
     print(f"Edges: {G.number_of_edges()}")
 
-    # Node colors
-    node_colors = []
-
-    for node in G.nodes():
-
-        family = protein_to_family.get(node, "Other")
-
-        node_colors.append(
-            category_colors.get(
-                family,
-                category_colors["Other"]
-            )
-        )
-
-
     plt.figure(figsize=(12, 12))
+
+    protein_to_family, category_colors = get_family_colors()
+
+    node_colors = [
+    category_colors.get(
+        protein_to_family.get(node.replace("_model", ""), "Other"),
+        category_colors["Other"]
+    )
+    for node in G.nodes()
+    ]
 
     pos = nx.spring_layout(
         G,
         seed=42,
-        weight="weight"
+        weight="weight",
+        k=0.3
     )
 
     nx.draw(
         G,
         pos,
         node_color=node_colors,
-        node_size=20,
-        width=0.2,
+        node_size=200,
+        width=0.4,
         with_labels=False
     )
 
-    # Legend
-    legend_handles = [
-        Line2D(
-            [0],
-            [0],
-            marker="o",
-            color="w",
-            label=family,
-            markerfacecolor=color,
-            markersize=8
-        )
-        for family, color in category_colors.items()
-    ]
-
-    plt.legend(
-        handles=legend_handles,
-        bbox_to_anchor=(1.05, 1),
-        loc="upper left"
-    )
-
     plt.title(
-        f"Protein similarity network {folder} {folding_method} (qtmscore ≥ {threshold})"
+        f"Protein similarity network {folder} {folding_method} (qtmscore ≥ {threshold})", fontsize=30
     )
 
     plt.figtext(
@@ -278,17 +285,23 @@ def neural_network(folder, folding_method, threshold):
         0.01,              # near bottom of figure
         f"Nodes: {G.number_of_nodes()} | Edges: {G.number_of_edges()}",
         ha="center",
-        fontsize=10
+        fontsize=30
         )
 
     plt.subplots_adjust(bottom=0.08, right=0.8)  # leave space at bottom
+    plt.legend(handles=make_legend(category_colors), fontsize=30, markerscale=3)
 
     output_file = (
     f"/home/rachel/{folder}/{folding_method}/"
     f"{folding_method}_network_threshold_{threshold}.png"
     )
 
-    plt.savefig(output_file, dpi=300)
+    plt.savefig(
+        output_file,
+        dpi=300,
+        bbox_inches="tight"
+        )
+    
     plt.close()
 
 def visualisation_pipeline(folder, folding_method, threshold1, threshold2):

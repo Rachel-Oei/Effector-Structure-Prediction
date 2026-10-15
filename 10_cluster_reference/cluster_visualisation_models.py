@@ -5,6 +5,7 @@ from Bio import Phylo
 from sklearn.manifold import ClassicalMDS
 import matplotlib.pyplot as plt
 import networkx as nx
+from matplotlib.lines import Line2D
 
 def tm_matrix (folder, pipeline, folding_method, threshold):
 
@@ -16,7 +17,8 @@ def tm_matrix (folder, pipeline, folding_method, threshold):
         names=["query","target","alnlen","alntmscore","qtmscore", "ttmscore","rmsd"]
     )
 
-    df = df[df["qtmscore"] >= threshold]
+    df = df[df["query"] != df["target"]] # remove self-hits 
+    df = df[df["qtmscore"] >= threshold] # remove below threshold
 
     # Collecting all the proteins in the query and target, and sorting them
     proteins = sorted(set(df["query"]).union(df["target"]))
@@ -140,11 +142,11 @@ def neural_network(folder, pipeline, folding_method, threshold):
     foldseek_dir=f"/home/rachel/{folder}/{pipeline}/{folding_method}/foldseek_output/{folding_method}_foldseek_results.tsv"
     
     df = pd.read_csv(
-        foldseek_dir,
-        sep="\t",
-        names=["query","target","alnlen","alntmscore","qtmscore", "ttmscore","rmsd"]
-    )
-
+            foldseek_dir,
+            sep="\t",
+            names=["query","target","alnlen","alntmscore","qtmscore", "ttmscore","rmsd"]
+        )
+    
     for _, row in df.iterrows():
 
         score = row["qtmscore"]
@@ -160,7 +162,6 @@ def neural_network(folder, pipeline, folding_method, threshold):
                 weight=score
             )
 
-    components = list(nx.connected_components(G))
     print(f"Threshold: {threshold}")
     print(f"Nodes: {G.number_of_nodes()}")
     print(f"Edges: {G.number_of_edges()}")
@@ -169,19 +170,21 @@ def neural_network(folder, pipeline, folding_method, threshold):
 
     pos = nx.spring_layout(
         G,
-        seed=42
+        seed=42,
+        weight="weight",
+        k=0.3
     )
 
     nx.draw(
         G,
         pos,
-        node_size=20,
-        width=0.2,
+        node_size=50,
+        width=0.4,
         with_labels=False
     )
 
     plt.title(
-        f"Protein similarity network {folder} {pipeline} {folding_method} (qtmscore ≥ {threshold})"
+        f"Protein similarity network {folder} {folding_method} (qtmscore ≥ {threshold})", fontsize=30
     )
 
     plt.figtext(
@@ -189,19 +192,24 @@ def neural_network(folder, pipeline, folding_method, threshold):
         0.01,              # near bottom of figure
         f"Nodes: {G.number_of_nodes()} | Edges: {G.number_of_edges()}",
         ha="center",
-        fontsize=10
+        fontsize=30
         )
 
-    plt.subplots_adjust(bottom=0.08)  # leave space at bottom
+    plt.subplots_adjust(bottom=0.08, right=0.8)  # leave space at bottom
 
     output_file = (
     f"/home/rachel/{folder}/{pipeline}/{folding_method}/"
     f"{pipeline}_{folding_method}_network_threshold_{threshold}.png"
     )
 
-    plt.savefig(output_file, dpi=300)
+    plt.savefig(
+            output_file,
+            dpi=300,
+            bbox_inches="tight"
+            )
+        
     plt.close()
-
+    
 def visualisation_pipeline(folder, pipeline, folding_method, threshold1, threshold2):
     """
     Tree reconstruction, PCoA and the neural network.
