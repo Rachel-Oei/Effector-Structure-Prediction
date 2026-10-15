@@ -107,6 +107,7 @@ Then the pipeline is as follows:
 (bash af2_clustering.sh)
 (bash af3_clustering.sh)
 (I ran umap.ipynb in GitHub codespaces, execution found in this repo)
+(python cluster_visualisation_main.py)
 ```
 
 **Part 2**
@@ -167,7 +168,10 @@ AF2 (effector_p: 2200s/protein, exp. finish: 21-09, foec_2: 1800s/protein, exp. 
     |
 08_cluster_all
 (bash cluster_all_esm.sh effector_p 0)              
-(bash cluster_all_esm.sh foec_2 1)                  
+(bash cluster_all_esm.sh foec_2 1)
+
+python cluster_visualisation_main.py        - did not run tree construction because it took too long and too much memory 
+
     |
 09_Fo4287_reference (FOEC_2 = 40 proteins, EFFECTOR_P = 1462 proteins)
 
@@ -189,6 +193,9 @@ AF2 (effector_p: 5000s/protein, exp finish date = 18-11).
 (bash cluster_all_af3.sh foec_2 1)              - finished, got 40/40 proteins folded
 (bash cluster_all_af2.sh effector_p 0)          
 (bash cluster_all_af2.sh foec_2 1)              - finished, got 40/40 proteins folded
+
+python cluster_visualisation_main.py        - did not run tree construction because it took too long and too much memory 
+
 ```
 
 **Notes:**

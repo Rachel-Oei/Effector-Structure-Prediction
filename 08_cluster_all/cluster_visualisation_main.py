@@ -1,22 +1,17 @@
-from cluster_visualisation_models import tree_construction, PCoA_construction
+from cluster_visualisation_models import visualisation_pipeline
 
 def main():
+    
+    folder="08_cluster_all"
 
-    tree_construction("effector_p", "esm")
-    tree_construction("foec_2", "esm")
-    PCoA_construction("effector_p", "esm")
-    PCoA_construction("foec_2", "esm")
+    visualisation_pipeline(folder, "effector_p", "esm", 0, 0.5)
+    visualisation_pipeline(folder, "foec_2", "esm", 0, 0.5)
 
-    tree_construction("effector_p", "af3")
-    tree_construction("foec_2", "af3")
-    PCoA_construction("effector_p", "af3")
-    PCoA_construction("foec_2", "af3")
+    visualisation_pipeline(folder, "effector_p", "af2", 0, 0.5)
+    visualisation_pipeline(folder, "foec_2", "af2", 0, 0.5)
 
-    tree_construction("effector_p", "af2")
-    tree_construction("foec_2", "af2")
-    PCoA_construction("effector_p", "af2")
-    PCoA_construction("foec_2", "af2")
-
+    visualisation_pipeline(folder, "foec_2", "af3", 0, 0.5)
+    visualisation_pipeline(folder, "effector_p", "af3", 0, 0.5)
 
 if __name__ == "__main__":
     main()

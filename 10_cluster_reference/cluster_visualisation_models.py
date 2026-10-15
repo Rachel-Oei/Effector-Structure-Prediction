@@ -6,15 +6,17 @@ from sklearn.manifold import ClassicalMDS
 import matplotlib.pyplot as plt
 import networkx as nx
 
-def tm_matrix (pipeline, folding_method):
+def tm_matrix (folder, pipeline, folding_method, threshold):
 
-    foldseek_dir=f"/home/rachel/10_cluster_reference/{pipeline}/{folding_method}/foldseek_output/{folding_method}_foldseek_results.tsv"
+    foldseek_dir=f"/home/rachel/{folder}/{pipeline}/{folding_method}/foldseek_output/{folding_method}_foldseek_results.tsv"
 
     df = pd.read_csv(
         foldseek_dir,
         sep="\t",
         names=["query","target","alnlen","alntmscore","qtmscore", "ttmscore","rmsd"]
     )
+
+    df = df[df["qtmscore"] >= threshold]
 
     # Collecting all the proteins in the query and target, and sorting them
     proteins = sorted(set(df["query"]).union(df["target"]))
@@ -53,9 +55,9 @@ def tm_matrix (pipeline, folding_method):
 
     return matrix, distance
 
-def tree_construction(pipeline, folding_method):
+def tree_construction(folder, pipeline, folding_method, threshold):
 
-    matrix, distance = tm_matrix (pipeline, folding_method)
+    matrix, distance = tm_matrix (folder, pipeline, folding_method, threshold)
 
     # Protein names
     names = list(matrix.index)
@@ -74,7 +76,7 @@ def tree_construction(pipeline, folding_method):
 
     # Labelling with clusters 
     clusters = pd.read_csv(
-        f"/home/rachel/10_cluster_reference/{pipeline}/{folding_method}/foldseek_output/{folding_method}_clusters_cluster.tsv",
+        f"/home/rachel/{folder}/{pipeline}/{folding_method}/foldseek_output/{folding_method}_clusters_cluster.tsv",
         sep="\t",
         header=None,
         names=["cluster", "protein"]
@@ -94,12 +96,13 @@ def tree_construction(pipeline, folding_method):
         leaf.name = f"{safe_protein} | Cluster {safe_cluster}"
         
 
-    output_file=f"/home/rachel/10_cluster_reference/{pipeline}/{folding_method}/{pipeline}_{folding_method}_foldseek_structural_tree.nwk"
+    output_file=f"/home/rachel/{folder}/{pipeline}/{folding_method}/{pipeline}_{folding_method}_foldseek_structural_tree_threshold_{threshold}.nwk"
     Phylo.write(tree, output_file, "newick")
 
-def PCoA_construction(pipeline, folding_method):
-    matrix, distance = tm_matrix (pipeline, folding_method)
-    proteins = matrix.index
+def PCoA_construction(folder, pipeline, folding_method, threshold):
+    matrix, distance = tm_matrix (folder, pipeline, folding_method, threshold)
+
+    n_proteins = len(matrix.index)
 
     cmds = ClassicalMDS(n_components=2, metric="precomputed")
     coordinates_cmds = cmds.fit_transform(distance)
@@ -107,10 +110,7 @@ def PCoA_construction(pipeline, folding_method):
     plt.figure(figsize=(6, 5))
     plt.scatter(coordinates_cmds[:, 0], coordinates_cmds[:, 1], color='teal', s=20)
 
-    # for i, (x, y) in enumerate(coordinates_cmds):
-    #     plt.text(x, y, proteins[i], fontsize=8)
-
-    plt.title("PCoA / Classical MDS Plot")
+    plt.title(f"PCoA Plot {folder} {pipeline} {folding_method} (qtmscore ≥ {threshold}) n_proteins={n_proteins}")
     plt.xlabel("Coordinate 1")
     plt.ylabel("Coordinate 2")
     plt.grid(True, linestyle='--', alpha=0.6)
@@ -118,17 +118,26 @@ def PCoA_construction(pipeline, folding_method):
     plt.axvline(0, color='black', linewidth=0.5)
 
     output_file = (
-    f"/home/rachel/10_cluster_reference/{pipeline}/{folding_method}/"
-    f"{pipeline}_{folding_method}_PCoA.png")
+    f"/home/rachel/{folder}/{pipeline}/{folding_method}/"
+    f"{pipeline}_{folding_method}_PCoA_threshold_{threshold}.png")
 
     plt.tight_layout()
     plt.savefig(output_file, dpi=300)
     plt.close()
 
-def neural_network(pipeline, folding_method, threshold):
+def neural_network(folder, pipeline, folding_method, threshold):
+    """
+    Creation of neural network
+        Folder is a string of either: "10_cluster_reference", "08_cluster_all" or "09_Fo4287_reference". 
+        Pipeline is a string of either: "effector_p", or "foec_2"
+        Folding method is a string of either: "esm", "af2", "af3"
+        Threshold1 is the first threshold for the TM score, usually >= 0.0
+        Threshold2 is the second threshold for the TM score, usually >= 0.5 
+    
+    """
     G = nx.Graph()
 
-    foldseek_dir=f"/home/rachel/10_cluster_reference/{pipeline}/{folding_method}/foldseek_output/{folding_method}_foldseek_results.tsv"
+    foldseek_dir=f"/home/rachel/{folder}/{pipeline}/{folding_method}/foldseek_output/{folding_method}_foldseek_results.tsv"
     
     df = pd.read_csv(
         foldseek_dir,
@@ -152,9 +161,9 @@ def neural_network(pipeline, folding_method, threshold):
             )
 
     components = list(nx.connected_components(G))
+    print(f"Threshold: {threshold}")
     print(f"Nodes: {G.number_of_nodes()}")
     print(f"Edges: {G.number_of_edges()}")
-    print(f"Components: {components}")
 
     plt.figure(figsize=(12, 12))
 
@@ -172,13 +181,41 @@ def neural_network(pipeline, folding_method, threshold):
     )
 
     plt.title(
-        f"Protein similarity network (qtmscore ≥ {threshold})"
+        f"Protein similarity network {folder} {pipeline} {folding_method} (qtmscore ≥ {threshold})"
     )
 
+    plt.figtext(
+        0.5,               # centered horizontally
+        0.01,              # near bottom of figure
+        f"Nodes: {G.number_of_nodes()} | Edges: {G.number_of_edges()}",
+        ha="center",
+        fontsize=10
+        )
+
+    plt.subplots_adjust(bottom=0.08)  # leave space at bottom
+
     output_file = (
-    f"/home/rachel/10_cluster_reference/{pipeline}/{folding_method}/"
+    f"/home/rachel/{folder}/{pipeline}/{folding_method}/"
     f"{pipeline}_{folding_method}_network_threshold_{threshold}.png"
     )
 
     plt.savefig(output_file, dpi=300)
     plt.close()
+
+def visualisation_pipeline(folder, pipeline, folding_method, threshold1, threshold2):
+    """
+    Tree reconstruction, PCoA and the neural network.
+        Folder is a string of either: "10_cluster_reference", "08_cluster_all" or "09_Fo4287_reference". 
+        Pipeline is a string of either: "effector_p", or "foec_2"
+        Folding method is a string of either: "esm", "af2", "af3"
+        Threshold1 is the first threshold for the TM score, usually >= 0.0
+        Threshold2 is the second threshold for the TM score, usually >= 0.5 
+    """
+    #tree_construction(folder, pipeline, folding_method, threshold1)
+    #tree_construction(folder, pipeline, folding_method, threshold2)
+
+    PCoA_construction(folder, pipeline, folding_method, threshold1)
+    PCoA_construction(folder, pipeline, folding_method, threshold2)
+
+    neural_network(folder, pipeline, folding_method, threshold1)
+    neural_network(folder, pipeline, folding_method, threshold2)
