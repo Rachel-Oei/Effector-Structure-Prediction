@@ -83,7 +83,6 @@ def tm_matrix (folder, folding_method, threshold):
     )
 
     df = df[df["query"] != df["target"]] # remove self-hits 
-    df = df[df["qtmscore"] >= threshold] # remove below threshold
 
     # Collecting all the proteins in the query and target, and sorting them
     proteins = sorted(set(df["query"]).union(df["target"]))
@@ -228,6 +227,10 @@ def neural_network(folder, folding_method, threshold):
         sep="\t",
         names=["query","target","alnlen","alntmscore","qtmscore", "ttmscore","rmsd"]
     )
+
+    proteins = set(df["query"]).union(df["target"]) # Add all the proteins as nodes
+
+    G.add_nodes_from(proteins)
 
     for _, row in df.iterrows():
 
