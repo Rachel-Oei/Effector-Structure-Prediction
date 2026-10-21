@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 from scipy.cluster.hierarchy import linkage, leaves_list
 from scipy.spatial.distance import squareform
 
-def tm_matrix (folding_method):
+def tm_matrix (foldseek_dir):
 
     df = pd.read_csv(
         foldseek_dir,
