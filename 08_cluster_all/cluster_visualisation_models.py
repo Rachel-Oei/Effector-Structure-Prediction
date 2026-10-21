@@ -111,9 +111,9 @@ def PCoA_construction(folder, pipeline, folding_method, threshold):
     plt.figure(figsize=(6, 5))
     plt.scatter(coordinates_cmds[:, 0], coordinates_cmds[:, 1], color='teal', s=20)
 
-    plt.title(f"PCoA Plot {folder} {pipeline} {folding_method} (qtmscore ≥ {threshold}) n_proteins={n_proteins}")
-    plt.xlabel("Coordinate 1")
-    plt.ylabel("Coordinate 2")
+    plt.title(f"{folding_method} (qtmscore ≥ {threshold}) n_proteins={n_proteins}", fontsize=16)
+    plt.xlabel("PCoA 1", fontsize=16)
+    plt.ylabel("PCoA 2", fontsize=16)
     plt.grid(True, linestyle='--', alpha=0.6)
     plt.axhline(0, color='black', linewidth=0.5)
     plt.axvline(0, color='black', linewidth=0.5)
@@ -187,7 +187,7 @@ def neural_network(folder, pipeline, folding_method, threshold):
     )
 
     plt.title(
-        f"Protein similarity network {folder} {folding_method} (qtmscore ≥ {threshold})", fontsize=30
+        f"{folding_method} (qtmscore ≥ {threshold})", fontsize=50
     )
 
     plt.figtext(
@@ -195,7 +195,7 @@ def neural_network(folder, pipeline, folding_method, threshold):
         0.01,              # near bottom of figure
         f"Nodes: {G.number_of_nodes()} | Edges: {G.number_of_edges()}",
         ha="center",
-        fontsize=30
+        fontsize=50
         )
 
     plt.subplots_adjust(bottom=0.08, right=0.8)  # leave space at bottom

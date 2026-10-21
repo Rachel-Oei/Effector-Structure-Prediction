@@ -191,9 +191,9 @@ def PCoA_construction(folder, folding_method, threshold):
     s=20
     )
 
-    plt.title(f"PCoA Plot {folder} {folding_method} (qtmscore ≥ {threshold}) n_proteins={n_proteins}")
-    plt.xlabel("Coordinate 1")
-    plt.ylabel("Coordinate 2")
+    plt.title(f"{folding_method}", fontsize=20)
+    plt.xlabel("PCoA 1", fontsize=20)
+    plt.ylabel("PCoA 2", fontsize=20)
     plt.grid(True, linestyle='--', alpha=0.6)
     plt.axhline(0, color='black', linewidth=0.5)
     plt.axvline(0, color='black', linewidth=0.5)
@@ -280,7 +280,7 @@ def neural_network(folder, folding_method, threshold):
     )
 
     plt.title(
-        f"Protein similarity network {folder} {folding_method} (qtmscore ≥ {threshold})", fontsize=30
+        f"{folding_method}", fontsize=50
     )
 
     plt.figtext(
@@ -288,7 +288,7 @@ def neural_network(folder, folding_method, threshold):
         0.01,              # near bottom of figure
         f"Nodes: {G.number_of_nodes()} | Edges: {G.number_of_edges()}",
         ha="center",
-        fontsize=30
+        fontsize=50
         )
 
     plt.subplots_adjust(bottom=0.08, right=0.8)  # leave space at bottom
@@ -325,8 +325,8 @@ def visualisation_pipeline(folder, folding_method, threshold1, threshold2):
         Threshold1 is the first threshold for the TM score, usually >= 0.0
         Threshold2 is the second threshold for the TM score, usually >= 0.5 
     """
-    tree_construction(folder, folding_method, threshold1)
-    tree_construction(folder, folding_method, threshold2)
+    #tree_construction(folder, folding_method, threshold1)
+    #tree_construction(folder, folding_method, threshold2)
 
     PCoA_construction(folder, folding_method, threshold1)
     PCoA_construction(folder, folding_method, threshold2)

@@ -238,8 +238,8 @@ def plot_tm_heatmap(
         fontsize=6
     )
 
-    ax.set_xlabel("Target")
-    ax.set_ylabel("Query")
+    ax.set_xlabel("Target", fontsize=16)
+    ax.set_ylabel("Query", fontsize=16)
 
     cbar = fig.colorbar(
         im,
@@ -249,7 +249,7 @@ def plot_tm_heatmap(
     )
 
     cbar.set_label(
-        "Query TM-score"
+        "Query TM-score", fontsize=16
     )
 
     # --------------------------------------------------
@@ -329,7 +329,7 @@ def plot_tm_heatmap(
 
     ax.set_title(
     title,
-    pad=30
+    pad=30,fontsize=20
     )
 
     plt.tight_layout()
